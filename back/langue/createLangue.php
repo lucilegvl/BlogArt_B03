@@ -86,7 +86,8 @@ include __DIR__ . '/initLangue.php';
         <br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Pays -->
+    
+<!-- Listbox Pays -->
         <br>
         <div class="control-group">
             <div class="controls">
@@ -107,8 +108,6 @@ include __DIR__ . '/initLangue.php';
     ?>
 
 </select>
-
-               
 
                 <!-- Listbox pays => 2ème temps -->
 

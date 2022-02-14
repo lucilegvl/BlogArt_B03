@@ -18,8 +18,12 @@ class LANGUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM LANGUE WHERE numLang = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numLang]);
+
 		return($result->fetch());
 	}
 
