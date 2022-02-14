@@ -53,23 +53,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
-        //$sameId=$_POST['id'];
+        $sameId=$_POST['id'];
         header("Location: ./deleteLangue.php?id=".$sameId);
     }
     
-    //controleCIR
-    $erreur = false;
 
     //delete effectif du langue
 
-    if ((isset($_POST['libStat']) AND !empty($_POST['libStat']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
+    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
+    AND isset($_POST['numLang']) AND !empty($_POST['numLang'])
+    AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
+    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
 
         $erreur = false;
-        $libStat = ctrlSaisies(($_POST['libStat']));
-        $idStat = ctrlSaisies(($_POST['id']));
-        $nbThematique = $monMembre->get_NbAllthematiquesByidStat($_POST['id']);
-        $nbAngle = $monUser->get_NbAllAnglesByidStat($_POST['id']);
+        $numLang = ctrlSaisies($_POST['numLang']);
+        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
+        $lib2Lang = ctrlSaisies($_POST['Lib2Lang']);
+        $numPays = ctrlSaisies($_POST['numPays']);
+
+        $nbThematique = $maThematique->get_NbAllThematiquesByidStat($_POST['id']);
+        $nbAngle = $monAngle->get_NbAllAnglesByidStat($_POST['id']);
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
