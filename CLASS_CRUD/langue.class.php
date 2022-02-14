@@ -17,12 +17,16 @@ class LANGUE{
 		return($result->fetch());
 	}
 
-	function get_1LangueByPays($numLang){
+	function get_1LangueByPays($numPays){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM LANGUE WHERE numPays = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numPays]);
+
 		return($result->fetch());
 	}
 
