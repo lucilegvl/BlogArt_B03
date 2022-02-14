@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // controle des saisies du formulaire
 
     // Saisies valides
-    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+    if (((isset($_POST['  $allLangues'])) AND !empty($_POST['libStat']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         $erreur = false;
 
