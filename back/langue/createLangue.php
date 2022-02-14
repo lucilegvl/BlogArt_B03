@@ -35,20 +35,23 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+
+
+
     // controle des saisies du formulaire
 
     // Saisies valides
-    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
-    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
-    AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
-    AND !empty($_POST['Submit']) AND $Submit === "Valider") {
+    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
+    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
+    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
         $erreur = false;
         $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['numPays']));
 
-        $numLang = $maLangue->getNextNumLang($numPays);
+        $numLang = getNextNumLang($numPays);
         $monStatut->create($numLang, $lib1Langue, $lib2Langue, $numPays);
 
         header("Location: ./langue.php");
@@ -138,15 +141,15 @@ include __DIR__ . '/initLangue.php';
 
 </select>
 
-                <!-- Listbox pays => 2ème temps -->
-                <select name="idPays" id="idPays">
-                    <?php 
-                        $allPays = $maLangue->get_AllPays();                    
-                        foreach($allPays as $pays) { 
-                    ?>
-                        <option value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
-                    <?php } ?>
-                </select>
+<!-- Listbox pays => 2ème temps -->
+    <select name="idPays" id="idPays">
+            <?php 
+                $allPays = $maLangue->get_AllPays();                    
+                foreach($allPays as $pays) { 
+            ?>
+                <option value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
+            <?php } ?>
+    </select>
          
 
     <!-- FIN Listbox Pays -->
