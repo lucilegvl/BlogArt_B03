@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
         $sameId=$_POST['id'];
-        header("Location: ./deleteStatut.php?id=".$sameId);
+        header("Location: ./deleteLangue.php?id=".$sameId);
     }   
 
     if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
@@ -61,16 +61,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = false;
         $libStat = ctrlSaisies(($_POST['libStat']));
         $idStat = ctrlSaisies(($_POST['id']));
-        $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
-        $nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
+        $nbThematique = $monMembre->get_NbAllthematiquesByidStat($_POST['id']);
+        $nbAngle = $monUser->get_NbAllAnglesByidStat($_POST['id']);
 
-        if (($nbMembre > 0) AND ($nbUser > 0)){
+        if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;
         } else{
-            $monStatut->delete($idStat);
-            header("Location: ./statut.php");
+            $maLangue->delete($idStat);
+            header("Location: ./langue.php");
         }
     }      // Fin if ((isset($_POST['libStat'])) ...
     else { // Saisies invalides
