@@ -57,8 +57,12 @@ class LANGUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM LANGUE WHERE numPays=?';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allLanguesByPays = $result->fetchAll();
+
 		return($allLanguesByPays);
 	}
 
@@ -66,8 +70,12 @@ class LANGUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM LANGUE WHERE lib1Lang=?';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allLanguesByLib1Lang = $result->fetchAll();
+
 		return($allLanguesByLib1Lang);
 	}
 
