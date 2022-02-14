@@ -43,22 +43,43 @@ $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
 
-    // controle CIR
+    if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
+        $sameId=$_POST['id'];
+        header("Location: ./deleteStatut.php?id=".$sameId);
+    }   
 
-    // delete effective du langue
+    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
+        $erreur = false;
+        $libStat = ctrlSaisies(($_POST['libStat']));
+        $idStat = ctrlSaisies(($_POST['id']));
+        $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
+        $nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
 
-
-
-
-
-
-
+        if (($nbMembre > 0) AND ($nbUser > 0)){
+            $erreur = true;
+            $errSaisies =  "Erreur, la suppression est impossible.";
+            echo $errSaisies;
+        } else{
+            $monStatut->delete($idStat);
+            header("Location: ./statut.php");
+        }
+    }      // Fin if ((isset($_POST['libStat'])) ...
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }  
 
 }   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
+
 // Init variables form
 include __DIR__ . '/initLangue.php';
 ?>
@@ -86,13 +107,11 @@ include __DIR__ . '/initLangue.php';
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Suppression d'une langue</h2>
 <?php
-    // Supp : récup id à supprimer
-    // id passé en GET
-
-
-
-
-
+    if (isset($_GET['id'])) {
+    $id=$_GET['id'];
+    $req = $monStatut->get_1Statut($id);
+    $libStat = $req['libStat'];
+    $id = $req['idStat'];
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
