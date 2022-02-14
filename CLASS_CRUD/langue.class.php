@@ -11,6 +11,7 @@ class LANGUE{
         $query = 'SELECT * FROM PAYS;';
         $result = $db->query($query);
         $allPays = $result->fetchAll();
+
         return($allPays);
     }
 	
@@ -44,7 +45,7 @@ class LANGUE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM LANGUE;';
+		$query = 'SELECT * FROM LANGUE';
 		// prepare
 		$result = $db->query($query);
 		// execute
@@ -79,7 +80,7 @@ class LANGUE{
 		return($allLanguesByLib1Lang);
 	}
 
-	// Récup dernière PK NumLang
+	// Récup dernière Primary Key NumLang
 	function getNextNumLang($numPays) {
 		global $db;
 	
@@ -125,7 +126,7 @@ class LANGUE{
 
 		try {
 			$db->beginTransaction();
-			$query = 'INSERT INTO STATUT (numLang, lib1Lang, lib2Lang, numPays) VALUES (?, ?, ?, ?)';
+			$query = 'INSERT INTO LANGUE (numLang, lib1Lang, lib2Lang, numPays) VALUES (?, ?, ?, ?)';
             $request = $db->prepare($query);
             $request->execute([$numLang, $lib1Lang, $lib2Lang, $numPays]);
 			$db->commit();
@@ -145,14 +146,18 @@ class LANGUE{
 			$db->beginTransaction();
 
 			// update
+			$query = 'UPDATE LANGUE SET lib1Lang = ?, lib2Lang = ?, numPays = ? WHERE numPays = ?';
 			// prepare
+			$result = $db->prepare($query);
 			// execute
+			$result->execute([$lib1Lang, $lib2Lang, $numPays, $numLang]);
+
 			$db->commit();
-			$request->closeCursor();
+			$result->closeCursor();
 		}
 		catch (PDOException $e) {
 			$db->rollBack();
-			$request->closeCursor();
+			$result->closeCursor();
 			die('Erreur update LANGUE : ' . $e->getMessage());
 		}
 	}
