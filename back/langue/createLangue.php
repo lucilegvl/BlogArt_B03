@@ -98,6 +98,13 @@ include __DIR__ . '/initLangue.php';
              <select id="idPays" name="idPays" >
 
     <?php
+    // Appel méthode : Get tous les statuts en BDD
+    $allStatuts = $monStatut->get_AllStatuts();
+
+    // Boucle pour afficher
+    foreach($allStatuts as $row) 
+
+?>
 
      foreach ($arr as $key => $value) {
         $name = $band["fldBand"];
