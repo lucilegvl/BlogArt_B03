@@ -51,7 +51,10 @@ $errDel = 0;
     if ($errDel == 99) {
 ?>
 	    <br />
-        <i><div class="error"><br>=>&nbsp;Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
+        <i><div class="error">
+            <br/>
+            <?php echo "&nbsp; Erreur delete LANGUE : la suppression sest mal passée !"?>
+        </div></i>
 <?php
     }   // End of if ($errDel == 99)
 ?>
@@ -77,20 +80,22 @@ $errDel = 0;
 	foreach($allLangues as $row) {
 ?>
         <tr>
-		<td><h4>&nbsp; <?= $row["numLang"]; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?php echo $row['numLang']; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= $row["lib1Lang"]; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo $row['lib1Lang']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= $row["lib2Lang"]; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo $row['lib2Lang']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= $row["numPays"]; ?> &nbsp;</td>
-        <td>&nbsp;<a href="./updateLangue.php?id=<?= ($row["numLang"]); ?>"><i>Modifier</i></a>&nbsp;
+        <td>&nbsp; <?php echo $row["numPays"]; ?> &nbsp;</td>
+
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLangue.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier langue" title="Modifier langue" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
-		<td>&nbsp;<a href="./deleteLangue.php?id=<?= ($row["numLang"]); ?>"><i>Supprimer</i></a>&nbsp;
+
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteLangue.php?id=<?=1; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer langue" title="Supprimer langue" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
 
         </tr>
-<?
+<?php
 	}	// End of foreach
 ?>
     </tbody>
