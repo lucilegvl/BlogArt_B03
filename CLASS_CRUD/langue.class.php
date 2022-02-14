@@ -26,8 +26,12 @@ class LANGUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM LANGUE;';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allLangues = $result->fetchAll();
+		
 		return($allLangues);
 	}
 

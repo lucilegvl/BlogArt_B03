@@ -14,10 +14,9 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Langue
-
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
-
-
+$maLangue = new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -25,27 +24,44 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
 
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+        $sameId=$_POST['id'];
+        header("Location: ./updateLangue.php?id=".$sameId);
+    }   
 
+    if ((((((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
+    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang'])))
+    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang'])))
+    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays'])))
+    AND ((!empty($_POST['Submit'])) AND ($Submit === "Valider"))) {
 
-    // controle des saisies du formulaire
+        $erreur = false;
 
-    // modification effective du langue
+        $numLang = ctrlSaisies(($_POST['numLang']));
+        $lib1Lang = ctrlSaisies(($_POST['lib1Lang']));
+        $lib2Lang = ctrlSaisies(($_POST['Lib2Lang']));
+        $numPays = ctrlSaisies(($_POST['numPays']));
 
+        $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
 
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
-
-
-
+        header("Location: ./langue.php");
+    }      // Fin if parenthèses par milliers
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }  
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+
 // Init variables form
 include __DIR__ . '/initLangue.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -62,14 +78,12 @@ include __DIR__ . '/initLangue.php';
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Modification d'une langue</h2>
 <?php
-    // Modif : récup id à modifier
-    // id passé en GET
-
-
-
-
-
-
+    if (isset($_GET['id'])) {
+        $id=$_GET['id'];
+        $req = $monStatut->get_1Statut($id);
+        $libStat = $req['libStat'];
+        $id = $req['idStat'];
+    }
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">

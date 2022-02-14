@@ -14,10 +14,9 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Langue
-
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
-
-
+$maLangue = new LANGUE();
 
 // Ctrl CIR
 $errCIR = 0;
@@ -72,18 +71,19 @@ $errDel = 0;
     <tbody>
 <?php
     // Appel méthode : Get toutes les langues en BDD
-
+    $allLangues = $maLangue->get_allLangues();
     // Boucle pour afficher
-    //foreach($all as $row) {
+
+    foreach($allLangues as $row) {
 ?>
         <tr>
-		<td><h4>&nbsp; <?= "ici numLang"; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?php echo $row['numLang']; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo $row['lib1Lang']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici lib2Lang"; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo $row['lib2Lang']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici frPays"; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo $row['numPays']; ?> &nbsp;</td>
 
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLangue.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier langue" title="Modifier langue" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
@@ -91,7 +91,7 @@ $errDel = 0;
 		<br /></td>
         </tr>
 <?php
-	// }	// End of foreach
+	}	// End of foreach
 ?>
     </tbody>
     </table>
