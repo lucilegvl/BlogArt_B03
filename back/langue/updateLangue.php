@@ -35,18 +35,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ./updateLangue.php?id=".$sameId);
     }   
 
-    if ((((((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
-    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang'])))
-    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang'])))
-    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays'])))
-    AND ((!empty($_POST['Submit'])) AND ($Submit === "Valider"))) {
+    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
+    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
+    AND isset($_POST['numLang']) AND !empty($_POST['numLang'])
+    AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
+    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
 
         $erreur = false;
 
-        $numLang = ctrlSaisies(($_POST['numLang']));
-        $lib1Lang = ctrlSaisies(($_POST['lib1Lang']));
-        $lib2Lang = ctrlSaisies(($_POST['Lib2Lang']));
-        $numPays = ctrlSaisies(($_POST['numPays']));
+        $numLang = ctrlSaisies($_POST['numLang']);
+        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
+        $lib2Lang = ctrlSaisies($_POST['Lib2Lang']);
+        $numPays = ctrlSaisies($_POST['numPays']);
 
         $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
 
@@ -123,8 +123,8 @@ include __DIR__ . '/initLangue.php';
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-        <div class="control-group">
-            <div class="error">
+    <div class="control-group">
+        <div class="error">
 <?php
             if ($erreur) {
                 echo ($errSaisies);
