@@ -178,6 +178,7 @@ include __DIR__ . '/initLangue.php';
                 <br>
             </div>
         </div>
+        
       </fieldset>
     </form>
 <?php
