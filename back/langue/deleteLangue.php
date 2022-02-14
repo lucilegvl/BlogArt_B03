@@ -23,6 +23,8 @@ $MaLangue = new LANGUE();
 $errCIR = 0;
 $errDel=0;
 
+
+
 // Insertion classe Angle
 require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe Angle
@@ -36,7 +38,7 @@ $maThematique = new THEMATIQUE();
 // Insertion classe Motcle
 require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 // Instanciation de la classe Motcle
-$monMotcle = new THEMATIQUE();
+$monMotcle = new MOTCLE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -51,11 +53,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
-        $sameId=$_POST['id'];
+        //$sameId=$_POST['id'];
         header("Location: ./deleteLangue.php?id=".$sameId);
-    }   
+    }
+    
+    //controleCIR
+    $erreur = false;
 
-    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+    //delete effectif du langue
+
+    if ((isset($_POST['libStat']) AND !empty($_POST['libStat']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
         $erreur = false;
