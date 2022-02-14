@@ -35,21 +35,23 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
-
     // controle des saisies du formulaire
 
     // Saisies valides
-    if (((isset($_POST['  $allLangues'])) AND !empty($_POST['libStat']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
+    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
+    AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
+    AND !empty($_POST['Submit']) AND $Submit === "Valider") {
+
         $erreur = false;
+        $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
+        $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
+        $numPays = ctrlSaisies(($_POST['numPays']));
 
-        $libStat = ctrlSaisies(($_POST['libStat']));
+        $numLang = $maLangue->getNextNumLang($numPays);
+        $monStatut->create($numLang, $lib1Langue, $lib2Langue, $numPays);
 
-        $monStatut->create($libStat);
-
-        header("Location: ./statut.php");
+        header("Location: ./langue.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
     else {
         // Saisies invalides
@@ -173,6 +175,7 @@ include __DIR__ . '/initLangue.php';
                 <br>
             </div>
         </div>
+        
       </fieldset>
     </form>
 <?php
