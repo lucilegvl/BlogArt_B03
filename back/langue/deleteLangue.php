@@ -14,35 +14,29 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Langue
-
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
-
+$MaLangue = new LANGUE();
 
 
 // Ctrl CIR
+$errCIR = 0;
+$errDel=0;
+
 // Insertion classe Angle
-
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe Angle
-
-
-
-
+$monAngle = new ANGLE();
 
 // Insertion classe Thematique
-
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe Thematique
-
-
-
-
+$maThematique = new THEMATIQUE();
 
 // Insertion classe Motcle
-
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 // Instanciation de la classe Motcle
-
-
-
-
+$monMotcle = new THEMATIQUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -50,21 +44,42 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
 
+    if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
+        $sameId=$_POST['id'];
+        header("Location: ./deleteStatut.php?id=".$sameId);
+    }   
 
-    // controle CIR
+    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
-    // delete effective du langue
+        $erreur = false;
+        $libStat = ctrlSaisies(($_POST['libStat']));
+        $idStat = ctrlSaisies(($_POST['id']));
+        $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
+        $nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
 
-
-
-
-
-
-
-
+        if (($nbMembre > 0) AND ($nbUser > 0)){
+            $erreur = true;
+            $errSaisies =  "Erreur, la suppression est impossible.";
+            echo $errSaisies;
+        } else{
+            $monStatut->delete($idStat);
+            header("Location: ./statut.php");
+        }
+    }      // Fin if ((isset($_POST['libStat'])) ...
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }  
 
 }   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
+
 // Init variables form
 include __DIR__ . '/initLangue.php';
 ?>
