@@ -57,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = false;
         $libStat = ctrlSaisies(($_POST['libStat']));
         $idStat = ctrlSaisies(($_POST['id']));
+        
         $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
         $nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
 
