@@ -14,42 +14,36 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Langue
-
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
-
+$MaLangue = new LANGUE();
 
 
 // Ctrl CIR
+$errCIR = 0;
+$errDel=0;
+
 // Insertion classe Angle
-
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe Angle
-
-
-
-
+$monAngle = new ANGLE();
 
 // Insertion classe Thematique
-
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe Thematique
-
-
-
-
+$maThematique = new THEMATIQUE();
 
 // Insertion classe Motcle
-
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 // Instanciation de la classe Motcle
-
-
-
-
+$monMotcle = new THEMATIQUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
+    
 
 
     // controle CIR
