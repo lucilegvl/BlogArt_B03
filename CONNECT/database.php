@@ -8,4 +8,3 @@ try {
 } catch (PDOException $err) {
   die('Echec connexion BLOGART : ' . $err->getMessage());
 }
-i

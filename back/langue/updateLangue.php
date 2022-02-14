@@ -37,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
     AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
-    AND isset($_POST['numLang']) AND !empty($_POST['numLang'])
     AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
     AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
 
@@ -96,11 +95,11 @@ include __DIR__ . '/initLangue.php';
 
         <div class="control-group">
             <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?php echo $lib1Lang; ?>" tabindex="10" autofocus="autofocus" /><br><br>
+            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" tabindex="10" autofocus="autofocus" /><br><br>
         </div>
         <div class="control-group">
             <label class="control-label" for="lib2Lang"><b>Libellé long :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?php echo $lib2Lang; ?>" tabindex="20" />
+            <input type="text" name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" tabindex="20" />
         </div>
         <br>
 <!-- --------------------------------------------------------------- -->
