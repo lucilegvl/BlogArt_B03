@@ -99,10 +99,9 @@ class LANGUE{
 
 		try {
 			$db->beginTransaction();
-
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO STATUT (numLang, lib1Lang, lib2Lang, numPays) VALUES (?, ?, ?, ?)';
+            $request = $db->prepare($query);
+            $request->execute([$numLang, $lib1Lang, $lib2Lang, $numPays]);
 			$db->commit();
 			$request->closeCursor();
 		}

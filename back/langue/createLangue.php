@@ -14,10 +14,19 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Langue
-
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
+$maLangue = new LANGUE();
 
+if(isset($_POST['Submit'])){
+    $Submit = $_POST['Submit'];
+} else {
+    $Submit = "";
+} 
+if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
 
+    header("Location: ./createLangue.php");
+}
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -84,14 +93,23 @@ include __DIR__ . '/initLangue.php';
             <label class="control-label" for="LibTypPays">
                 <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
             </label>
+            <select name="idPays" id="idPays">
+             <option value="allemand">Allemand</option>
+             <option value="anglais">Anglais</option>
+             <option value="bulgare">Bulgare</option>
+             <option value="française">Français</option>
+             <option value="italien">Italien</option>
+             <option value="russe">Russe</option>
+             <option value="ukrainien">Ukrainien</option>
+             </select>
 
-
-                <input type="text" name="idPays" id="idPays" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" />
+               
 
                 <!-- Listbox pays => 2ème temps -->
 
             </div>
         </div>
+
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
