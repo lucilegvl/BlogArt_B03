@@ -94,15 +94,20 @@ include __DIR__ . '/initLangue.php';
             <label class="control-label" for="LibTypPays">
                 <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
             </label>
-            <select name="idPays" id="idPays">
-             <option value="allemand">Allemand</option>
-             <option value="anglais">Anglais</option>
-             <option value="bulgare">Bulgare</option>
-             <option value="française">Français</option>
-             <option value="italien">Italien</option>
-             <option value="russe">Russe</option>
-             <option value="ukrainien">Ukrainien</option>
-             </select>
+
+             <select id="idPays" name="idPays" >
+
+    <?php
+
+     foreach ($arr as $key => $value) {
+        $name = $band["fldBand"];
+        $id = $band["pkID"];
+        $options .= '<option value="' . $id . '>' . $name . '</option>';
+     }
+     echo $options; 
+    ?>
+
+</select>
 
                 <!-- Listbox pays => 2ème temps -->
 

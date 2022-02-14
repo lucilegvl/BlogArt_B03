@@ -4,6 +4,16 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class LANGUE{
+
+	function get_AllPays(){
+        global $db;
+
+        $query = 'SELECT * FROM PAYS;';
+        $result = $db->query($query);
+        $allPays = $result->fetchAll();
+        return($allPays);
+    }
+	
 	function get_1Langue($numLang){
 		global $db;
 
@@ -17,12 +27,16 @@ class LANGUE{
 		return($result->fetch());
 	}
 
-	function get_1LangueByPays($numLang){
+	function get_1LangueByPays($numPays){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM LANGUE WHERE numPays = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numPays]);
+
 		return($result->fetch());
 	}
 
