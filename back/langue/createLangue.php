@@ -102,7 +102,7 @@ include __DIR__ . '/initLangue.php';
     $allStatuts = $monStatut->get_AllStatuts();
 
     // Boucle pour afficher
-    foreach($allStatuts as $row) {
+    foreach($allStatuts as $row) 
 
 ?>
 
