@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['id'];
+        $sameId=$_POST['numPays'];
         header("Location: ./updateLangue.php?id=".$sameId);
     }   
 
@@ -78,12 +78,27 @@ include __DIR__ . '/initLangue.php';
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Modification d'une langue</h2>
 <?php
-    if (isset($_GET['id'])) {
+    /*if (isset($_GET['id'])) {
         $id=$_GET['id'];
-        $req = $monStatut->get_1Statut($id);
-        $libStat = $req['libStat'];
-        $id = $req['idStat'];
+        $id=ctrlSaisies($_GET['id']);
+
+        $query = (array)$maLangue->get_1Langue($id);
+
+        $lib1Lang = $query['lib1Lang'];
+        $lib2Lang = $query['lib2Lang'];
+        $numLang = $query['numLang'];
+    }*/
+
+    if(!isset($_GET['id'])) {
+        header("Location: ./langue.php");
+        die();
     }
+    
+    $langue = (array)$maLangue->get_1Langue($_GET['id']);
+
+    $lib1Lang = $langue['lib1Lang'];
+    $lib2Lang = $langue['lib2Lang'];
+    $idPays = $langue['numPays'];
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -95,11 +110,11 @@ include __DIR__ . '/initLangue.php';
 
         <div class="control-group">
             <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" tabindex="10" autofocus="autofocus" /><br><br>
+            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?php echo $lib1Lang; ?>" tabindex="10" autofocus="autofocus" /><br><br>
         </div>
         <div class="control-group">
             <label class="control-label" for="lib2Lang"><b>Libellé long :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" tabindex="20" />
+            <input type="text" name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?php echo $lib2Lang; ?>" tabindex="20" />
         </div>
         <br>
 <!-- --------------------------------------------------------------- -->
