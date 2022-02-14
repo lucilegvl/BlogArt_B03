@@ -18,6 +18,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
+
 if(isset($_POST['Submit'])){
     $Submit = $_POST['Submit'];
 } else {
@@ -39,6 +40,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // controle des saisies du formulaire
 
+    // Saisies valides
+    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
+    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
+    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+
+        $erreur = false;
+        $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
+        $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
+        $numPays = ctrlSaisies(($_POST['numPays']));
+
+        $numLang = getNextNumLang($numPays);
+        $monStatut->create($numLang, $lib1Langue, $lib2Langue, $numPays);
+
+        header("Location: ./langue.php");
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
+
     // création effective du user
 
 
@@ -50,6 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
+
+
+
 // Init variables form
 include __DIR__ . '/initLangue.php';
 ?>
@@ -102,24 +128,29 @@ include __DIR__ . '/initLangue.php';
     $allStatuts = $monStatut->get_AllStatuts();
 
     // Boucle pour afficher
-    foreach($allStatuts as $row) 
 
-?>
-
-     foreach ($arr as $key => $value) {
+    foreach ($arr as $key => $value) {
         $name = $band["fldBand"];
         $id = $band["pkID"];
         $options .= '<option value="' . $id . '>' . $name . '</option>';
      }
      echo $options; 
-    ?>
+?>
+
+
 
 </select>
 
-                <!-- Listbox pays => 2ème temps -->
-
-            </div>
-        </div>
+<!-- Listbox pays => 2ème temps -->
+    <select name="idPays" id="idPays">
+            <?php 
+                $allPays = $maLangue->get_AllPays();                    
+                foreach($allPays as $pays) { 
+            ?>
+                <option value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
+            <?php } ?>
+    </select>
+         
 
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
@@ -136,7 +167,7 @@ include __DIR__ . '/initLangue.php';
 ?>
             </div>
         </div>
-
+        
         <div class="control-group">
             <div class="controls">
                 <br><br>
@@ -147,6 +178,7 @@ include __DIR__ . '/initLangue.php';
                 <br>
             </div>
         </div>
+        
       </fieldset>
     </form>
 <?php

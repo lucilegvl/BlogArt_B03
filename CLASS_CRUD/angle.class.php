@@ -44,8 +44,12 @@ class ANGLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ANGLE WHERE numLang = ?';
 		// prepare
+		$allNbAnglesBynumLang = $db->prepare($query);
 		// execute
+		$allNbAnglesBynumLang->execute([$numLang]);
+		$count = $allNbAnglesBynumLang->rowCount();
 		return($allNbAnglesBynumLang);
 	}
 
