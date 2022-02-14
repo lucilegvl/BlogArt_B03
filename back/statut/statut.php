@@ -67,10 +67,10 @@ $errCIR = 0;
     <tbody>
 <?php
     // Appel méthode : Get tous les statuts en BDD
-    $allStatuts = $monStatut->get_AllStatuts();
+    $allPays = $monStatut->get_AllPays();
 
     // Boucle pour afficher
-    foreach($allStatuts as $row) {
+    foreach($allPays as $row) {
 
 ?>
         <tr>
