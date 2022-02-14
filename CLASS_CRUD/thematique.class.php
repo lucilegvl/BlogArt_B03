@@ -44,8 +44,12 @@ class THEMATIQUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM THEMATIQUE WHERE numLang = ?';
 		// prepare
+		$allNbThematiqueBynumLang = $db->prepare($query);
 		// execute
+		$allNbThematiqueBynumLang->execute([$numLang]);
+		$count = $allNbThematiqueBynumLang->rowCount();
 		return($allNbThematiquesBynumLang);
 	}
 
