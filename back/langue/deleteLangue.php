@@ -72,15 +72,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $lib2Lang = ctrlSaisies($_POST['Lib2Lang']);
         $numPays = ctrlSaisies($_POST['numPays']);
 
-        $nbThematique = $maThematique->get_NbAllThematiquesByidStat($_POST['id']);
-        $nbAngle = $monAngle->get_NbAllAnglesByidStat($_POST['id']);
+        $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
+        $nbAngle = $monAngle->	function get_NbAllAnglesBynumLang($_POST['id']);
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;
         } else{
-            $maLangue->delete($idStat);
+            $maLangue->delete($numLang);
             header("Location: ./langue.php");
         }
     }      // Fin if ((isset($_POST['libStat'])) ...
