@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['numPays'];
+        $sameId=$_POST['id'];
         header("Location: ./updateLangue.php?id=".$sameId);
     }   
 
@@ -78,27 +78,13 @@ include __DIR__ . '/initLangue.php';
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Modification d'une langue</h2>
 <?php
-    /*if (isset($_GET['id'])) {
-        $id=$_GET['id'];
-        $id=ctrlSaisies($_GET['id']);
-
-        $query = (array)$maLangue->get_1Langue($id);
-
-        $lib1Lang = $query['lib1Lang'];
-        $lib2Lang = $query['lib2Lang'];
-        $numLang = $query['numLang'];
-    }*/
-
-    if(!isset($_GET['id'])) {
-        header("Location: ./langue.php");
-        die();
-    }
-    
-    $langue = (array)$maLangue->get_1Langue($_GET['id']);
-
-    $lib1Lang = $langue['lib1Lang'];
-    $lib2Lang = $langue['lib2Lang'];
-    $idPays = $langue['numPays'];
+        if (isset($_GET['id'])) {
+            $id=$_GET['id'];
+            $req = $maLangue->get_1Langue($id);
+            $lib1Lang = $req['lib1Lang'];
+            $lib2Lang = $req['lib2Lang'];
+            $id = $req['numLang'];
+        }
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -143,7 +129,7 @@ include __DIR__ . '/initLangue.php';
             if ($erreur) {
                 echo ($errSaisies);
             } else {
-                $errSaisies = "";
+                $errSaisies = "Données mises à jour";
                 echo ($errSaisies);
             }
 ?>
