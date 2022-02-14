@@ -15,14 +15,11 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
-$monStatut = new STATUT();
-
 // Instanciation de la classe Statut
-
+$monStatut = new STATUT();
 
 // Gestion des CIR => affichage erreur sinon
 $errCIR = 0;
-
 
 ?>
 <!DOCTYPE html>
@@ -67,10 +64,10 @@ $errCIR = 0;
     <tbody>
 <?php
     // Appel méthode : Get tous les statuts en BDD
-    $allPays = $monStatut->get_AllPays();
+    $allStatuts = $monStatut->get_AllStatuts();
 
     // Boucle pour afficher
-    foreach($allPays as $row) {
+    foreach($allStatuts as $row) {
 
 ?>
         <tr>
