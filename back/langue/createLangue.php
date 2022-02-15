@@ -43,13 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // controle des saisies du formulaire    
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
-    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
+    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
         $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
-        $numPays = ctrlSaisies(($_POST['numPays']));
+        $numPays = ctrlSaisies(($_POST['TypPays']));
 
         $numLang = $maLangue->getNextNumLang($numPays);
 
