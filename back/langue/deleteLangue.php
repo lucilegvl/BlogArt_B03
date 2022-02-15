@@ -18,6 +18,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $MaLangue = new LANGUE();
 
+$monPays = new PAYS();
 
 // Ctrl CIR
 $errCIR = 0;
@@ -143,21 +144,67 @@ include __DIR__ . '/initLangue.php';
         <br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Pays -->
-        <br>
+  <!-- Listbox Pays -->
+<label for="LibTypPays" title="Sélectionnez le pays !">
+            <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+            <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
+                <option value="-1">- - - Choisissez un pays - - -</option>
+<?php
+                $listNumPays = "";
+                $listfrPays = "";
+
+                $result = $monPays->get_AllPays();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumPays= $row["numPays"];
+                        $listfrPays = $row["frPays"];
+?>
+                        <option value="<?= $listNumPays; ?>">
+                            <?= $listfrPays; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
+
+    <!-- FIN Listbox Pays -->
+<!-- --------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------- -->
         <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypPays">
-                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
-            </label>
-
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" />
-
-                <!-- Listbox langue disabled => 2ème temps -->
-
+            <div class="error">
+            <?php
+            if ($erreur) {
+                echo ($errSaisies);
+            } else {
+                $errSaisies = "";
+                echo ($errSaisies);
+            }
+?>
             </div>
         </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <br>
+            </div>
+        </div>
+      </fieldset>
+    </form>
+<?php
+require_once __DIR__ . '/footerLangue.php';
+
+require_once __DIR__ . '/footer.php';
+?>
+</body>
+</html>
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
