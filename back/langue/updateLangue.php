@@ -24,41 +24,28 @@ $monPays = new PAYS();
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
+AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
+AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
+    $erreur = false;
+    $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
+    $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
+    $numPays = ctrlSaisies(($_POST['TypPays']));
 
-    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['id'];
-        header("Location: ./updateLangue.php?id=".$sameId);
-    }   
+    $numLang = $maLangue->getNextNumLang($numPays);
 
-    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
-    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
-    AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
-    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
+    $maLangue->create($numLang, $lib1Langue, $lib2Langue, $numPays);
 
-        $erreur = false;
+    header("Location: ./langue.php");
+}   // Fin if ((isset($_POST['libStat'])) ...
+else { // Saisies invalides
+    $erreur = true;
+    $errSaisies =  "Erreur, la saisie est obligatoire !";
+}   // End of else erreur saisies
 
-        $numLang = ctrlSaisies($_POST['numLang']);
-        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
-        $lib2Lang = ctrlSaisies($_POST['Lib2Lang']);
-        $numPays = ctrlSaisies($_POST['numPays']);
-
-        $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
-
-        header("Location: ./langue.php");
-    }      // Fin if parenthèses par milliers
-    else { // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }  
-
-}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+  // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
 include __DIR__ . '/initLangue.php';
