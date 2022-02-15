@@ -18,6 +18,8 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
+$monPays = new PAYS();
+
 if(isset($_POST['Submit'])){
     $Submit = $_POST['Submit'];
 } else {
@@ -49,8 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['numPays']));
 
-        $numLang = $maLanguegetNextNumLang($numPays);
-        $monStatut->create($numLang, $lib1Langue, $lib2Langue, $numPays);
+        $numLang = $maLangue->getNextNumLang($numPays);
+
+        $maLangue->create($numLang, $lib1Langue, $lib2Langue, $numPays);
 
         header("Location: ./langue.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
@@ -111,43 +114,30 @@ include __DIR__ . '/initLangue.php';
 <!-- --------------------------------------------------------------- -->
     
 <!-- Listbox Pays -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypPays">
-                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
-            </label>
+<label for="LibTypPays" title="Sélectionnez le pays !">
+            <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+            <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
+                <option value="-1">- - - Choisissez un pays - - -</option>
+<?php
+                $listNumPays = "";
+                $listfrPays = "";
 
-             <select id="idPays" name="idPays" >
-
-    <?php
-    // Appel méthode : Get tous les statuts en BDD
-    $allStatuts = $monStatut->get_AllStatuts();
-
-    // Boucle pour afficher
-
-    foreach ($arr as $key => $value) {
-        $name = $band["fldBand"];
-        $id = $band["pkID"];
-        $options .= '<option value="' . $id . '>' . $name . '</option>';
-     }
-     echo $options; 
+                $result = $monPays->get_AllPays();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumPays= $row["numPays"];
+                        $listfrPays = $row["frPays"];
 ?>
-
-
-
-</select>
-
-<!-- Listbox pays => 2ème temps -->
-    <select name="idPays" id="idPays">
-            <?php 
-                $allPays = $maLangue->get_AllPays();                    
-                foreach($allPays as $pays) { 
-            ?>
-                <option value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
-            <?php } ?>
-    </select>
-         
+                        <option value="<?= $listNumPays; ?>">
+                            <?= $listfrPays; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
 
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
@@ -178,7 +168,7 @@ include __DIR__ . '/initLangue.php';
       </fieldset>
     </form>
 <?php
-require_once __DIR__ . '/footerStatut.php';
+require_once __DIR__ . '/footerLangue.php';
 
 require_once __DIR__ . '/footer.php';
 ?>
