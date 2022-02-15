@@ -18,6 +18,8 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
+$monPays = new PAYS();
+
 // Gestion des erreurs de saisie
 $erreur = false;
 
@@ -104,31 +106,42 @@ include __DIR__ . '/initLangue.php';
         <br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Pays -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypPays">
-                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
-            </label>
+ <!-- Listbox Pays -->
+<label for="LibTypPays" title="Sélectionnez le pays !">
+            <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+            <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
+                <option value="-1">- - - Choisissez un pays - - -</option>
+<?php
+                $listNumPays = "";
+                $listfrPays = "";
 
+                $result = $monPays->get_AllPays();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumPays= $row["numPays"];
+                        $listfrPays = $row["frPays"];
+?>
+                        <option value="<?= $listNumPays; ?>">
+                            <?= $listfrPays; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
 
-                <input type="text" name="idPays" id="idPays" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" />
-
-                <!-- Listbox pays => 2ème temps -->
-
-            </div>
-        </div>
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <div class="control-group">
-        <div class="error">
-<?php
+        <div class="control-group">
+            <div class="error">
+            <?php
             if ($erreur) {
                 echo ($errSaisies);
             } else {
-                $errSaisies = "Données mises à jour";
+                $errSaisies = "";
                 echo ($errSaisies);
             }
 ?>
