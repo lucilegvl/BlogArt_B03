@@ -157,7 +157,7 @@ include __DIR__ . '/initLangue.php';
 <!-- --------------------------------------------------------------- -->
         <div class="control-group">
             <div class="error">
-<?php
+            <?php
             if ($erreur) {
                 echo ($errSaisies);
             } else {
@@ -167,7 +167,7 @@ include __DIR__ . '/initLangue.php';
 ?>
             </div>
         </div>
-        
+
         <div class="control-group">
             <div class="controls">
                 <br><br>
@@ -178,11 +178,10 @@ include __DIR__ . '/initLangue.php';
                 <br>
             </div>
         </div>
-        
       </fieldset>
     </form>
 <?php
-require_once __DIR__ . '/footerLangue.php';
+require_once __DIR__ . '/footerStatut.php';
 
 require_once __DIR__ . '/footer.php';
 ?>
