@@ -157,7 +157,7 @@ class LANGUE{
 		}
 		catch (PDOException $e) {
 			$db->rollBack();
-			$result->closeCursor();
+			$request->closeCursor();
 			die('Erreur update LANGUE : ' . $e->getMessage());
 		}
 	}
