@@ -18,12 +18,12 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
-
 if(isset($_POST['Submit'])){
     $Submit = $_POST['Submit'];
 } else {
     $Submit = "";
 } 
+
 if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
 
     header("Location: ./createLangue.php");
@@ -38,26 +38,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-    // controle des saisies du formulaire
-
-    // Saisies valides
+    // controle des saisies du formulaire    
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
     AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
         $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['numPays']));
 
-        $numLang = getNextNumLang($numPays);
+        $numLang = $maLanguegetNextNumLang($numPays);
         $monStatut->create($numLang, $lib1Langue, $lib2Langue, $numPays);
 
         header("Location: ./langue.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
-    else {
-        // Saisies invalides
+    else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }   // End of else erreur saisies

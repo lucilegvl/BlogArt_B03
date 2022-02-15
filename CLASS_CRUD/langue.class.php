@@ -146,18 +146,18 @@ class LANGUE{
 			$db->beginTransaction();
 
 			// update
-			$query = 'UPDATE LANGUE SET lib1Lang = ?, lib2Lang = ?, numPays = ? WHERE numPays = ?';
+			$query = "UPDATE LANGUE SET lib1Lang = '$lib1Lang', lib2Lang = '$lib2Lang', numPays = '$numPays' WHERE numLang = '$numLang' ";
 			// prepare
-			$result = $db->prepare($query);
+			$request = $db->prepare($query);
 			// execute
-			$result->execute([$lib1Lang, $lib2Lang, $numPays, $numLang]);
+			$request->execute([$lib1Lang, $lib2Lang, $numPays]);
 
 			$db->commit();
-			$result->closeCursor();
+			$request->closeCursor();
 		}
 		catch (PDOException $e) {
 			$db->rollBack();
-			$result->closeCursor();
+			$request->closeCursor();
 			die('Erreur update LANGUE : ' . $e->getMessage());
 		}
 	}
