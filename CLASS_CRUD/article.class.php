@@ -8,8 +8,11 @@ class ARTICLE{
 		global $db;
 		
 		// select
+		$query = 'SELECT * FROM ARTICLE WHERE numArt = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numArt]);
 		return($result->fetch());
 	}
 
@@ -17,8 +20,11 @@ class ARTICLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ARTICLE WHERE numArt = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numArt]);
 		return($result->fetch());
 	}
 
@@ -26,8 +32,11 @@ class ARTICLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ARTICLE';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allArticles = $result->fetchAll();
 		return($allArticles);
 	}
 
@@ -35,8 +44,11 @@ class ARTICLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ARTICLE WHERE numArt=?;';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allArticlesByNumAnglNumThem = $result->fetchAll();
 		return($allArticlesByNumAnglNumThem);
 	}
 
@@ -44,17 +56,25 @@ class ARTICLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ARTICLE WHERE numAngl = ?';
 		// prepare
+		$allNbArticlesBynumAngl = $db->prepare($query);
 		// execute
+		$allNbArticlesBynumAngl->execute([$numAngl]);
+		$count = $allNbArticlesBynumAngl->rowCount();
 		return($allNbArticlesBynumAngl);
 	}
 
 	function get_NbAllArticlesByNumThem($numThem){
 		global $db;
 
-		// select
+		//select
+		$query = 'SELECT * FROM ARTICLE WHERE numThem = ?';
 		// prepare
+		$allNbArticlesBynumThem = $db->prepare($query);
 		// execute
+		$allNbArticlesBynumThem->execute([$numThem]);
+		$count = $allNbArticlesBynumThem->rowCount();
 		return($allNbArticlesBynumThem);
 	}
 
