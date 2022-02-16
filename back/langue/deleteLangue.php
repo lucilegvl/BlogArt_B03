@@ -18,12 +18,9 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $MaLangue = new LANGUE();
 
-<<<<<<< HEAD
-=======
 // Instanciation de la classe pays
 $monPays = new PAYS();
 
->>>>>>> c5197f214c17a2cf547f39f8d92a31ecffa063a1
 // Ctrl CIR
 $errCIR = 0;
 $errDel=0;
@@ -76,13 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numPays = ctrlSaisies($_POST['numPays']);
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
-<<<<<<< HEAD
         $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
 
-=======
-        $nbAngle = $monAngle-> get_NbAllAnglesBynumLang($_POST['id']);
-    
->>>>>>> c5197f214c17a2cf547f39f8d92a31ecffa063a1
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
