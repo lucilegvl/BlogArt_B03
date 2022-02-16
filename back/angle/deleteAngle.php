@@ -22,9 +22,9 @@ $monAngle = new ANGLE();
 $errCIR = 0;
 $errDel=0;
 // Insertion classe Article
-
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 // Instanciation de la classe Article
-
+$monArticle = new ARTICLE();
 
 
 // Gestion des erreurs de saisie
@@ -32,12 +32,33 @@ $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if ($_POST["Submit"] == "Annuler") {
+        $sameId=$_POST['id'];
+        header("Location: angle.php");
+    }
 
+ //delete effectif du langue
+ elseif (($_POST["Submit"] == "Valider")) {
+    $erreur = false;
 
+    $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
+    $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
 
-    // controle CIR
+    if (($nbThematique > 0) AND ($nbAngle > 0)){
+        $erreur = true;
+        $errSaisies =  "Erreur, la suppression est impossible.";
+        echo $errSaisies;
+    } else{
+        $maLangue->delete($_POST['id']);
+        header("Location: langue.php");
+    }
+}      // Fin if ((isset($_POST['libStat'])) ...
+else { // Saisies invalides
+    $erreur = true;
+    $errSaisies =  "Erreur, la saisie est obligatoire !";
+}   
 
-    // delete effective de l'angle
+    
 
 
 
