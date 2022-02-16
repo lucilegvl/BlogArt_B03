@@ -162,11 +162,11 @@ class THEMATIQUE{
 			$db->beginTransaction();
 
 			// update
-			$query = "UPDATE THEMATIQUE SET libThem = '$libThem', numThem = '$numThem' WHERE numLang = '$numLang' ";
+			$query = "UPDATE THEMATIQUE SET libThem = ?, numLang = ? WHERE numThem = ?;"; //se référencer à la photo de toutes les tables (clé primaire, étrangères,...)
 			// prepare
 			$request = $db->prepare($query);
 			// execute
-			$request->execute([$libThem, $numThem, $numLang]);
+			$request->execute([$libThem, $numLang, $numThem]); // ordre de $query obligatoire mais pas de function update
 
 			$db->commit();
 			$request->closeCursor();
