@@ -8,8 +8,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE WHERE numMotCle = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numMotCle]);
+
 		return($result->fetch());
 	}
 
@@ -17,8 +21,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE WHERE numMotCle = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numMotCle]);
+
 		return($result->fetch());
 	}
 
@@ -26,8 +34,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allMotCles = $result->fetchAll();
+
 		return($allMotCles);
 	}
 
@@ -35,8 +47,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE WHERE numMotCle=?';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allMotsClesByPays = $result->fetchAll();
+
 		return($allMotsClesByLang);
 	}
 
@@ -44,8 +60,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE ORDER BY libMotCle;';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$NbAllMotsClesBynumLang = $result->fetchAll();
+
 		return($allNbMotsClesBynumLang);
 	}
 
@@ -131,14 +151,12 @@ class MOTCLE{
 			$db->beginTransaction();
 
 			// insert
-			$query='INSERT INTO MOTCLE (libMotCle) VALUES (?)';
-			//$query2='INSERT INTO MOTCLE (numLang) VALUES (?)';
+			$query='INSERT INTO MOTCLE (libMotCle, numLang) VALUES (?, ?)';
 			// prepare
 			$request = $db->prepare($query);
-			//$request2 = $db->prepare($query2);
 			// execute
-			$request->execute([$libMotCle]);
-			//$request2->execute([$numLang]);
+			$request->execute([$libMotCle, $numLang]);
+
 
 			$db->commit();
 			$request->closeCursor();
@@ -157,8 +175,11 @@ class MOTCLE{
 			$db->beginTransaction();
 
 			// update
+			$query = "UPDATE MOTCLE SET numLang = ?,  libMotCle = ? WHERE numMotCle = ?";
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$numLang, $libMotCle, $numMotCle]);
 			$db->commit();
 			$request->closeCursor();
 		}

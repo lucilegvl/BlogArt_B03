@@ -14,16 +14,14 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Angle
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+// Insertion classe Langue 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 
 // Instanciation de la classe angle
-
-
-
-// Insertion classe Langue
-
+$monAngle = new ANGLE();
 // Instanciation de la classe langue
-
-
+$maLangue = new LANGUE();
 
 // Gestion  erreurs de saisie
 $erreur = false;
@@ -31,22 +29,44 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
 
-
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+        $sameId=$_POST['id'];
+        header("Location: ./updateAngle.php?id=".$sameId);
+    }  
     // controle des saisies du formulaire
+     // Saisies valides
+     if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
+     AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
+     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+        
+        $erreur = false;
+ 
+         $libAngl = ctrlSaisies(($_POST['libAngl']));
+         $numLang = ctrlSaisies(($_POST['TypLang']));
+         $numAngl = ctrlSaisies(($_POST['id']));
 
+
+
+    $numNextAngl = $monAngle->getNextNumAngl($numLang);
     // modification effective du angle
+    $monAngle->update($numNextAngl,$libAngl, $numLang);
 
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
-
+    header("Location: ./angle.php");
+}  
+else {
+// Gestion des erreurs => msg si saisies ko
+    $erreur = true;
+    $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+
 // Init variables form
 include __DIR__ . '/initAngle.php';
 ?>
@@ -65,13 +85,19 @@ include __DIR__ . '/initAngle.php';
     <h1>BLOGART22 Admin - CRUD Angle</h1>
     <h2>Modification d'un angle</h2>
 <?php
-    // Modif : récup id à modifier
-    // id passé en GET
 
+    if (isset($_GET['id'])) {
+        //ajouter ctrl saisies ici
 
-
-
-
+        $id=$_GET['id'];
+        $req = $monAngle->get_1Angle($id);
+        if ($req) {
+            $numAngl = $req['numAngl'];
+            $libAngl = $req['libAngl'];
+            $numLang = $req['numLang'];
+            $id = $req['numAngl'];
+        }
+    }
 
 
 ?>
@@ -90,17 +116,38 @@ include __DIR__ . '/initAngle.php';
 <!-- ---------------------------------------------------------------------- -->
 <!-- ---------------------------------------------------------------------- -->
     <!-- Listbox Langue -->
-        <br>
+    <br>
         <div class="control-group">
             <div class="controls">
-            <label class="control-label" for="LibTypLang">
-                <b>Quelle langue :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
+                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
             </label>
-<!--  -->
-
-            <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
 
             <!-- Listbox langue => 2ème temps -->
+
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <option value="-1">- - - Choisissez une langue - - -</option>
+
+            <?php
+                $listNumLang = "";
+                $listlib1Lang = "";
+
+                $result = $maLangue->get_AllLanguesByLib1Lang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumLang= $row["numLang"];
+                        $listlib1Lang = $row["lib1Lang"];
+            ?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listlib1Lang; ?>
+                        </option>
+            <?php
+                    } // End of foreach
+                }   // if ($result)
+            ?>
+
+            </select>
 
             </div>
         </div>
