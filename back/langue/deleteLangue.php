@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numPays = ctrlSaisies($_POST['numPays']);
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
-        $nbAngle = $monAngle->	function get_NbAllAnglesBynumLang($_POST['id']);
+    //    $nbAngle = $monAngle-> function get_NbAllAnglesBynumLang($numLang['id']);
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
@@ -202,13 +202,13 @@ include __DIR__ . '/initLangue.php';
 require_once __DIR__ . '/footerLangue.php';
 
 require_once __DIR__ . '/footer.php';
-?>
+?> <!-- FIN Listbox Pays -->
+<!-- --------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------- -->
+
 </body>
 </html>
-    <!-- FIN Listbox Pays -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-        <div class="control-group">
+      <div class="control-group">
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -222,10 +222,11 @@ require_once __DIR__ . '/footer.php';
     </form>
     <br>
     <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
+</body>
+</html>
+
 <?php
 require_once __DIR__ . '/footerLangue.php';
 
 require_once __DIR__ . '/footer.php';
 ?>
-</body>
-</html>
