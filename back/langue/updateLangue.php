@@ -40,17 +40,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
-    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+    //AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
         $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
-        $numPays = ctrlSaisies(($_POST['TypPays']));
+        $numPays = ctrlSaisies(($_POST['numPays']));
+        $numLang = ctrlSaisies(($_POST['numLang']));
 
         $numLang = $maLangue->getNextNumLang($numPays);
 
-        $maLangue->create($numLang, $lib1Langue, $lib2Langue, $numPays);
+        $maLangue->update($numLang, $lib1Langue, $lib2Langue, $numPays);
 
         header("Location: ./langue.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
@@ -94,7 +96,7 @@ include __DIR__ . '/initLangue.php';
       <fieldset>
         <legend class="legend1">Formulaire Langue...</legend>
 
-        <input type="hidden" id="idPays" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
         <div class="control-group">
             <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
