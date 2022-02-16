@@ -18,6 +18,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
+// Instanciation de la classe pays
 $monPays = new PAYS();
 
 // Gestion des erreurs de saisie
