@@ -14,11 +14,25 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Thematique
+<<<<<<< HEAD
 require_once __DIR__ . '/../../CLASS_CRUD/createThematique.class.php';
 
+=======
+require_once __DIR__ . '/../../CLASS_CRUD/Thematique.class.php';
+>>>>>>> a043d8b0b3fc37e64df9e6fbff6f7ce195b8e8bd
 // Instanciation de la classe thématique
 $maThematique = new THEMATIQUE ();
 
+if(isset($_POST['Submit'])){
+    $Submit = $_POST['Submit'];
+} else {
+    $Submit = "";
+} 
+
+if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+
+    header("Location: ./createThematique.php");
+}
 
 
 
@@ -35,6 +49,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // controle des saisies du formulaire
+    if (((isset($_POST['numThem'])) AND !empty($_POST['numThem']))
+    AND ((isset($_POST['libThem'])) AND !empty($_POST['libThem']))
+    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
+
+        $erreur = false;
+        $numThem = ctrlSaisies(($_POST['numThem']));
+        $libThem = ctrlSaisies(($_POST['libThem']));
+        $numPays = ctrlSaisies(($_POST['TypPays']));
+
+        $numLang = $maLangue->getNextNumLang($numPays);
+
+        $maThematique->create($numThem, $numPays, $libThem);
+
+        header("Location: ./thematique.php");
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
     // création effective de la thématique
 
