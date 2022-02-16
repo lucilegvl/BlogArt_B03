@@ -7,18 +7,24 @@ class THEMATIQUE{
 	function get_1Thematique($numThem){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
-	}
+	// select
+	$query = 'SELECT * FROM THEMATIQUE WHERE numThem = ?';
+	// prepare
+	$result = $db->prepare($query);
+	// execute
+	$result->execute([$numThem]);
+			return($result->fetch());
+		}
 
 	function get_1ThematiqueByLang($numThem){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM THEMATIQUE WHERE numThem = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numThem]);
 		return($result->fetch());
 	}
 
@@ -26,8 +32,12 @@ class THEMATIQUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM THEMATIQUE';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allThematiques = $result->fetchAll();
+
 		return($allThematiques);
 	}
 
@@ -35,11 +45,22 @@ class THEMATIQUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM THEMATIQUE WHERE numThem=?';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allThematiquesByLang = $result->fetchAll();
+
 		return($allThematiquesByLang);
 	}
+	function get_AllLanguesOrderByLibLang(){
+        global $db;
 
+        $query = 'SELECT * FROM LANGUE ORDER BY lib1Lang;';
+        $result = $db->query($query);
+        $allLanguesOrderByLibLang = $result->fetchAll();
+        return($allLanguesOrderByLibLang);
+    }
 	function get_NbAllThematiquesBynumLang($numLang){
 		global $db;
 
@@ -50,7 +71,12 @@ class THEMATIQUE{
 		// execute
 		$allNbThematiqueBynumLang->execute([$numLang]);
 		$count = $allNbThematiqueBynumLang->rowCount();
-		return($allNbThematiquesBynumLang);
+<<<<<<< HEAD
+
+		// return($allNbThematiquesBynumLang);
+=======
+		return($count);
+>>>>>>> 836b2cd5ccd855c3b9e7591c5330d676f6d58ba5
 	}
 
 	// Récup dernière PK NumThem
@@ -118,8 +144,12 @@ class THEMATIQUE{
 			$db->beginTransaction();
 
 			// insert
+			$query = 'INSERT INTO THEMATIQUE (numThem, libThem, numLang) VALUES (?, ?, ?)';
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$numLang, $libThem, $numThem]);
+
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -137,8 +167,12 @@ class THEMATIQUE{
 			$db->beginTransaction();
 
 			// update
+			$query = "UPDATE THEMATIQUE SET libThem = '$libThem', numThem = '$numThem' WHERE numLang = '$numLang' ";
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$libThem, $numThem, $numLang]);
+
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -157,8 +191,12 @@ class THEMATIQUE{
 			$db->beginTransaction();
 
 			// delete
+			$query="DELETE FROM THEMATIQUE WHERE numThem = ?";
 			// prepare
+			$request=$db->prepare($query);
 			// execute
+			$request->execute([$numThem]);
+
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

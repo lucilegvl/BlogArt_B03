@@ -46,52 +46,31 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
-
-    if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
+    if ($_POST["Submit"] == "Annuler") {
         $sameId=$_POST['id'];
-        header("Location: ./langue.php");
+        header("Location: langue.php");
     }
     
     //delete effectif du langue
-
-    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
-    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
-//    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
-//    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
-        echo 1;
+    elseif (($_POST["Submit"] == "Valider")) {
         $erreur = false;
-        $numLang = ctrlSaisies($_POST['numLang']);
-        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
-        $lib2Lang = ctrlSaisies($_POST['Lib2Lang']);
-        $numPays = ctrlSaisies($_POST['numPays']);
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
         $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
-            echo 2;
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;
         } else{
-            $maLangue->delete($numLang);
-            header("Location: ./langue.php");
+            $maLangue->delete($_POST['id']);
+            header("Location: langue.php");
         }
     }      // Fin if ((isset($_POST['libStat'])) ...
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
-        $sameId=$_POST['id'];
-        header("Location: ./deleteLangue.php?id=$sameId");
-        echo 4;
     }  
-
 }  // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
