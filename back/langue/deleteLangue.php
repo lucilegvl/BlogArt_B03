@@ -54,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //delete effectif du langue
     elseif (($_POST["Submit"] == "Valider")) {
         $erreur = false;
-        echo "1";
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
 <<<<<<< HEAD
@@ -64,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 >>>>>>> 1eb311e2e5df6f9d4ea33ca379f90792389856c9
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
-            echo 2;
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;

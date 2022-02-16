@@ -19,9 +19,18 @@ require_once __DIR__ . '/../../CLASS_CRUD/createThematique.class.php';
 
 =======
 require_once __DIR__ . '/../../CLASS_CRUD/Thematique.class.php';
+<<<<<<< HEAD
 >>>>>>> a043d8b0b3fc37e64df9e6fbff6f7ce195b8e8bd
+=======
+
+// Insertion classe Langue 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+>>>>>>> ea8a2b2046d05249f3bad8d98dc851e9c7319d10
 // Instanciation de la classe thématique
 $maThematique = new THEMATIQUE ();
+
+// Instanciation de la classe langue
+$maLangue = new LANGUE();
 
 if(isset($_POST['Submit'])){
     $Submit = $_POST['Submit'];
@@ -35,7 +44,7 @@ if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
 }
 
 
-
+ // FK Langue 
 // BBCode
 
 
@@ -45,23 +54,20 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
-
     // controle des saisies du formulaire
-    if (((isset($_POST['numThem'])) AND !empty($_POST['numThem']))
-    AND ((isset($_POST['libThem'])) AND !empty($_POST['libThem']))
-    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
+    if (isset($_POST['libThem']) AND !empty($_POST['libThem'])
+    AND isset($_POST['TypLang']) AND !empty($_POST['TypLang'])
+    AND !empty($_POST['Submit']) AND $Submit === "Valider") { // Saisies valides
 
         $erreur = false;
-        $numThem = ctrlSaisies(($_POST['numThem']));
-        $libThem = ctrlSaisies(($_POST['libThem']));
-        $numPays = ctrlSaisies(($_POST['TypPays']));
+        $libThem = ctrlSaisies($_POST['libThem']);
+        $numLang = ctrlSaisies($_POST['TypLang']);
 
-        $numLang = $maLangue->getNextNumLang($numPays);
 
-        $maThematique->create($numThem, $numPays, $libThem);
+
+        $numNextThem = $maThematique->getNextNumThem($numLang);
+
+        $maThematique->create($numNextThem, $libThem, $numLang);
 
         header("Location: ./thematique.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
@@ -113,18 +119,39 @@ include __DIR__ . '/initThematique.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->
+    
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox langue -->
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="LibTypLang"><b>Quelle langue :&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
 
                 <!-- Listbox langue => 2ème temps -->
         </div>
-    <!-- FIN Listbox langue -->
+           <!-- Listbox Langue -->
+           <br>
+        <label for="LibTypLang" title="Sélectionnez la langue !">
+            <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+            <!-- <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <!-- <option value="-1">- - - Choisissez une langue - - -</option> -->
+<?php
+                $listNumLang = "";
+                $listLib1Lang = "";
+
+                $result = $maLangue->get_AllLanguesByLib1Lang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumLang = $row["numLang"];
+                        $listLib1Lang = $row["lib1Lang"];
+?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listLib1Lang; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
+            
+    <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->
 <!-- --------------------------------------------------------------- -->

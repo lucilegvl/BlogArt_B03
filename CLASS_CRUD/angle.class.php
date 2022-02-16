@@ -4,6 +4,14 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class ANGLE{
+	function get_AllLangues(){
+        global $db;
+
+        $query = 'SELECT * FROM LANGUE;';
+        $result = $db->query($query);
+        $allLangues = $result->fetchAll();
+        return($allLangues);
+    }
 	function get_1Angle(string $numAngl) {
 		global $db;
 
@@ -17,15 +25,15 @@ class ANGLE{
 		return($result->fetch());
 	}
 
-	function get_1AngleByLang(string $numAngl) {
+	function get_1AngleByLang(string $numLang) {
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM ANGLE WHERE numAngle = ?';
+		$query = 'SELECT * FROM ANGLE WHERE numLang = ?';
 		// prepare
 		$result = $db->prepare($query);
 		// execute
-		$result->execute([$numAngle]);
+		$result->execute([$numLang]);
 		return($result->fetch());
 	}
 
@@ -45,7 +53,7 @@ class ANGLE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM ANGLE;';
+		$query = 'SELECT * FROM ANGLE WHERE numLang=?;';
 		// prepare
 		$result = $db->query($query);
 		// execute
@@ -133,7 +141,9 @@ class ANGLE{
 			// insert
 			$query = 'INSERT INTO ANGLE (numAngl, libAngl, numLang) VALUES (?, ?, ?)';
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$numAngl, $libAngl, $numLang]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -151,8 +161,11 @@ class ANGLE{
 			$db->beginTransaction();
 
 			// update
+			$query = "UPDATE LANGUE SET libAngl = ?,  numPays = ? WHERE numLang = ?";
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$libAngl, $numPays, $numLang]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -171,8 +184,11 @@ class ANGLE{
 			$db->beginTransaction();
 
 			// delete
+			$query="DELETE FROM ANGLE WHERE numLang = ?";
 			// prepare
+			$request=$db->prepare($query);
 			// execute
+			$request->execute([$numLang]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();
@@ -185,3 +201,4 @@ class ANGLE{
 		}
 	}
 }		// End of class
+
