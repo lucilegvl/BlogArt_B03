@@ -161,8 +161,12 @@ class LANGUE{
 			$db->beginTransaction();
 
 			// delete
+			$query="DELETE FROM LANGUE WHERE numLang = ?";
 			// prepare
+			$request=$db->prepare($query);
 			// execute
+			$request->execute([$numLang]);
+
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

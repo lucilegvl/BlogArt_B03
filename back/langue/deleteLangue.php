@@ -16,7 +16,7 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 // Insertion classe Langue
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
-$MaLangue = new LANGUE();
+$maLangue = new LANGUE();
 
 // Instanciation de la classe pays
 $monPays = new PAYS();
@@ -57,7 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ./deleteLangue.php?id=".$sameId);
     }
     
-
     //delete effectif du langue
 
     if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
@@ -89,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }  
 
-  // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
+}  // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
 include __DIR__ . '/initLangue.php';
@@ -118,11 +117,13 @@ include __DIR__ . '/initLangue.php';
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Suppression d'une langue</h2>
 <?php
-    if (isset($_GET['id'])) {
-    $id=$_GET['id'];
-    $req = $monStatut->get_1Statut($id);
-    $libStat = $req['libStat'];
-    $id = $req['idStat'];
+        if (isset($_GET['id'])) {
+            $id=$_GET['id'];
+            $req = $maLangue->get_1Langue($id);
+            $lib1Lang = $req['lib1Lang'];
+            $lib2Lang = $req['lib2Lang'];
+            $id = $req['numLang'];
+        }
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
@@ -148,7 +149,7 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
@@ -157,7 +158,7 @@ include __DIR__ . '/initLangue.php';
 
                 $result = $monPays->get_AllPays();
                 if($result){
-                foreach($result as $row) {
+                    foreach($result as $row) {
                         $listNumPays= $row["numPays"];
                         $listfrPays = $row["frPays"];
 ?>
@@ -165,6 +166,10 @@ include __DIR__ . '/initLangue.php';
                         <?= $listfrPays; ?>
                         </option>
             </select>
+            <?php
+                    } // End of foreach
+                }   // if ($result)
+?>
 
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
