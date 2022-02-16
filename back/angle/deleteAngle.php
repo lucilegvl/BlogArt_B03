@@ -14,12 +14,13 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Angle
-
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe angle
-
-
+$monAngle = new ANGLE();
 
 // Ctrl CIR
+$errCIR = 0;
+$errDel=0;
 // Insertion classe Article
 
 // Instanciation de la classe Article
