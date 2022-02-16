@@ -137,11 +137,11 @@ class LANGUE{
 			$db->beginTransaction();
 
 			// update
-			$query = "UPDATE LANGUE SET lib1Lang = '$lib1Lang', lib2Lang = '$lib2Lang', numPays = '$numPays' WHERE numLang = '$numLang' ";
+			$query = "UPDATE LANGUE SET lib1Lang = ?, lib2Lang = ?, numPays = ? WHERE numLang = ?";
 			// prepare
 			$request = $db->prepare($query);
 			// execute
-			$request->execute([$lib1Lang, $lib2Lang, $numPays]);
+			$request->execute([$lib1Lang, $lib2Lang, $numPays, $numLang]);
 
 			$db->commit();
 			$request->closeCursor();

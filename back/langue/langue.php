@@ -17,11 +17,11 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
+$monPays = new PAYS();
 
 // Ctrl CIR
 $errCIR = 0;
 $errDel = 0;
-
 
 ?>
 <!DOCTYPE html>
@@ -42,6 +42,7 @@ $errDel = 0;
         }
     </style>
 </head>
+
 <body>
 	<h1>BLOGART22 Admin - CRUD Langue</h1>
 
@@ -75,6 +76,7 @@ $errDel = 0;
 <?php
     // Appel méthode : Get toutes les langues en BDD
     $allLangues = $maLangue->get_allLangues();
+    $pays = $monPays->get_AllPays();
     // Boucle pour afficher
 
 	foreach($allLangues as $row) {
