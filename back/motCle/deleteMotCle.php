@@ -14,27 +14,50 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe MotCle
+require_once __DIR__ . '/../../util/delMotCle.php';
 
 // Instanciation de la classe MotCle
+$monMotCle = new MOTCLE();
 
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
 
+    if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
+        $sameId=$_POST['id'];
+        header("Location: ./deleteStatut.php?id=".$sameId);
+    }   
 
+    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
+        $erreur = false;
+        $libStat = ctrlSaisies(($_POST['libStat']));
+        $idStat = ctrlSaisies(($_POST['id']));
+        
+        $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
+        $nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
 
+        if (($nbMembre > 0) AND ($nbUser > 0)){
+            $erreur = true;
+            $errSaisies =  "Erreur, la suppression est impossible.";
+            echo $errSaisies;
+        } else{
+            $monStatut->delete($idStat);
+            header("Location: ./statut.php");
+        }
+    }      // Fin if ((isset($_POST['libStat'])) ...
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }  
+}// End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 
-    // controle des saisies du formulaire
-
-    // modif effective de la MotCle
-
-
-
-
-
-
-}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initMotCle.php';
 ?>

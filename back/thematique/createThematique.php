@@ -53,18 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libThem = ctrlSaisies($_POST['libThem']);
         $numLang = ctrlSaisies($_POST['TypLang']);
 
-
-
         $numNextThem = $maThematique->getNextNumThem($numLang);
 
         $maThematique->create($numNextThem, $libThem, $numLang);
 
         header("Location: ./thematique.php");
     }   // Fin if 
-   
-
-
-
 
     // Gestion des erreurs => msg si saisies ko
 
@@ -118,7 +112,7 @@ include __DIR__ . '/initThematique.php';
         <label for="LibTypLang" title="Sélectionnez la langue !">
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $id; ?>" />
             <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
                 <option value="-1">- - - Choisissez une langue - - -</option>
 <?php
