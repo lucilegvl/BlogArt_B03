@@ -18,6 +18,12 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $MaLangue = new LANGUE();
 
+<<<<<<< HEAD
+=======
+// Instanciation de la classe pays
+$monPays = new PAYS();
+
+>>>>>>> c5197f214c17a2cf547f39f8d92a31ecffa063a1
 // Ctrl CIR
 $errCIR = 0;
 $errDel=0;
@@ -70,8 +76,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numPays = ctrlSaisies($_POST['numPays']);
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
+<<<<<<< HEAD
         $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
 
+=======
+        $nbAngle = $monAngle-> get_NbAllAnglesBynumLang($_POST['id']);
+    
+>>>>>>> c5197f214c17a2cf547f39f8d92a31ecffa063a1
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
@@ -86,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }  
 
-}   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
+  // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
 include __DIR__ . '/initLangue.php';
@@ -140,25 +151,59 @@ include __DIR__ . '/initLangue.php';
         <br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Pays -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypPays">
-                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
-            </label>
+  <!-- Listbox Pays -->
+  
+<label for="LibTypPays" title="Sélectionnez le pays !">
+            <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+            <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
+                <option value="-1">- - - Choisissez un pays - - -</option>
+<?php
+                $listNumPays = "";
+                $listfrPays = "";
 
+                $result = $monPays->get_AllPays();
+                if($result){
+                foreach($result as $row) {
+                        $listNumPays= $row["numPays"];
+                        $listfrPays = $row["frPays"];
+?>
+                        <option value="<?= $listNumPays; ?>">
+                        <?= $listfrPays; ?>
+                        </option>
+            </select>
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" />
-
-                <!-- Listbox langue disabled => 2ème temps -->
-
-            </div>
-        </div>
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
         <div class="control-group">
+            <div class="error">
+    <?php
+            if ($erreur) {
+                echo ($errSaisies);
+            } else {
+                $errSaisies = "";
+                echo ($errSaisies);
+            }
+    ?>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <br>
+            </div>
+        </div>
+      </fieldset>
+    </form>
+
+<div class="control-group">
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -167,11 +212,12 @@ include __DIR__ . '/initLangue.php';
                 <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 <br>
             </div>
-        </div>
+</div>
       </fieldset>
     </form>
     <br>
     <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
+
 <?php
 require_once __DIR__ . '/footerLangue.php';
 

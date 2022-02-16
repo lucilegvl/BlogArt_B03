@@ -18,6 +18,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
+// Instanciation de la classe pays
 $monPays = new PAYS();
 
 if(isset($_POST['Submit'])){
@@ -117,7 +118,7 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
 <?php

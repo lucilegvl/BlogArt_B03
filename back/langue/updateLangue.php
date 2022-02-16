@@ -18,10 +18,13 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
+$monPays = new PAYS();
+
 // Gestion des erreurs de saisie
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if(isset($_POST['Submit'])){
@@ -33,30 +36,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
         $sameId=$_POST['id'];
         header("Location: ./updateLangue.php?id=".$sameId);
-    }   
+    }  
 
-    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
-    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
-    AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
-    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
+    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
+    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
+    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
+        $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
+        $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
+        $numPays = ctrlSaisies(($_POST['TypPays']));
 
-        $numLang = ctrlSaisies($_POST['numLang']);
-        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
-        $lib2Lang = ctrlSaisies($_POST['Lib2Lang']);
-        $numPays = ctrlSaisies($_POST['numPays']);
+        $numLang = $maLangue->getNextNumLang($numPays);
 
-        $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
+        $maLangue->create($numLang, $lib1Langue, $lib2Langue, $numPays);
 
         header("Location: ./langue.php");
-    }      // Fin if parenthèses par milliers
+    }   // Fin if ((isset($_POST['libStat'])) ...
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }  
+    }   // End of else erreur saisies
 
-}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+}  // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
 include __DIR__ . '/initLangue.php';
@@ -91,7 +94,7 @@ include __DIR__ . '/initLangue.php';
       <fieldset>
         <legend class="legend1">Formulaire Langue...</legend>
 
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+        <input type="hidden" id="idPays" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
         <div class="control-group">
             <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
@@ -104,15 +107,7 @@ include __DIR__ . '/initLangue.php';
         <br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Pays -->
-
-
-                <!-- Listbox pays => 2ème temps -->
-
-            </div>
-        </div>
-
-        <!-- Listbox Pays -->
+ <!-- Listbox Pays -->
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
@@ -137,16 +132,17 @@ include __DIR__ . '/initLangue.php';
                 }   // if ($result)
 ?>
             </select>
+
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <div class="control-group">
-        <div class="error">
-<?php
+        <div class="control-group">
+            <div class="error">
+            <?php
             if ($erreur) {
                 echo ($errSaisies);
             } else {
-                $errSaisies = "Données mises à jour";
+                $errSaisies = "";
                 echo ($errSaisies);
             }
 ?>
