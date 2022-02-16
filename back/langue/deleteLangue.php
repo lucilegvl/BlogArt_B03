@@ -18,12 +18,9 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $MaLangue = new LANGUE();
 
-
 // Ctrl CIR
 $errCIR = 0;
 $errDel=0;
-
-
 
 // Insertion classe Angle
 require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
@@ -73,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numPays = ctrlSaisies($_POST['numPays']);
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
-        $nbAngle = $monAngle->	function get_NbAllAnglesBynumLang($_POST['id']);
+        $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
