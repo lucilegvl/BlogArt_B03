@@ -1,4 +1,5 @@
 <?php
+echo "ici";
 ////////////////////////////////////////////////////////////
 //
 //  CRUD MOTCLE (PDO) - Modifié : 4 Juillet 2021
@@ -26,6 +27,7 @@ $maLangue= new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
+echo "la";
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -53,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $libMotCle = ctrlSaisies(($_POST['libMotCle']));
         // creation effective de la MotCle
-        $monMotCle->create($libMotCle, $_POST["id"]); 
+        $monMotCle->create($libMotCle, $_POST["TypLang"]); 
 
         header("Location: ./MotCle.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
@@ -69,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // Init variables form
 include __DIR__ . '/initMotCle.php';
+echo "uuu";
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -113,14 +116,15 @@ include __DIR__ . '/initMotCle.php';
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                    <option value="-1">- - - Choisissez une langue - - -</option>
                     <option value="-1">- - - Choisissez une langue - - -</option>
 <?php
-                
                 $listNumLang = "";
                 $listLib1Lang = "";
 
                 $result = $maLangue->get_AllLanguesByLib1Lang();
+
                 if($result){
                     
                     foreach($result as $row) {
+
                         $listNumLang = $row["numLang"];
                         $listLib1Lang = $row["lib1Lang"];
 ?>

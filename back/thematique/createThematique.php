@@ -62,19 +62,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $maThematique->create($numNextThem, $libThem, $numLang);
 
         header("Location: ./thematique.php");
-    }   // Fin if ((isset($_POST['libStat'])) ...
-    else { // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }   // End of else erreur saisies
+    }   // Fin if 
+   
 
-    // création effective de la thématique
 
 
 
     // Gestion des erreurs => msg si saisies ko
 
-
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -114,16 +113,16 @@ include __DIR__ . '/initThematique.php';
     
 <!-- --------------------------------------------------------------- -->
 
-                <!-- Listbox langue => 2ème temps -->
+                <!-- Listbox langue  -->
         </div>
-           <!-- Listbox Langue -->
+           <!-- Listbox Langue 2è temps-->
            <br>
         <label for="LibTypLang" title="Sélectionnez la langue !">
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
         <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
-            <!-- <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
-                <!-- <option value="-1">- - - Choisissez une langue - - -</option> -->
+            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <option value="-1">- - - Choisissez une langue - - -</option>
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";
