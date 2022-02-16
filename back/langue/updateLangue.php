@@ -18,6 +18,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
+// Instanciation de la classe pays
 $monPays = new PAYS();
 
 // Gestion des erreurs de saisie
@@ -34,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['id'];
         header("Location: ./updateLangue.php?id=".$sameId);
     }  
 
@@ -52,7 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $maLangue->update($numLang, $lib1Langue, $lib2Langue, $numPays);
 
         header("Location: ./langue.php");
-    }   // Fin if ((isset($_POST['libStat'])) ...
+    }   // Fin if ((isset($_POST['libStat'])) 
+    
+    
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
