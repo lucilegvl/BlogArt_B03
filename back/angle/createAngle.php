@@ -107,7 +107,7 @@ include __DIR__ . '/initAngle.php';
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numAngl; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
