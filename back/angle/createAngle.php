@@ -23,30 +23,28 @@ $monAngle = new ANGLE();
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
-
-
-if(isset($_POST['Submit'])){
-    $Submit = $_POST['Submit'];
-} else {
-    $Submit = "";
-} 
-
-if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-
-    header("Location: ./createAngle.php");
-}
-
 // Gestion des erreurs de saisie
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    } 
+    
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+    
+        header("Location: ./createAngle.php");
+    }
+
  // controle des saisies du formulaire
     // Saisies valides
     if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
     AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
-    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
+    //AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         $erreur = false;
 
@@ -108,8 +106,8 @@ include __DIR__ . '/initAngle.php';
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numAngl; ?>" />
-                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
             <?php
