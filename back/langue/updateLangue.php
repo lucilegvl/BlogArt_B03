@@ -41,10 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
     AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
-<<<<<<< HEAD
-    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
-=======
->>>>>>> 6b1d600d55193eb42178f93472271f7012ce28fc
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;

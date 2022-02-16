@@ -104,7 +104,7 @@ include __DIR__ . '/initMotCle.php';
             <label class="control-label" for="LibTypLang"><b>Quelle langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idTypLang" name="idTypLang" value="<?= isset($_GET['numLang']) ? $_GET['numLang'] : '' ?>" />
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" />
+                <!-- <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" /> -->
 
                 <!-- Listbox langue => 2ème temps -->
                 <select size="1" name="numLang" id="numLang"  class="form-control form-control-create" title="Sélectionnez la langue!" >
