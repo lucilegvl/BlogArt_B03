@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['id'];
+        //$sameId=$_POST['id'];
         header("Location: ./updateMotCle.php?id=".$sameId);
     }  
 
@@ -41,14 +41,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
-        $lib1Langue = ctrlSaisies($_POST['libMotCle']);
-        $lib2Langue = ctrlSaisies($_POST['numLang']);
+        $libMotCle = ctrlSaisies($_POST['libMotCle']);
         $numLang = ctrlSaisies($_POST['id']);
+        //$numLang = ctrlSaisies($_POST['id']);
 
-        $monMonCle->update($lib2Langue, $numLang);
+        $monMonCle->update($libMotCle, $numLang);
 
         header("Location: ./motCle.php");
-    }   // Fin if ((isset($_POST['libStat'])) ...
+    }   // Fin if ((isset($_POST['libStat'])) 
+    
+
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
@@ -85,7 +87,7 @@ include __DIR__ . '/initMotCle.php';
         $req = $monMotCle->get_1MotCle($id);
         if ($req) {
             $libMotCle = $req['libMotCle'];
-            $numLang = $req['numLang'];
+            $numLang = $req['id'];
             $id = $req['numLang'];
         }
     }

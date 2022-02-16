@@ -46,14 +46,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }   // End of if ((isset($_POST["submit"]))
 
     // controle des saisies du formulaire
-// controle des saisies du formulaire
-    // Saisies valides
+
     
     if (((isset($_POST['libMotCle'])) AND !empty($_POST['libMotCle']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         $erreur = false;
 
+        // controle des saisies du formulaire
         $libMotCle = ctrlSaisies(($_POST['libMotCle']));
+        // Saisies valides
         // creation effective de la MotCle
         $monMotCle->create($libMotCle, $_POST["TypLang"]); 
 
@@ -71,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // Init variables form
 include __DIR__ . '/initMotCle.php';
-echo "uuu";
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
