@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Saisies valides
     if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
     AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
+    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         $erreur = false;
 
