@@ -4,14 +4,6 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class ANGLE{
-	function get_AllLangues(){
-        global $db;
-
-        $query = 'SELECT * FROM LANGUE;';
-        $result = $db->query($query);
-        $allLangues = $result->fetchAll();
-        return($allLangues);
-    }
 	function get_1Angle(string $numAngl) {
 		global $db;
 
@@ -41,7 +33,7 @@ class ANGLE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM ANGLE;';
+		$query = 'SELECT * FROM ANGLE';
 		// prepare
 		$result = $db->query($query);
 		// execute
@@ -60,6 +52,15 @@ class ANGLE{
 		$allAnglesByAngl = $result->fetchAll();
 		return($allAnglesByLang);
 	}
+
+	function get_AllLanguesOrderByLibLang(){
+        global $db;
+
+        $query = 'SELECT * FROM LANGUE ORDER BY lib1Lang;';
+        $result = $db->query($query);
+        $allLanguesOrderByLibLang = $result->fetchAll();
+        return($allLanguesOrderByLibLang);
+    }
 
 	function get_NbAllAnglesBynumLang(string $numLang) {
 		global $db;

@@ -21,7 +21,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 
-//  trl CIR
+//  Ctrl CIR
 $errCIR = 0;
 $errDel = 0;
 

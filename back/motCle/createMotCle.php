@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $libMotCle = ctrlSaisies(($_POST['libMotCle']));
         // creation effective de la MotCle
-        $monMotCle->create($libMotCle); 
+        $monMotCle->create($libMotCle, $_POST["id"]); 
 
         header("Location: ./MotCle.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
