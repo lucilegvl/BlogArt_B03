@@ -80,10 +80,10 @@ include __DIR__ . '/initLangue.php';
     <h2>Modification d'une langue</h2>
 <?php
         if (isset($_GET['id'])) {
-            //ajouter ctrl saisies ici
 
             $id=$_GET['id'];
             $req = $maLangue->get_1Langue($id);
+
             if ($req) {
                 $lib1Lang = $req['lib1Lang'];
                 $lib2Lang = $req['lib2Lang'];
