@@ -38,9 +38,6 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
-
     // controle des saisies du formulaire    
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
@@ -97,31 +94,33 @@ include __DIR__ . '/initLangue.php';
 
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
-      <fieldset>
-        <legend class="legend1">Formulaire Langue...</legend>
+        <fieldset>
+            <legend class="legend1">Formulaire Langue...</legend>
 
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+            <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
-        <div class="control-group">
-            <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" tabindex="10" autofocus="autofocus" /><br><br>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="lib2Lang"><b>Libellé long :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" tabindex="20" />
-        </div>
-        <br>
+            <div class="control-group">
+                <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" tabindex="10" autofocus="autofocus" /><br><br>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="lib2Lang"><b>Libellé long :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <input type="text" name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" tabindex="20" />
+            </div>
+            <br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     
 <!-- Listbox Pays -->
-<label for="LibTypPays" title="Sélectionnez le pays !">
-            <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
+            <label for="LibTypPays" title="Sélectionnez le pays !">
+                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
+            </label>
+
+            <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
-<?php
+
+            <?php
                 $listNumPays = "";
                 $listfrPays = "";
 
@@ -130,47 +129,51 @@ include __DIR__ . '/initLangue.php';
                     foreach($result as $row) {
                         $listNumPays= $row["numPays"];
                         $listfrPays = $row["frPays"];
-?>
+            ?>
                         <option value="<?= $listNumPays; ?>">
                             <?= $listfrPays; ?>
                         </option>
-<?php
+            <?php
                     } // End of foreach
                 }   // if ($result)
-?>
+            ?>
+
             </select>
+
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-        <div class="control-group">
-            <div class="error">
-            <?php
-            if ($erreur) {
-                echo ($errSaisies);
-            } else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
+            <div class="control-group">
+                <div class="error">
+                <?php
+                if ($erreur) {
+                    echo ($errSaisies);
+                } else {
+                    $errSaisies = "";
+                    echo ($errSaisies);
+                }
+                ?>
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
+            <div class="control-group">
+                <div class="controls">
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <br>
+                </div>
             </div>
-        </div>
-      </fieldset>
+        </fieldset>
     </form>
-<?php
-require_once __DIR__ . '/footerLangue.php';
 
-require_once __DIR__ . '/footer.php';
-?>
+    <?php
+    require_once __DIR__ . '/footerLangue.php';
+
+    require_once __DIR__ . '/footer.php';
+    ?>
+
 </body>
 </html>
