@@ -79,11 +79,11 @@ $errDel = 0;
     foreach($allAngles as $row) {
 ?>
         <tr>
-		<td><h4>&nbsp; <?= "ici numAngl"; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?= $row['numAngl']; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici libAngl"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['libAngl']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['numLang']; ?> &nbsp;</td>
 
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateAngle.php?id=<?=$row['numAngl']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier angle" title="Modifier angle" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp
 		<br /></td>
