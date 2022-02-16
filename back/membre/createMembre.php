@@ -16,9 +16,9 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/delAccents.php';
 
 // Insertion classe Membre
-
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
-
+$monMembre = new MEMBRE();
 
 // Constantes reCaptcha
 
@@ -26,15 +26,24 @@ require_once __DIR__ . '/../../util/delAccents.php';
 
 // Gestion des erreurs de saisie
 $erreur = false;
-// init msg erreur
 
+// init msg erreur
+$errSaisies='';
 
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    } 
+    
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+    
+        header("Location: ./createLangue.php");
+    }
 
     // controle des saisies du formulaire
 
@@ -64,9 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
+
 // Init variables form
 include __DIR__ . '/initMembre.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="fr-FR">
 <head>
