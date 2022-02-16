@@ -54,16 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
         $sameId=$_POST['id'];
-        header("Location: ./deleteLangue.php?id=".$sameId);
+        header("Location: ./langue.php");
     }
     
     //delete effectif du langue
 
-    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
-    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
-    AND isset($_POST['numPays']) AND !empty($_POST['numPays'])
-    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
-
+    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
+    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
+//    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+//    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+        echo 1;
         $erreur = false;
         $numLang = ctrlSaisies($_POST['numLang']);
         $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
@@ -74,6 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
+            echo 2;
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;
@@ -85,6 +87,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
+        $sameId=$_POST['id'];
+        header("Location: ./deleteLangue.php?id=$sameId");
+        echo 4;
     }  
 
 }  // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
@@ -148,7 +153,7 @@ include __DIR__ . '/initLangue.php';
             <label for="LibTypPays" title="Sélectionnez le pays !">
                 <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
             </label>
-            <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
+            <input type="hidden" id="idPays" name="idPays" value="<?= $id; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
             <?php

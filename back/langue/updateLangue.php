@@ -40,17 +40,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
-    //AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
-    AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
+    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+    //AND ((isset($_POST['numPays'])) AND !empty($_POST['numPays']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
         $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
-        $numPays = ctrlSaisies(($_POST['numPays']));
-        $numLang = ctrlSaisies(($_POST['numLang']));
-
-        $numLang = $maLangue->getNextNumLang($numPays);
+        $numPays = ctrlSaisies(($_POST['TypPays']));
+        $numLang = ctrlSaisies(($_POST['id']));
 
         $maLangue->update($numLang, $lib1Langue, $lib2Langue, $numPays);
 
@@ -83,11 +81,16 @@ include __DIR__ . '/initLangue.php';
     <h2>Modification d'une langue</h2>
 <?php
         if (isset($_GET['id'])) {
+            //ajouter ctrl saisies ici
+
             $id=$_GET['id'];
             $req = $maLangue->get_1Langue($id);
-            $lib1Lang = $req['lib1Lang'];
-            $lib2Lang = $req['lib2Lang'];
-            $id = $req['numLang'];
+            if ($req) {
+                $lib1Lang = $req['lib1Lang'];
+                $lib2Lang = $req['lib2Lang'];
+                $numLang = $req['numLang'];
+                $id = $req['numLang'];
+            }
         }
 
 ?>
@@ -113,7 +116,7 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+        <input type="hidden" id="idPays" name="idPays" value="<?= $id; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
