@@ -52,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 
@@ -119,9 +120,8 @@ include __DIR__ . '/initMotCle.php';
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";
-                echo 11;
                 $result = $maLangue->get_AllLanguesByLib1Lang();
-                echo 0;
+
                 if($result){
                     
                     foreach($result as $row) {

@@ -118,9 +118,9 @@ echo "uuu";
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";
-                echo 11;
+
                 $result = $maLangue->get_AllLanguesByLib1Lang();
-                echo 0;
+
                 if($result){
                     
                     foreach($result as $row) {

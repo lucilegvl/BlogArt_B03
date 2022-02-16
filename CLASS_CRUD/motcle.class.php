@@ -8,8 +8,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE WHERE numMotCle = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numMotCle]);
+
 		return($result->fetch());
 	}
 
@@ -17,8 +21,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE WHERE numMotCle = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numMotCle]);
+
 		return($result->fetch());
 	}
 
@@ -39,8 +47,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE WHERE numMotCle=?';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allMotsClesByPays = $result->fetchAll();
+
 		return($allMotsClesByLang);
 	}
 
@@ -48,8 +60,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE ORDER BY libMotCle;';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$NbAllMotsClesBynumLang = $result->fetchAll();
+
 		return($allNbMotsClesBynumLang);
 	}
 
