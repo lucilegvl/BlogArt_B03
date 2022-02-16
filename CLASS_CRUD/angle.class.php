@@ -8,8 +8,12 @@ class ANGLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ANGLE WHERE numAngl = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numAngl]);
+
 		return($result->fetch());
 	}
 
@@ -17,8 +21,11 @@ class ANGLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ANGLE WHERE numAngle = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numAngle]);
 		return($result->fetch());
 	}
 
@@ -26,8 +33,11 @@ class ANGLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ANGLE;';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allAngles = $result->fetchAll();
 		return($allAngles);
 	}
 
@@ -35,8 +45,11 @@ class ANGLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM ANGLE;';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allAnglesByAngl = $result->fetchAll();
 		return($allAnglesByLang);
 	}
 
@@ -118,6 +131,7 @@ class ANGLE{
 			$db->beginTransaction();
 
 			// insert
+			$query = 'INSERT INTO ANGLE (numAngl, libAngl, numLang) VALUES (?, ?, ?)';
 			// prepare
 			// execute
 			$db->commit();

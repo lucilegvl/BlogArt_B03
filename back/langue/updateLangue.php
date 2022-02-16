@@ -47,10 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['TypPays']));
+        $numLang = ctrlSaisies(($_POST['id']));
 
-        $numLang = $maLangue->getNextNumLang($numPays);
-
-        $maLangue->create($numLang, $lib1Langue, $lib2Langue, $numPays);
+        $maLangue->update($numLang, $lib1Langue, $lib2Langue, $numPays);
 
         header("Location: ./langue.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
@@ -81,11 +80,16 @@ include __DIR__ . '/initLangue.php';
     <h2>Modification d'une langue</h2>
 <?php
         if (isset($_GET['id'])) {
+            //ajouter ctrl saisies ici
+
             $id=$_GET['id'];
             $req = $maLangue->get_1Langue($id);
-            $lib1Lang = $req['lib1Lang'];
-            $lib2Lang = $req['lib2Lang'];
-            $id = $req['numLang'];
+            if ($req) {
+                $lib1Lang = $req['lib1Lang'];
+                $lib2Lang = $req['lib2Lang'];
+                $numLang = $req['numLang'];
+                $id = $req['numLang'];
+            }
         }
 
 ?>
@@ -94,7 +98,7 @@ include __DIR__ . '/initLangue.php';
       <fieldset>
         <legend class="legend1">Formulaire Langue...</legend>
 
-        <input type="hidden" id="idPays" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
         <div class="control-group">
             <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
@@ -111,7 +115,7 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+        <input type="hidden" id="idPays" name="idPays" value="<?= $id; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
