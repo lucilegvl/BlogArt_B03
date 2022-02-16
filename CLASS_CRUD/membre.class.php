@@ -5,12 +5,16 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class MEMBRE{
-/*	function get_1Membre($numMemb){
+	function get_1Membre($numMemb){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MEMBRE WHERE numMemb = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numMemb]);
+
 		return($result->fetch());
 	}
 
@@ -18,8 +22,12 @@ class MEMBRE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MEMBRE WHERE eMailMemb = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$eMailMemb]);
+
 		return($result->fetch());
 	}
 
@@ -27,12 +35,16 @@ class MEMBRE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MEMBRE';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allMembres = $result->fetchAll();
+
 		return($allMembres);
 	}
 
-	function get_ExistPseudo($pseudoMemb) {
+/*	function get_ExistPseudo($pseudoMemb) {
 		global $db;
 
 		// select
@@ -48,7 +60,7 @@ class MEMBRE{
 		// prepare
 		// execute
 		return($allMembersByStat);
-	}*/
+	} */
 
 	function get_NbAllMembersByidStat($idStat){
 		global $db;

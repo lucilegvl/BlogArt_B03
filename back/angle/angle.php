@@ -13,15 +13,22 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
+// Del accents sur string
+require_once __DIR__ . '/../../util/delAccents.php';
+
 // Insertion classe Angle
 require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe angle
 $monAngle = new ANGLE();
 
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
 
 // Ctrl CIR contrainte d'intégrité référentielle
 $errCIR = 0;
-
 $errDel = 0;
 
 
@@ -49,7 +56,7 @@ $errDel = 0;
 	<h1>BLOGART22 Admin - CRUD Angle</h1>
 
 	<hr />
-	<h2>Nouvel angle :&nbsp;<a href="./createangle.php"><i>Créer un angle</i></a></h2>
+	<h2>Nouvel angle :&nbsp;<a href="./createAngle.php"><i>Créer un angle</i></a></h2>
 <?php
     if ($errDel == 99) {
 ?>
