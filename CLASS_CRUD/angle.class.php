@@ -162,11 +162,11 @@ class ANGLE{
 			$db->beginTransaction();
 
 			// update
-			$query = "UPDATE LANGUE SET libAngl = ?,  numPays = ? WHERE numLang = ?";
+			$query = "UPDATE ANGLE SET numLang = ?,  libAngl = ? WHERE numAngl = ?";
 			// prepare
 			$request = $db->prepare($query);
 			// execute
-			$request->execute([$libAngl, $numPays, $numLang]);
+			$request->execute([$numLang, $libAngl, $numAngl]);
 			$db->commit();
 			$request->closeCursor();
 		}
