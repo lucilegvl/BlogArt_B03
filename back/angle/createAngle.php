@@ -15,8 +15,13 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Angle
 require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+// Insertion classe Langue 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+
 // Instanciation de la classe angle
 $monAngle = new ANGLE();
+// Instanciation de la classe langue
+$maLangue = new LANGUE();
 
 
 
@@ -49,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numLang = $maLangue->getNextNumAngl($numLang);
 
-        $monStatut->create($libAngl, $numAngl, $numLang);
+        $monAngle->create($libAngl, $numAngl, $numLang);
 
         header("Location: ./angle.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
@@ -99,14 +104,16 @@ include __DIR__ . '/initAngle.php';
         <div class="control-group">
             <div class="controls">
             <label class="control-label" for="LibTypLang">
-
+            <label for="LibTypLang" title="Sélectionnez la langue !">
+            <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+            </label>
             </label>
 
 
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
             <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue!" >
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
@@ -114,7 +121,7 @@ include __DIR__ . '/initAngle.php';
                 $listNumLang = "";
                 $listlibLang = "";
 
-                $result = $monAngle->get_AllLangues();
+                $result = $m->get_AllLangues();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang= $row["numLang"];

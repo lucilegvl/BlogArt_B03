@@ -4,7 +4,7 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class ANGLE{
-	function get_AllLangues(){
+		function get_AllLangues(){
         global $db;
 
         $query = 'SELECT * FROM LANGUE;';
