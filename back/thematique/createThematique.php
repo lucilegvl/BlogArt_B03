@@ -14,18 +14,10 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Thematique
-<<<<<<< HEAD
-require_once __DIR__ . '/../../CLASS_CRUD/createThematique.class.php';
-
-=======
 require_once __DIR__ . '/../../CLASS_CRUD/Thematique.class.php';
-<<<<<<< HEAD
->>>>>>> a043d8b0b3fc37e64df9e6fbff6f7ce195b8e8bd
-=======
 
 // Insertion classe Langue 
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
->>>>>>> ea8a2b2046d05249f3bad8d98dc851e9c7319d10
 // Instanciation de la classe thématique
 $maThematique = new THEMATIQUE ();
 
@@ -120,7 +112,7 @@ include __DIR__ . '/initThematique.php';
         <label for="LibTypLang" title="Sélectionnez la langue !">
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $id; ?>" />
+        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
             <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
                 <option value="-1">- - - Choisissez une langue - - -</option>
 <?php

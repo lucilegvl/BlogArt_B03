@@ -56,11 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = false;
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
-<<<<<<< HEAD
-    //    $nbAngle = $monAngle-> function get_NbAllAnglesBynumLang($numLang['id']);
-=======
         $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
->>>>>>> 1eb311e2e5df6f9d4ea33ca379f90792389856c9
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
