@@ -21,22 +21,22 @@ $maLangue = new LANGUE();
 // Instanciation de la classe pays
 $monPays = new PAYS();
 
-if(isset($_POST['Submit'])){
-    $Submit = $_POST['Submit'];
-} else {
-    $Submit = "";
-} 
-
-if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-
-    header("Location: ./createLangue.php");
-}
-
 // Gestion des erreurs de saisie
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    } 
+    
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+    
+        header("Location: ./createLangue.php");
+    }
 
     // controle des saisies du formulaire    
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))

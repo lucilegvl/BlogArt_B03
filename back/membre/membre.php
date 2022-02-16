@@ -17,14 +17,13 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Membre
-
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
+$monMembre = new MEMBRE();
 
-
-//  trl CIR
+//  Ctrl CIR
 $errCIR = 0;
 $errDel = 0;
-
 
 ?>
 <!DOCTYPE html>
@@ -83,29 +82,31 @@ $errDel = 0;
     $to = 'd/m/Y H:i:s';
 
     // Appel méthode : Get toutes les membres en BDD
+    $allMemb = $monMembre->get_AllMembres();
 
     // Boucle pour afficher
-    //foreach($all as $row) {
-
-
+    
+    foreach($allMemb as $row) {
 
             // date dtCreaMemb => FR
-            // $dtCreaMemb = dateChangeFormat($dtCreaMemb, $from, $to);
+        $dtCreaMemb=$row['dtCreaMemb'];
+        $dtCreaMemb = dateChangeFormat($dtCreaMemb, $from, $to);
 ?>
             <tr>
-            <td><h4>&nbsp; <?= "ici numMemb"; ?> &nbsp;</h4></td>
+            <td><h4>&nbsp; <?php echo $row['numMemb']; ?> &nbsp;</h4></td>
 
-            <td>&nbsp; <?= "ici prenomMemb" . " " . "ici nomMemb"; ?> &nbsp;</td>
+            <td>&nbsp; <?php echo $row['prenomMemb'] . " " . $row['nomMemb']; ?> &nbsp;</td>
 
-            <td>&nbsp; <?= "ici pseudoMemb"; ?> &nbsp;</td>
+            <td>&nbsp; <?php echo $row['pseudoMemb']; ?> &nbsp;</td>
 
-            <td>&nbsp; <?= "ici eMailMemb"; ?> &nbsp;</td>
+            <td>&nbsp; <?php echo $row['eMailMemb']; ?> &nbsp;</td>
 
-            <td>&nbsp; <?= "ici dtCreaMemb" ; ?> &nbsp;</td>
+            <td>&nbsp; <?php echo $dtCreaMemb; ?> &nbsp;</td>
 
-            <td>&nbsp; <?= "ici accordMemb"; ?> &nbsp;</td>
+            <td>&nbsp; <?php echo $row['accordMemb']; ?> &nbsp;</td>
 
-            <td>&nbsp; <?= "ici libStat"; ?> &nbsp;</td>
+            <!-- Elle voulait libStat ici mais pour l'instant je met l'id -->
+            <td>&nbsp; <?php echo $row['idStat']; ?> &nbsp;</td>
 
             <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateMembre.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier membre" title="Modifier membre" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
             <br /></td>
@@ -114,7 +115,7 @@ $errDel = 0;
             </tr>
 <?php
 
-	// }	// End of foreach
+	}	// End of foreach
 ?>
     </tbody>
     </table>
