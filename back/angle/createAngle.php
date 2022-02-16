@@ -14,9 +14,9 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Angle
-
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe angle
-
+$monAngle = new ANGLE();
 
 
 // Gestion des erreurs de saisie
@@ -25,17 +25,33 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
 
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
 
+        header("Location: ./createAngle.php");
+    }  
+ // controle des saisies du formulaire
+    // Saisies valides
+    if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+        $erreur = false;
 
-    // controle des saisies du formulaire
+        $libAngl = ctrlSaisies(($_POST['libAngl']));
 
-    // création effective de l'angle
+        $monStatut->create($libAngl);
 
-
-
-    // Gestion des erreurs => msg si saisies ko
-
+        header("Location: ./angle.php");
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+        }
 
 
 
