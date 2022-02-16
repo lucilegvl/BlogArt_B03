@@ -99,8 +99,8 @@ include __DIR__ . '/initMotCle.php';
     <!-- FK : Langue -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox langue -->
-        <br>
-        <div class="control-group">
+        <!-- <br> -->
+        <!-- <div class="control-group"> -->
             <label class="control-label" for="LibTypLang"><b>Quelle langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idTypLang" name="idTypLang" value="<?= isset($_GET['numLang']) ? $_GET['numLang'] : '' ?>" />
 
@@ -126,7 +126,7 @@ include __DIR__ . '/initMotCle.php';
                         } // End of foreach
                     }   // if ($result)
     ?>
-            </select>
+                </select>
         </div>
     <!-- FIN Listbox langue -->
 <!-- --------------------------------------------------------------- -->
