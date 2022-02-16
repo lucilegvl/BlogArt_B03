@@ -26,8 +26,12 @@ class MOTCLE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MOTCLE';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allMotCles = $result->fetchAll();
+
 		return($allMotCles);
 	}
 
@@ -131,14 +135,12 @@ class MOTCLE{
 			$db->beginTransaction();
 
 			// insert
-			$query='INSERT INTO MOTCLE (libMotCle) VALUES (?)';
-			//$query2='INSERT INTO MOTCLE (numLang) VALUES (?)';
+			$query='INSERT INTO MOTCLE (libMotCle, numLang) VALUES (?, ?)';
 			// prepare
 			$request = $db->prepare($query);
-			//$request2 = $db->prepare($query2);
 			// execute
-			$request->execute([$libMotCle]);
-			//$request2->execute([$numLang]);
+			$request->execute([$libMotCle, $numLang]);
+
 
 			$db->commit();
 			$request->closeCursor();

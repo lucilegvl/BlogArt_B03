@@ -14,9 +14,13 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe MotCle
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 
 // Instanciation de la classe MotCle
+$monMotCle = new MOTCLE();
 
+// Gestion des CIR => affichage erreur sinon
+$errCIR = 0;
 
 ?>
 <!DOCTYPE html>
@@ -49,17 +53,16 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 <?php
     // Appel méthode : Get toutes les mots cles en BDD
+    $allMotsCles = $monMotCle->get_AllMotCles();
 
     // Boucle pour afficher
-    //foreach($all as $row) {
+    foreach($allMotsCles as $row) {
 ?>
         <tr>
 
-		<td><h4>&nbsp; <?= "ici numMotCle"; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?php echo($row['libMotCle']); ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici libMotCle"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo($row['numLang']);?> &nbsp;</td>
 
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateMotCle.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier mot clé" title="Modifier mot clé" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
@@ -68,8 +71,17 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
         </tr>
 <?php
-	// }	// End of foreach
-?>
+	}	// End of foreach
+
+    if ($errCIR == 1) {
+        ?>
+                <i><div class="error"><br>=>&nbsp;Suppression impossible, existence d'article(s) associé(s) à cette thématique. Vous devez d'abord supprimer le(s) thématique(s) concernée(s).</div></i>
+        <?php
+            }   // End of if ($errCIR == 1)
+        ?>
+            <p>&nbsp;</p>
+
+
     </tbody>
     </table>
     <br /><br/>

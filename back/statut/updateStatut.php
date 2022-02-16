@@ -38,7 +38,8 @@
         // controle des saisies du formulaire
         if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
         AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
-        // Saisies valides
+        
+            // Saisies valides
             $erreur = false;
 
             $libStat = ctrlSaisies(($_POST['libStat']));
