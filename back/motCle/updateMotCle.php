@@ -37,18 +37,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }  
 
     if (((isset($_POST['libMotCle'])) AND !empty($_POST['libMotCle']))
-    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
+    AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
-        $lib1Langue = ctrlSaisies($_POST['libMotCle']);
-        $lib2Langue = ctrlSaisies($_POST['numLang']);
-        $numLang = ctrlSaisies($_POST['id']);
 
-        $monMonCle->update($lib2Langue, $numLang);
+        $libMotCle = ctrlSaisies($_POST['libMotCle']);
+        $numLang = ctrlSaisies($_POST['TypLang']);
+        $numMotCle = ctrlSaisies($_POST['id']);
+
+        $monMotCle->update($libMotCle, $numLang); //modification effective du mot clé
 
         header("Location: ./motCle.php");
-    }   // Fin if ((isset($_POST['libStat'])) ...
+    }   // Fin if ((isset($_POST['libStat'])) 
+    
+
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
@@ -83,9 +86,10 @@ include __DIR__ . '/initMotCle.php';
 
         $id=$_GET['id'];
         $req = $monMotCle->get_1MotCle($id);
+        
         if ($req) {
             $libMotCle = $req['libMotCle'];
-            $numLang = $req['numLang'];
+            $numLang = $req['id'];
             $id = $req['numLang'];
         }
     }
@@ -111,12 +115,9 @@ include __DIR__ . '/initMotCle.php';
         <div class="control-group">
             <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
-
-                <!-- <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" /> -->
-
                 <!-- Listbox langue => 2ème temps -->
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                    <option value="-1">- - - Choisissez une langue - - -</option>
-                    <option value="-1">- - - Choisissez une langue - - -</option>
+                <option value="-1">- - - Choisissez une langue - - -</option>
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";

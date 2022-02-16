@@ -55,18 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libThem = ctrlSaisies($_POST['libThem']);
         $numLang = ctrlSaisies($_POST['TypLang']);
 
-
-
         $numNextThem = $maThematique->getNextNumThem($numLang);
 
         $maThematique->create($numNextThem, $libThem, $numLang);
 
         header("Location: ./thematique.php");
     }   // Fin if 
-   
-
-
-
 
     // Gestion des erreurs => msg si saisies ko
 
