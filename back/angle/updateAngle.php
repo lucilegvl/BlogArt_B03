@@ -53,11 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-         $numNextAngl = $monAngle->getNextNumAngl($numLang);
+       //  $numNextAngl = $monAngle->getNextNumAngl($numLang);
     // modification effective du angle
-    $monAngle->update($numNextAngl,$libAngl, $numLang);
+    $monAngle->update($numAngl, $libAngl, $numLang);
 
-    header("Location: ./angle.php");
+        header("Location: ./angle.php");
 }  
 else {
 // Gestion des erreurs => msg si saisies ko
@@ -125,7 +125,7 @@ include __DIR__ . '/initAngle.php';
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
