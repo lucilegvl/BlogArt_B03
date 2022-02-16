@@ -62,7 +62,7 @@ class LANGUE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM LANGUE WHERE lib1Lang=?';
+		$query = 'SELECT * FROM LANGUE ORDER BY lib1Lang;';
 		// prepare
 		$result = $db->query($query);
 		// execute
