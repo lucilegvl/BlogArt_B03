@@ -16,15 +16,14 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 // Insertion classe Langue
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
-$MaLangue = new LANGUE();
+$maLangue = new LANGUE();
 
+// Instanciation de la classe pays
 $monPays = new PAYS();
 
 // Ctrl CIR
 $errCIR = 0;
 $errDel=0;
-
-
 
 // Insertion classe Angle
 require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
@@ -58,7 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ./deleteLangue.php?id=".$sameId);
     }
     
-
     //delete effectif du langue
 
     if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
@@ -74,7 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numPays = ctrlSaisies($_POST['numPays']);
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
+<<<<<<< HEAD
     //    $nbAngle = $monAngle-> function get_NbAllAnglesBynumLang($numLang['id']);
+=======
+        $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
+>>>>>>> 1eb311e2e5df6f9d4ea33ca379f90792389856c9
 
         if (($nbThematique > 0) AND ($nbAngle > 0)){
             $erreur = true;
@@ -90,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }  
 
-}   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
+}  // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
 include __DIR__ . '/initLangue.php';
@@ -119,11 +121,13 @@ include __DIR__ . '/initLangue.php';
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Suppression d'une langue</h2>
 <?php
-    if (isset($_GET['id'])) {
-    $id=$_GET['id'];
-    $req = $monStatut->get_1Statut($id);
-    $libStat = $req['libStat'];
-    $id = $req['idStat'];
+        if (isset($_GET['id'])) {
+            $id=$_GET['id'];
+            $req = $maLangue->get_1Langue($id);
+            $lib1Lang = $req['lib1Lang'];
+            $lib2Lang = $req['lib2Lang'];
+            $id = $req['numLang'];
+        }
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
@@ -145,10 +149,11 @@ include __DIR__ . '/initLangue.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
   <!-- Listbox Pays -->
+  
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numClas; ?>" />
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
@@ -162,27 +167,27 @@ include __DIR__ . '/initLangue.php';
                         $listfrPays = $row["frPays"];
 ?>
                         <option value="<?= $listNumPays; ?>">
-                            <?= $listfrPays; ?>
+                        <?= $listfrPays; ?>
                         </option>
-<?php
+            </select>
+            <?php
                     } // End of foreach
                 }   // if ($result)
 ?>
-            </select>
 
     <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
         <div class="control-group">
             <div class="error">
-            <?php
+    <?php
             if ($erreur) {
                 echo ($errSaisies);
             } else {
                 $errSaisies = "";
                 echo ($errSaisies);
             }
-?>
+    ?>
             </div>
         </div>
 
@@ -198,9 +203,8 @@ include __DIR__ . '/initLangue.php';
         </div>
       </fieldset>
     </form>
-<?php
-require_once __DIR__ . '/footerLangue.php';
 
+<<<<<<< HEAD
 require_once __DIR__ . '/footer.php';
 ?> <!-- FIN Listbox Pays -->
 <!-- --------------------------------------------------------------- -->
@@ -209,6 +213,9 @@ require_once __DIR__ . '/footer.php';
 </body>
 </html>
       <div class="control-group">
+=======
+<div class="control-group">
+>>>>>>> 1eb311e2e5df6f9d4ea33ca379f90792389856c9
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -217,13 +224,16 @@ require_once __DIR__ . '/footer.php';
                 <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 <br>
             </div>
-        </div>
+</div>
       </fieldset>
     </form>
     <br>
     <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
+<<<<<<< HEAD
 </body>
 </html>
+=======
+>>>>>>> 1eb311e2e5df6f9d4ea33ca379f90792389856c9
 
 <?php
 require_once __DIR__ . '/footerLangue.php';
