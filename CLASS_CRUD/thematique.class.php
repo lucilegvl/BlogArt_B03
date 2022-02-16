@@ -71,8 +71,7 @@ class THEMATIQUE{
 		// execute
 		$allNbThematiqueBynumLang->execute([$numLang]);
 		$count = $allNbThematiqueBynumLang->rowCount();
-
-		// return($allNbThematiquesBynumLang);
+		return($count);
 	}
 
 	// Récup dernière PK NumThem
@@ -144,7 +143,7 @@ class THEMATIQUE{
 			// prepare
 			$request = $db->prepare($query);
 			// execute
-			$request->execute([$numLang, $libThem, $numThem]);
+			$request->execute([$numThem, $libThem, $numLang]);
 
 			$db->commit();
 			$request->closeCursor();
