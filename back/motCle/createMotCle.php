@@ -21,6 +21,9 @@ require_once __DIR__ . '/../../CLASS_CRUD/MotCle.class.php';
 // Instanciation de la classe MotCle
 $monMotCle = new MOTCLE();
 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+$maLangue= new LANGUE();
+
 // Gestion des erreurs de saisie
 $erreur = false;
 
@@ -120,7 +123,6 @@ include __DIR__ . '/initMotCle.php';
                     foreach($result as $row) {
                         $listNumLang = $row["numLang"];
                         $listLib1Lang = $row["lib1Lang"];
-                        echo listLib1Lang;
 ?>
                         <option value="<?= $listNumLang; ?>">
                             <?= $listLib1Lang; ?>
