@@ -14,9 +14,9 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Angle
-
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe angle
-
+$monAngle = new ANGLE();
 
 
 // Ctrl CIR contrainte d'intégrité référentielle
@@ -73,10 +73,10 @@ $errDel = 0;
     <tbody>
 <?php
     // Appel méthode : Get tous les angles en BDD
-
+    $allAngles = $monAngle->get_AllAngles();
     // Boucle pour afficher
     //foreach($all as $row) {
-
+    foreach($allAngles as $row) {
 ?>
         <tr>
 		<td><h4>&nbsp; <?= "ici numAngl"; ?> &nbsp;</h4></td>
@@ -85,13 +85,13 @@ $errDel = 0;
 
         <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
 
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateAngle.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier angle" title="Modifier angle" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateAngle.php?id=<?=$row['numAngl']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier angle" title="Modifier angle" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp
 		<br /></td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteAngle.php?id=<?=1; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer angle" title="Supprimer angle" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteAngle.php?id=<?=$row['numAngl']; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer angle" title="Supprimer angle" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
         </tr>
 <?php
-	// }	// End of foreach
+	}	// End of foreach
 ?>
     </tbody>
     </table>
