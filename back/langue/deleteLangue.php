@@ -52,17 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //delete effectif du langue
-
-    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
-    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
-    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    elseif (($_POST["Submit"] == "Valider")) {
         $erreur = false;
-        echo 1;
-        $numLang = ctrlSaisies($_POST['numLang']);
-        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
-        $lib2Lang = ctrlSaisies($_POST['Lib2Lang']);
-        $numPays = ctrlSaisies($_POST['numPays']);
+        echo "1";
 
         $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
         $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
@@ -73,15 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;
         } else{
-            $maLangue->delete($numLang);
-            header("Location: ./langue.php");
+            $maLangue->delete($_POST['id']);
+            header("Location: langue.php");
         }
     }      // Fin if ((isset($_POST['libStat'])) ...
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
-        $sameId=$_POST['id'];
-        header("Location: ./deleteLangue.php?id=$sameId");
     }  
 }  // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 

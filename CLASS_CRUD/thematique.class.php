@@ -50,7 +50,7 @@ class THEMATIQUE{
 		// execute
 		$allNbThematiqueBynumLang->execute([$numLang]);
 		$count = $allNbThematiqueBynumLang->rowCount();
-		return($allNbThematiquesBynumLang);
+		return($count);
 	}
 
 	// Récup dernière PK NumThem
