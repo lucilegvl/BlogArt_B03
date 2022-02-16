@@ -27,10 +27,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
-
-
 // BBCode
-
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -38,8 +35,14 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if   ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    } 
+
 if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['id'];
+        $sameId = ctrlSaisies($_POST['id']);
         header("Location: ./updateThematique.php?id=".$sameId);
     } 
 
@@ -49,18 +52,20 @@ if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
     AND !empty($_POST['Submit']) AND $Submit === "Valider") { // Saisies valides
 
     $erreur = false;
+    $numThem = ctrlSaisies($_POST['id']);
     $libThem = ctrlSaisies($_POST['libThem']);
     $numLang = ctrlSaisies($_POST['TypLang']);
 
-    $numNextThem = $maThematique->getNextNumThem($numLang);
+    $maThematique->update($numThem, $libThem, $numLang);
 
-    $maThematique->update($numNextThem, $libThem, $numLang);
-
-     
     header("Location: ./thematique.php");
+
 } // Fin if saisie valide 
 
-
+else { // Saisies invalides
+    $erreur = true;
+    $errSaisies =  "Erreur, la saisie est obligatoire !";
+}  
 
 }  // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
@@ -87,19 +92,15 @@ include __DIR__ . '/initThematique.php';
     // Modif : récup id à modifier
     // id passé en GET
 
-    if (isset($_GET['id'])) {
-        //ajouter ctrl saisies ici
+    if (isset($_GET['id']) AND $_GET['id'] > 0) { //toujours update delete
 
-        $id=$_GET['id'];
-        $req = $maThematique->get_1Thematique($id);
-        if ($req) {
-            
-            $libThem = $req['libThem'];
-            $id = $req['numLang'];
+        $id = ctrlSaisies($_GET['id']);
+        $reqThem = $maThematique->get_1Thematique($id);
+        if ($reqThem) {
+            $libThem = $reqThem['libThem'];
+            $idLang = $reqThem['numLang'];
         }
     }
-
-
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 

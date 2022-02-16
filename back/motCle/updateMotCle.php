@@ -14,8 +14,10 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe MotCle
+require_once __DIR__ . '/../../CLASS_CRUD/motCle.class.php';
 
 // Instanciation de la classe MotCle
+$monMotCle = new MOTCLE();
 
 
 // Gestion des erreurs de saisie
@@ -23,22 +25,41 @@ $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
 
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+        $sameId=$_POST['id'];
+        header("Location: ./updateMotCle.php?id=".$sameId);
+    }  
 
+    if (((isset($_POST['libMotCle'])) AND !empty($_POST['libMotCle']))
+    AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
+        $erreur = false;
 
-    // controle des saisies du formulaire
+        $libMotCle = ctrlSaisies($_POST['libMotCle']);
+        $numLang = ctrlSaisies($_POST['TypLang']);
+        $numMotCle = ctrlSaisies($_POST['id']);
 
-    // modif effective de la MotCle
+        $monMotCle->update($libMotCle, $numLang); //modification effective du mot clé
 
+        header("Location: ./motCle.php");
+    }   // Fin if ((isset($_POST['libStat'])) 
+    
 
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+
+
+
 // Init variables form
 include __DIR__ . '/initMotCle.php';
 ?>
@@ -60,12 +81,18 @@ include __DIR__ . '/initMotCle.php';
     // Modif : récup id à modifier
     // id passé en GET
 
+    if (isset($_GET['id'])) {
+        //ajouter ctrl saisies ici
 
-
-
-
-
-
+        $id=$_GET['id'];
+        $req = $monMotCle->get_1MotCle($id);
+        
+        if ($req) {
+            $libMotCle = $req['libMotCle'];
+            $numLang = $req['id'];
+            $id = $req['numLang'];
+        }
+    }
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
@@ -88,11 +115,29 @@ include __DIR__ . '/initMotCle.php';
         <div class="control-group">
             <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" />
-
                 <!-- Listbox langue => 2ème temps -->
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                    <option value="-1">- - - Choisissez une langue - - -</option>
+                <option value="-1">- - - Choisissez une langue - - -</option>
+<?php
+                $listNumLang = "";
+                $listLib1Lang = "";
+                $result = $maLangue->get_AllLanguesByLib1Lang();
 
+                if($result){
+                    
+                    foreach($result as $row) {
+
+                        $listNumLang = $row["numLang"];
+                        $listLib1Lang = $row["lib1Lang"];
+?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listLib1Lang; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
         </div>
     <!-- FIN Listbox langue -->
 <!-- --------------------------------------------------------------- -->
