@@ -115,11 +115,7 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-<<<<<<< HEAD
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
-=======
         <input type="hidden" id="idPays" name="idPays" value="<?= $id; ?>" />
->>>>>>> 6b1d600d55193eb42178f93472271f7012ce28fc
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
                 <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
