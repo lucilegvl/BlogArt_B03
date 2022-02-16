@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = false;
 
         $libStat = ctrlSaisies(($_POST['libStat']));
-
+        // insertion effective du statut
         $monStatut->create($libStat);
 
         header("Location: ./statut.php");
@@ -55,14 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     else {
         // Saisies invalides
         $erreur = true;
+        // Gestion des erreurs => msg si saisies ok
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }   // End of else erreur saisies
 
-    // insertion effective du statut
-
-    // Gestion des erreurs => msg si saisies ok
-
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
+
 // Init variables form
 include __DIR__ . '/initStatut.php';
 ?>
