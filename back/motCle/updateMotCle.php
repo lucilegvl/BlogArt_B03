@@ -32,20 +32,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        //$sameId=$_POST['id'];
+        $sameId=$_POST['id'];
         header("Location: ./updateMotCle.php?id=".$sameId);
     }  
 
     if (((isset($_POST['libMotCle'])) AND !empty($_POST['libMotCle']))
-    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
+    AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
-        $libMotCle = ctrlSaisies($_POST['libMotCle']);
-        $numLang = ctrlSaisies($_POST['id']);
-        //$numLang = ctrlSaisies($_POST['id']);
 
-        $monMonCle->update($libMotCle, $numLang);
+        $libMotCle = ctrlSaisies($_POST['libMotCle']);
+        $numLang = ctrlSaisies($_POST['TypLang']);
+        $numMotCle = ctrlSaisies($_POST['id']);
+
+        $monMotCle->update($libMotCle, $numLang); //modification effective du mot clé
 
         header("Location: ./motCle.php");
     }   // Fin if ((isset($_POST['libStat'])) 
@@ -85,6 +86,7 @@ include __DIR__ . '/initMotCle.php';
 
         $id=$_GET['id'];
         $req = $monMotCle->get_1MotCle($id);
+        
         if ($req) {
             $libMotCle = $req['libMotCle'];
             $numLang = $req['id'];
@@ -113,12 +115,9 @@ include __DIR__ . '/initMotCle.php';
         <div class="control-group">
             <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
-
-                <!-- <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" /> -->
-
                 <!-- Listbox langue => 2ème temps -->
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                    <option value="-1">- - - Choisissez une langue - - -</option>
-                    <option value="-1">- - - Choisissez une langue - - -</option>
+                <option value="-1">- - - Choisissez une langue - - -</option>
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";

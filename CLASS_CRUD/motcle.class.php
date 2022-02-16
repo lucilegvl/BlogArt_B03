@@ -175,8 +175,11 @@ class MOTCLE{
 			$db->beginTransaction();
 
 			// update
+			$query = "UPDATE MOTCLE SET numLang = ?,  libMotCle = ? WHERE numMotCle = ?";
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$numLang, $libMotCle, $numMotCle]);
 			$db->commit();
 			$request->closeCursor();
 		}

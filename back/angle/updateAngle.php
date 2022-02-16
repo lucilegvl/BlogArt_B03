@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-         $numNextAngl = $monAngle->getNextNumAngl($numLang);
+    $numNextAngl = $monAngle->getNextNumAngl($numLang);
     // modification effective du angle
     $monAngle->update($numNextAngl,$libAngl, $numLang);
 
