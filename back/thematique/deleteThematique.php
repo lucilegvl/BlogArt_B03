@@ -25,39 +25,57 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
-
 // Ctrl CIR
 $errCIR = 0;
 $errDel=0;
 
 // Insertion classe Article
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 
 // Instanciation de la classe Article
+$monArticle = new ARTICLE();
 
+// Gestion des erreurs de saisie
+$erreur = false;
 
 // BBCode
 
-
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+ // modification effective du Angle
+ if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Opérateur ternaire
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
 
+    //Submit = "";
+    if ((isset($_POST['Submit'])) AND ($_POST["Submit"] === "Annuler")) {
+        header("Location: ./thematique.php");
+    }
+    // Mode création
 
-    // controle CIR
+    if (isset($_POST['id']) AND $_POST['id']
+    AND isset($_POST['numLang']) AND $_POST['numLang']
+    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
+    
+        // Saisies valides
+        $erreur = false;
+        $numThem = ctrlSaisies($_POST['id']);
+        $nbThematique = (int)($maThematique->get_AllThematiques($numThem));
+        if ($nbThematique<1) {
 
+        $maThematique->delete($numThem);
+
+        header("Location: ./thematique.php");
+    } else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }  
+
+     }   // Fin if
+} // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
     // delete effective du user
 
 
-
-
-
-
-
-
-
-
-}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initThematique.php';
 ?>
@@ -94,9 +112,15 @@ include __DIR__ . '/initThematique.php';
     // Supp : récup id à supprimer
     // id passé en GET
 
+    if (isset($_GET['id']) AND $_GET['id']) { //toujours update delete
 
-
-
+        $id = ctrlSaisies($_GET['id']);
+        $reqThem = $maThematique->get_1Thematique($id);
+        if ($reqThem) {
+            $libThem = $reqThem['libThem'];
+            $idLang = $reqThem['numLang'];
+        }
+    }
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -115,19 +139,36 @@ include __DIR__ . '/initThematique.php';
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox langue -->
-        <br>
+                  <!-- Listbox langue => 2ème temps -->
+                  </div>
+           <!-- Listbox Langue -->
+           <br>
+        <label for="LibTypLang" title="Sélectionnez la langue !">
+            <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <option value="-1"> Choisissez une langue </option>
+<?php
+                $listNumLang = "";
+                $listLib1Lang = "";
 
-        <div class="control-group">
-            <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" />
-
-                <!-- Listbox langue disabled => 2ème temps -->
-
-        </div>
-    <!-- FIN Listbox langue -->
+                $result = $maLangue->get_AllLanguesByLib1Lang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumLang = $row["numLang"];
+                        $listLib1Lang = $row["lib1Lang"];
+?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listLib1Lang; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
+            
+    <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->
 <!-- --------------------------------------------------------------- -->
