@@ -16,14 +16,16 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/delAccents.php';
 
 // Insertion classe Thematique
+require_once __DIR__ . '/../../CLASS_CRUD/Thematique.class.php';
 
 // Instanciation de la classe Thematique
-
-
+$maThematique = new THEMATIQUE ();
 
 // Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 
 // Instanciation de la classe Langue
+$maLangue = new LANGUE();
 
 // BBCode
 
@@ -82,15 +84,28 @@ $errDel = 0;
     // Appel méthode : Get toutes les Thematiques en BDD
 
     // Boucle pour afficher
-    //foreach($all as $row) {
+    foreach($maThematique -> get_AllThematiques() as $row) {
+   
+   
+   
+   
+   
+        // var_dump($row); // afficher le tableau pour débuger 
+
+
+
+
+
+
+        
 ?>
         <tr>
 
-		<td><h4>&nbsp; <?= "ici numThem"; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?php echo($row['numThem']); ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici libThem"; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo($row['libThem']); ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo($row['numLang']); ?> &nbsp;</td>
 
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateThematique.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier thématique" title="Modifier thématique" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
@@ -99,7 +114,7 @@ $errDel = 0;
 
         </tr>
 <?php
-	// }	// End of foreach
+	}	// End of foreach
 ?>
     </tbody>
     </table>
