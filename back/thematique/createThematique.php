@@ -39,14 +39,12 @@ if(isset($_POST['Submit'])){
 } 
 
 if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-
     header("Location: ./createThematique.php");
 }
 
+// FK Langue 
 
- // FK Langue 
 // BBCode
-
 
 // Gestion des erreurs de saisie
 $erreur = false;

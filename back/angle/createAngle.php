@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Saisies valides
     if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
     AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
+    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         $erreur = false;
 
@@ -63,8 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
         }
-
-
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
@@ -109,7 +108,7 @@ include __DIR__ . '/initAngle.php';
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numAngl; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
