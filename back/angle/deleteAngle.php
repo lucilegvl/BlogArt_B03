@@ -18,6 +18,11 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe angle
 $monAngle = new ANGLE();
 
+// Insertion classe Langue 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+// Instanciation de la classe langue
+$maLangue = new LANGUE();
+
 // Ctrl CIR
 $errCIR = 0;
 $errDel=0;
@@ -35,38 +40,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST["Submit"] == "Annuler") {
         $sameId=$_POST['id'];
         header("Location: angle.php");
-    }
+    } 
+    //delete effectif du langue
+    elseif (($_POST["Submit"] == "Valider")) {
+        $erreur = false;
 
- //delete effectif du langue
- elseif (($_POST["Submit"] == "Valider")) {
-    $erreur = false;
+        $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($_POST['id']);
 
-    $nbThematique = $maThematique->get_NbAllThematiquesBynumLang($_POST['id']);
-    $nbAngle = $monAngle->get_NbAllAnglesBynumLang($_POST['id']);
-
-    if (($nbThematique > 0) AND ($nbAngle > 0)){
+        if ($nbArticle > 0) {
+            $erreur = true;
+            $errSaisies =  "Erreur, la suppression est impossible.";
+            echo $errSaisies;
+        } else{
+            $monAngle->delete($_POST['id']);
+            header("Location: angle.php");
+        }
+    }      // Fin if ((isset($_POST['libStat'])) ...
+    else { // Saisies invalides
         $erreur = true;
-        $errSaisies =  "Erreur, la suppression est impossible.";
-        echo $errSaisies;
-    } else{
-        $maLangue->delete($_POST['id']);
-        header("Location: langue.php");
-    }
-}      // Fin if ((isset($_POST['libStat'])) ...
-else { // Saisies invalides
-    $erreur = true;
-    $errSaisies =  "Erreur, la saisie est obligatoire !";
-}   
-
-    
-
-
-
-
-
-
-
-
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   
 }   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initAngle.php';
@@ -97,7 +90,18 @@ include __DIR__ . '/initAngle.php';
 <?php
     // Supp : récup id à supprimer
     // id passé en GET
+    if (isset($_GET['id'])) {
+        //ajouter ctrl saisies ici
 
+        $id=$_GET['id'];
+        $req = $monAngle->get_1Angle($id);
+        if ($req) {
+            $numAngl = $req['numAngl'];
+            $libAngl = $req['libAngl'];
+            $numLang = $req['numLang'];
+            $id = $req['numAngl'];
+        }
+    }
 
 
 
@@ -118,17 +122,38 @@ include __DIR__ . '/initAngle.php';
 <!-- ---------------------------------------------------------------------- -->
 <!-- ---------------------------------------------------------------------- -->
     <!-- Listbox Angle -->
-        <br>
+    <br>
         <div class="control-group">
             <div class="controls">
-            <label class="control-label" for="LibTypLang">
-                <b>Quelle langue :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
+                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
             </label>
 
+            <!-- Listbox langue => 2ème temps -->
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <option value="-1">- - - Choisissez une langue - - -</option>
 
-                <!-- Listbox langue disabled => 2ème temps -->
+            <?php
+                $listNumLang = "";
+                $listlib1Lang = "";
+
+                $result = $maLangue->get_AllLanguesByLib1Lang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumLang= $row["numLang"];
+                        $listlib1Lang = $row["lib1Lang"];
+            ?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listlib1Lang; ?>
+                        </option>
+            <?php
+                    } // End of foreach
+                }   // if ($result)
+            ?>
+
+            </select>
 
             </div>
         </div>
