@@ -46,14 +46,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // controle des saisies du formulaire
+    
+    // Saisies valides
+    if (isset($_POST['prenomMemb']) AND !empty($_POST['prenomMemb'])
+    AND isset($_POST['nomMemb']) AND !empty($_POST['nomMemb'])
+    AND isset($_POST['pseudoMemb']) AND !empty($_POST['pseudoMemb'])
+    AND isset($_POST['passMemb']) AND !empty($_POST['passMemb'])
+    AND isset($_POST['eMailMemb']) AND !empty($_POST['eMailMemb'])
+    AND isset($_POST['dtCreaMemb']) AND !empty($_POST['dtCreaMemb'])
+    AND isset($_POST['accordMemb']) AND !empty($_POST['accordMemb'])
+    AND isset($_POST['idStat']) AND !empty($_POST['idStat'])
+    AND !empty($_POST['Submit']) AND $Submit === "Valider") { 
+
+        $erreur = false;
+
+        //vérifications saisies dans variables
+        $prenomMemb = ctrlSaisies($_POST['prenomMemb']);
+        $nomMemb = ctrlSaisies($_POST['nomMemb']);
+        $pseudoMemb = ctrlSaisies($_POST['pseudoMemb']);
+        $passMemb = ctrlSaisies($_POST['passMemb']);
+        $eMailMemb = ctrlSaisies($_POST['eMailMemb']);
+        $dtCreaMemb = ctrlSaisies($_POST['dtCreaMemb']);
+        $accordMemb = ctrlSaisies($_POST['accordMemb']);
+        $idStat = ctrlSaisies($_POST['idStat']);
+
+        //application méthode create
+        $maLangue->create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
+
+        header("Location: ./langue.php");
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
     // création effective du user
 
-
-
     // Gestion des erreurs => msg si saisies ko
-
-
 
         // CTRL saisies
         // PSEUDO : valide, longueur: 6 mini, 70 maxi
