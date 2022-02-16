@@ -131,8 +131,15 @@ class MOTCLE{
 			$db->beginTransaction();
 
 			// insert
+			$query='INSERT INTO MOTCLE (libMotCle) VALUES (?)';
+			//$query2='INSERT INTO MOTCLE (numLang) VALUES (?)';
 			// prepare
+			$request = $db->prepare($query);
+			//$request2 = $db->prepare($query2);
 			// execute
+			$request->execute([$libMotCle]);
+			//$request2->execute([$numLang]);
+
 			$db->commit();
 			$request->closeCursor();
 		}

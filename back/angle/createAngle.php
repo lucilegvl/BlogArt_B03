@@ -15,8 +15,13 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Angle
 require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+// Insertion classe Langue 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+
 // Instanciation de la classe angle
 $monAngle = new ANGLE();
+// Instanciation de la classe langue
+$maLangue = new LANGUE();
 
 
 
@@ -47,9 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libAngl = ctrlSaisies(($_POST['libAngl']));
         $numLang = ctrlSaisies(($_POST['TypLang']));
 
-        $numLang = $maLangue->getNextNumAngl($numLang);
+        $numNextAngl = $monAngle->getNextNumAngl($numLang);
 
-        $monStatut->create($libAngl, $numAngl, $numLang);
+        $monAngle->create($numNextAngl,$libAngl, $numLang);
 
         header("Location: ./angle.php");
     }   // Fin if ((isset($_POST['libStat'])) ...
@@ -98,30 +103,28 @@ include __DIR__ . '/initAngle.php';
         <br>
         <div class="control-group">
             <div class="controls">
-            <label class="control-label" for="LibTypLang">
-
+            <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
+                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
             </label>
-
-
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
-            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue!" >
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
             <?php
                 $listNumLang = "";
-                $listlibLang = "";
+                $listlib1Lang = "";
 
-                $result = $monAngle->get_AllLangues();
+                $result = $maLangue->get_AllLanguesByLib1Lang();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang= $row["numLang"];
-                        $listfrLang = $row["lib1Lang"];
+                        $listlib1Lang = $row["lib1Lang"];
             ?>
                         <option value="<?= $listNumLang; ?>">
-                            <?= $listlibLang; ?>
+                            <?= $listlib1Lang; ?>
                         </option>
             <?php
                     } // End of foreach
