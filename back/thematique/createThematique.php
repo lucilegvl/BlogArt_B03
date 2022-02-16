@@ -125,8 +125,8 @@ include __DIR__ . '/initThematique.php';
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
         <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
-            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >
-                <option value="-1">- - - Choisissez une langue - - -</option>
+            <!-- <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <!-- <option value="-1">- - - Choisissez une langue - - -</option> -->
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";
@@ -145,6 +145,7 @@ include __DIR__ . '/initThematique.php';
                 }   // if ($result)
 ?>
             </select>
+            
     <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->

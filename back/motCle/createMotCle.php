@@ -101,33 +101,36 @@ include __DIR__ . '/initMotCle.php';
     <!-- Listbox langue -->
         <!-- <br> -->
         <!-- <div class="control-group"> -->
-            <label class="control-label" for="LibTypLang"><b>Quelle langue :&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idTypLang" name="idTypLang" value="<?= isset($_GET['numLang']) ? $_GET['numLang'] : '' ?>" />
+            <label for="LibTypLang"><b>Quelle langue :&nbsp;&nbsp;&nbsp;</b></label>
+                <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
 
                 <!-- <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" /> -->
 
                 <!-- Listbox langue => 2ème temps -->
-                <select size="1" name="numLang" id="numLang"  class="form-control form-control-create" title="Sélectionnez la langue!" >
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                    <option value="-1">- - - Choisissez une langue - - -</option>
                     <option value="-1">- - - Choisissez une langue - - -</option>
-    <?php
-                    $listNumLang = "";
-                    $listLib1Lang = "";
+<?php
+                
+                $listNumLang = "";
+                $listLib1Lang = "";
 
-                    $result = $maLangue->get_AllLangues();
-                    if($result){
-                        foreach($result as $row) {
-                            $listNumLang= $row["numLang"];
-                            $listLib1Lang = $row["Lib1Lang"];
-    ?>
-                            <option value="<?= $listNumLang; ?>">
-                                <?= $listLib1Lang; ?>
-                            </option>
-    <?php
-                        } // End of foreach
-                    }   // if ($result)
-    ?>
-                </select>
-        </div>
+                $result = $maLangue->get_AllLanguesByLib1Lang();
+                if($result){
+                    
+                    foreach($result as $row) {
+                        $listNumLang = $row["numLang"];
+                        $listLib1Lang = $row["lib1Lang"];
+                        echo listLib1Lang;
+?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listLib1Lang; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
+        <!-- </div> -->
     <!-- FIN Listbox langue -->
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->
