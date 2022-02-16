@@ -60,11 +60,11 @@ class STATUT{
 			$db->beginTransaction();
 
 			// update
-			$query = "UPDATE STATUT SET libStat='$libStat' WHERE idStat='$idStat' ";
+			$query = "UPDATE STATUT SET libStat=? WHERE idStat=?";
 			// prepare
 			$request = $db->prepare($query);
 			// execute
-			$request->execute([$libStat]);
+			$request->execute([$libStat, $idStat]);
 
 			$db->commit();
 			$request->closeCursor();
