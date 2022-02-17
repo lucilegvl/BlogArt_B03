@@ -107,10 +107,6 @@ include __DIR__ . '/initAngle.php';
             
         }
     }
-
-
-
-
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 

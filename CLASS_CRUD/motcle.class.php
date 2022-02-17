@@ -65,8 +65,8 @@ class MOTCLE{
 		$result = $db->query($query);
 		// execute
 		$result->execute([$numLang]);
-		$count = $allNbAnglesBynumLang->rowCount();
-		return($allNbAnglesBynumLang);
+		$count = $result->rowCount();
+		return($count);
 	}
 
 	// Sortir mots clés déjà sélectionnés dans MOTCLE (TJ) dans ARTICLE

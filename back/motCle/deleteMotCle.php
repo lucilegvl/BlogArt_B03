@@ -31,6 +31,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/motclearticle.class.php';
 // Instanciation de la classe MotCleArticle
 $monMotCleArticle = new MOTCLEARTICLE();
 
+
 // Ctrl CIR
 $errCIR = 0;
 $errDel=0;
@@ -55,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Saisies valides
         $erreur = false;
         $numMotCle = ctrlSaisies($_POST['id']);
-        $nbMotCle = $monMotCle->get_NbAllMotsClesBynumLang($numMotCle);
+        $nbMotCle = $monMotCleArticle->get_NbAllArtsByNumMotCle($numMotCle);
         
         if ($nbMotCle>0) {
             $erreur=true;
@@ -68,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: ./motCle.php");
         } 
     }
-    
+
     }// Fin if
 
     //else { // Saisies invalides
