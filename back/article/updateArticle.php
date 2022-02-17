@@ -26,19 +26,38 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Article
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 
 // Instanciation de la classe Article
+$monArticle = new ARTICLE();
+
+// Insertion classe Thematique
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
+// Instanciation de la classe Thematique
+$maThematique = new THEMATIQUE();
+
+// Insertion classe Angle
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+// Instanciation de la classe Angle
+$monAngle = new ANGLE();
+
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
 
 
 // Insertion classe MotCleArticle
+require_once __DIR__ . '/../../CLASS_CRUD/motclearticle.class.php';
 
 // Instanciation de la classe MotCleArticle
-
+$monMotCleArticle = new MOTCLEARTICLE();
 
 // Insertion classe MotCle
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 
 // Instanciation de la classe MotCle
-
+$monMotCle = new MOTCLE();
 
 
 // Gestion des erreurs de saisie
@@ -54,7 +73,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // controle des saisies du formulaire
+    if (((isset($_POST['numArt'])) AND !empty($_POST['numArt']))
+    AND ((isset($_POST['dtCreArt'])) AND !empty($_POST['dtCreArt']))
+    AND ((isset($_POST['libTitrArt'])) AND !empty($_POST['libTitrArt']))
+    AND ((isset($_POST['libChapoArt'])) AND !empty($_POST['libChapoArt']))
+    AND ((isset($_POST['libAccrochArt'])) AND !empty($_POST['libAccrochArt']))
+    AND ((isset($_POST['parag1Art'])) AND !empty($_POST['parag1Art']))
+    AND ((isset($_POST['libSsTitr1Art'])) AND !empty($_POST['libSsTitr1Art']))
+    AND ((isset($_POST['parag2Art'])) AND !empty($_POST['parag2Art']))
+    AND ((isset($_POST['libSsTitr2Art'])) AND !empty($_POST['libSsTitr2Art']))
+    AND ((isset($_POST['parag3Art'])) AND !empty($_POST['parag3Art']))
+    AND ((isset($_POST['libConclArt'])) AND !empty($_POST['libConclArt']))
+    AND ((isset($_POST['urlPhotArt'])) AND !empty($_POST['urlPhotArt']))
+    AND ((isset($_POST['numAngl'])) AND !empty($_POST['numAngl']))
+    AND ((isset($_POST['numThem'])) AND !empty($_POST['numThem']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
+        $erreur = false;
+        $dtCreArt = ctrlSaisies(($_POST['dtCreArt']));
+        $libTitrArt = ctrlSaisies(($_POST['libTitrArt']));
+        $libChapoArt = ctrlSaisies(($_POST['libChapoArt']));
+        $libAccrochArt = ctrlSaisies(($_POST['libAccrochArt']));
+        $parag1Art = ctrlSaisies(($_POST['parag1Art']));
+        $libSsTitr1Art = ctrlSaisies(($_POST['libSsTitr1Art']));
+        $parag2Art = ctrlSaisies(($_POST['parag2Art']));
+        $libSsTitr2Art = ctrlSaisies(($_POST['libSsTitr2Art']));
+        $parag3Art = ctrlSaisies(($_POST['parag3Art']));
+        $libConclArt = ctrlSaisies(($_POST['libConclArt']));
+        $urlPhotArt = ctrlSaisies(($_POST['urlPhotArt']));
+        $numAngl = ctrlSaisies(($_POST['numAngl']));
+        $numThem = ctrlSaisies(($_POST['numThem']));
+    
+
+        $numNextArt = $monArticle->getNextNumArt($numLang);
+
+        $monArticle->create($numNextArt, $dtCreAr, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
+
+
+        header("Location: ./article.php");
+    }   // Fin if 
+   
     // modification effective du article
 
 

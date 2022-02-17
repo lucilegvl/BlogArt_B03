@@ -223,7 +223,7 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
  <!-- Listbox Langue 2è temps-->
- <br>
+<br />
         <label for="LibTypLang" title="Sélectionnez la langue !">
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
@@ -263,7 +263,7 @@ include __DIR__ . '/initArticle.php';
             <b>Quelle angle :&nbsp;&nbsp;&nbsp;</b>
         </label>
         <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
-            <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > -->
+            <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" >
                 <option value="-1">- - - Choisissez un angle- - -</option>
 <?php
                 $listNumAngl = "";
@@ -287,8 +287,6 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Thématique -->
-
-
               <br>
         <label for="LibTypThematique" title="Sélectionnez la thematique!">
             <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
@@ -326,7 +324,7 @@ include __DIR__ . '/initArticle.php';
     <div class="controls">
         <label class="control-label" for="LibTypMotsCles1">
             <b>Choisissez les mots clés liés à l'article :&nbsp;&nbsp;&nbsp;</b>
-        </label>
+        </label>é
     </div>
     <!-- A faire dans un 2/3ème temps  -->
 
