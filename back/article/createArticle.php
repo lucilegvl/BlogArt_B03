@@ -26,6 +26,11 @@ require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();
 
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
+
 // Insertion classe Thematique
 require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe Thematique
@@ -222,8 +227,8 @@ include __DIR__ . '/initArticle.php';
 
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
- <!-- Listbox Langue 2è temps-->
-<br />
+ <!-- Listbox Langue -->
+<br>
         <label for="LibTypLang" title="Sélectionnez la langue !">
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
@@ -240,8 +245,8 @@ include __DIR__ . '/initArticle.php';
                         $listNumLang = $row["numLang"];
                         $listLib1Lang = $row["lib1Lang"];
 ?>
-                        <option value="<?= $listNumLang; ?>">
-                            <?= $listLib1Lang; ?>
+                        <option value="<?php $listNumLang; ?>">
+                            <?php $listLib1Lang; ?>
                         </option>
 <?php
                     } // End of foreach
@@ -257,26 +262,26 @@ include __DIR__ . '/initArticle.php';
     <!-- FK : Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Angle live share -->
+    <!-- Listbox Angle -->
     <br>
-        <label for="LibTypAngle" title="Sélectionnez l'angle!">
-            <b>Quelle angle :&nbsp;&nbsp;&nbsp;</b>
+        <label for="LibTypAngl" title="Sélectionnez l'angle !">
+            <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
-            <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" >
-                <option value="-1">- - - Choisissez un angle- - -</option>
+        <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?php $numAngl; ?>" />
+            <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > -->
+                <option value="-1">- - - Choisissez un angle - - -</option>
 <?php
                 $listNumAngl = "";
-                $listLibAngl= "";
+                $listLibAngl = "";
 
-                $result = $monAngle->get_AllAnglesByLang();
+                $result = $monAngle->get_AllLanguesOrderByLibLang();
                 if($result){
                     foreach($result as $row) {
                         $listNumAngl = $row["numAngl"];
                         $listLibAngl = $row["libAngl"];
 ?>
-                        <option value="<?= $listNumAngl; ?>">
-                            <?= $listLibAngl; ?>
+                        <option value="<?php $listNumAngl ?>">
+                            <?php $listLibAngl; ?>
                         </option>
 <?php
                     } // End of foreach
