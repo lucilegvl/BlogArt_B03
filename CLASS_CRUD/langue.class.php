@@ -190,4 +190,14 @@ class PAYS {
         return($allPays);
     }
 	
+	function get_1Pays($numPays){
+        global $db;
+
+        $query = 'SELECT * FROM PAYS WHERE numPays =?';
+        $result = $db->prepare($query);
+		$result->execute([$numPays]);
+
+		return($result->fetch());
+    }
+
 }

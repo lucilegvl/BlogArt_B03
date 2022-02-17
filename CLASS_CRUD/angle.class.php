@@ -84,7 +84,7 @@ class ANGLE{
 		// execute
 		$allNbAnglesBynumLang->execute([$numLang]);
 		$count = $allNbAnglesBynumLang->rowCount();
-		return($allNbAnglesBynumLang);
+		return($count);
 	}
 
 	//  Récupérer la prochaine PK de la table ANGLE
