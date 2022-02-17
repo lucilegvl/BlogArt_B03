@@ -19,9 +19,12 @@ require_once __DIR__ . '/../../util/delMotCle.php';
 // Instanciation de la classe MotCle
 $monMotCle = new MOTCLE();
 
+//gestion des erreur de saisie
+$erreur=false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
     if(isset($_POST['Submit'])){
         $Submit = $_POST['Submit'];
     } else {
@@ -33,23 +36,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ./deleteStatut.php?id=".$sameId);
     }   
 
-    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+    if (((isset($_POST['libMotCle'])) AND !empty($_POST['libMotCle']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
         $erreur = false;
-        $libStat = ctrlSaisies(($_POST['libStat']));
+        $libStat = ctrlSaisies(($_POST['libMotCle']));
         $idStat = ctrlSaisies(($_POST['id']));
         
-        $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
-        $nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
+        $nbMotCle = $monMembre->get_NbAllMotsClesBynumLang($_POST['id']);
+        //$nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
 
         if (($nbMembre > 0) AND ($nbUser > 0)){
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;
         } else{
-            $monStatut->delete($idStat);
-            header("Location: ./statut.php");
+            $monMotCle->delete($idMotCle);
+            header("Location: ./motCle.php");
         }
     }      // Fin if ((isset($_POST['libStat'])) ...
     else { // Saisies invalides
