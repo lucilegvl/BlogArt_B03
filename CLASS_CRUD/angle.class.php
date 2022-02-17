@@ -13,8 +13,7 @@ class ANGLE{
 		$result = $db->prepare($query);
 		// execute
 		$result->execute([$numAngl]);
-
-		return($result->fetch());
+			return($result->fetch());
 	}
 
 	function get_1AngleByLang(string $numLang) {
@@ -49,7 +48,7 @@ class ANGLE{
 		// prepare
 		$result = $db->query($query);
 		// execute
-		$allAnglesByAngl = $result->fetchAll();
+		$allAnglesByLang = $result->fetchAll();
 		return($allAnglesByLang);
 	}
 
@@ -185,11 +184,11 @@ class ANGLE{
 			$db->beginTransaction();
 
 			// delete
-			$query="DELETE FROM ANGLE WHERE numLang = ?";
+			$query="DELETE FROM ANGLE WHERE numAngl = ?";
 			// prepare
 			$request=$db->prepare($query);
 			// execute
-			$request->execute([$numLang]);
+			$request->execute([$numAngl]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();
