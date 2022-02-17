@@ -62,10 +62,10 @@ if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
 
 } // Fin if saisie valide 
 
-else { // Saisies invalides
-    $erreur = true;
-    $errSaisies =  "Erreur, la saisie est obligatoire !";
-}  
+    else { // Saisies invalides
+         $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }  
 
 }  // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
@@ -134,6 +134,7 @@ include __DIR__ . '/initThematique.php';
                 $listLib1Lang = "";
 
                 $result = $maLangue->get_AllLanguesByLib1Lang();
+                
                 if($result){
                     foreach($result as $row) {
                         $listNumLang = $row["numLang"];

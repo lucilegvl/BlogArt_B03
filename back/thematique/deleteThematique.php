@@ -41,7 +41,7 @@ $erreur = false;
 // BBCode
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
- // modification effective du Angle
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Opérateur ternaire
     $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
