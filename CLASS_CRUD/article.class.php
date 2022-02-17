@@ -37,6 +37,7 @@ class ARTICLE{
 		$result = $db->query($query);
 		// execute
 		$allArticles = $result->fetchAll();
+		
 		return($allArticles);
 	}
 
