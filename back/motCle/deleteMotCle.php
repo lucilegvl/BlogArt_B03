@@ -40,6 +40,7 @@ $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
     if(isset($_POST['Submit'])){
         $Submit = $_POST['Submit'];
     } else {
@@ -60,16 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libMotCle = ctrlSaisies($_POST['libMotCle']);
         $numLang = ctrlSaisies($_POST['TypLang']);
         
-        $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
-        $nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
+        $nbMotCle = $monMembre->get_NbAllMotsClesBynumLang($_POST['id']);
+        //$nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
 
         if (($nbMembre > 0) AND ($nbUser > 0)){
             $erreur = true;
             $errSaisies =  "Erreur, la suppression est impossible.";
             echo $errSaisies;
         } else{
-            $monMotCle->update($numMotCle, $libMotCle, $numLang);
-
+            $monMotCle->delete($idMotCle);
             header("Location: ./motCle.php");
         }
     }      // Fin if ((isset($_POST['libStat'])) ...
