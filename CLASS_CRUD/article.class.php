@@ -68,14 +68,15 @@ class ARTICLE{
 	function get_NbAllArticlesByNumThem($numThem){
 		global $db;
 
-		//select
+		// select
 		$query = 'SELECT * FROM ARTICLE WHERE numThem = ?';
 		// prepare
 		$allNbArticlesBynumThem = $db->prepare($query);
 		// execute
 		$allNbArticlesBynumThem->execute([$numThem]);
-		$count = $allNbArticlesBynumThem->rowCount();
-		return($allNbArticlesBynumThem);
+		$count = $allNbArticlesBynumThem->rowCount(); 
+
+		return($count);
 	}
 
 	// Barre de recherche CONCAT : mots clés dans ARTICLE & THEMATIQUE

@@ -182,13 +182,42 @@ include __DIR__ . '/initLangue.php';
         </fieldset>
     </form>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+require_once __DIR__ . '/footer.php';
+?> <!-- FIN Listbox Pays -->
+<!-- --------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------- -->
+
+</body>
+</html>
+      <div class="control-group">
+=======
+<div class="control-group">
+>>>>>>> 1eb311e2e5df6f9d4ea33ca379f90792389856c9
+            <div class="controls">
+                <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <br>
+            </div>
+</div>
+      </fieldset>
+    </form>
+=======
+>>>>>>> bb6ee881362272c4f65180dfbc9b5ad22718c4ac
     <br>
     <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
+<<<<<<< HEAD
+</body>
+</html>
+=======
+>>>>>>> 1eb311e2e5df6f9d4ea33ca379f90792389856c9
 
 <?php
 require_once __DIR__ . '/footerLangue.php';
 
 require_once __DIR__ . '/footer.php';
 ?>
-</body>
-</html>
