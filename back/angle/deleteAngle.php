@@ -37,30 +37,35 @@ $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if ($_POST["Submit"] == "Annuler") {
-        $sameId=$_POST['id'];
-        header("Location: angle.php");
-    } 
-    //delete effectif du langue
-    elseif (($_POST["Submit"] == "Valider")) {
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
+     //Submit = "";
+    if ((isset($_POST['Submit'])) AND ($_POST["Submit"] === "Annuler")) {
+        header("Location: ./angle.php");
+    }
+    // Mode création
+
+    elseif (($_POST["Submit"] == "Valider")) {{
+    
+        // Saisies valides
         $erreur = false;
-
-        $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($_POST['id']);
-
-        if ($nbArticle > 0) {
-            $erreur = true;
-            $errSaisies =  "Erreur, la suppression est impossible.";
+        $numAngl = ctrlSaisies($_POST['id']);
+        $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($numAngl);
+        
+        if ($nbArticle>0) {
+            $erreur=true;
+            $errSaisies = "Erreur, suppression impossible.";
             echo $errSaisies;
-        } else{
+        } else {
+            $erreur=false;
             $monAngle->delete($_POST['id']);
-            header("Location: angle.php");
-        }
-    }      // Fin if ((isset($_POST['libStat'])) ...
-    else { // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }   
-}   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
+            header("Location: ./angle.php");
+        } 
+    }
+    }// Fin if
+
+} // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+// delete effective 
+              
 // Init variables form
 include __DIR__ . '/initAngle.php';
 ?>
@@ -93,13 +98,13 @@ include __DIR__ . '/initAngle.php';
     if (isset($_GET['id'])) {
         //ajouter ctrl saisies ici
 
-        $id=$_GET['id'];
+        $id= ctrlSaisies($_GET['id']);
         $req = $monAngle->get_1Angle($id);
         if ($req) {
             $numAngl = $req['numAngl'];
             $libAngl = $req['libAngl'];
             $numLang = $req['numLang'];
-            $id = $req['numAngl'];
+            
         }
     }
 

@@ -62,7 +62,7 @@ class ARTICLE{
 		// execute
 		$allNbArticlesBynumAngl->execute([$numAngl]);
 		$count = $allNbArticlesBynumAngl->rowCount();
-		return($allNbArticlesBynumAngl);
+		return($count);
 	}
 
 	function get_NbAllArticlesByNumThem($numThem){
