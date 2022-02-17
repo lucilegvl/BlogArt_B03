@@ -37,29 +37,50 @@ $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if ($_POST["Submit"] == "Annuler") {
-        $sameId=$_POST['id'];
-        header("Location: angle.php");
-    } 
-    //delete effectif du langue
-    elseif (($_POST["Submit"] == "Valider")) {
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
+     //Submit = "";
+    if ((isset($_POST['Submit'])) AND ($_POST["Submit"] === "Annuler")) {
+        header("Location: ./angle.php");
+    }
+    // Mode création
+
+    if (isset($_POST['id']) AND $_POST['id']
+    AND isset($_POST['numLang']) AND $_POST['numLang']
+    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
+    
+        // Saisies valides
         $erreur = false;
+        $numAngl = ctrlSaisies($_POST['id']);
+        $nbArticle = (int)($monArticle->get_NbAllArticlesByNumAngl($nbArticle));
+        if ($nbArticle<1) {
 
-        $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($_POST['id']);
+        $monAngle->delete($numAngl);
 
-        if ($nbArticle > 0) {
-            $erreur = true;
-            $errSaisies =  "Erreur, la suppression est impossible.";
-            echo $errSaisies;
-        } else{
-            $monAngle->delete($_POST['id']);
-            header("Location: angle.php");
-        }
-    }      // Fin if ((isset($_POST['libStat'])) ...
-    else { // Saisies invalides
+        header("Location: ./angle.php");
+    } else { // Saisies invalides
         $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }   
+        $errSaisies =  "Erreur, la supression est impossible, veuillez remplir les champs !";
+    }
+        }
+    //delete effectif du langue
+    //elseif (($_POST["Submit"] == "Valider")) {
+    //    $erreur = false;
+
+    //    $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($_POST['id']);
+
+    //    if ($nbArticle > 0) {
+     //       $erreur = true;
+      //      $errSaisies =  "Erreur, la suppression est impossible.";
+      //      echo $errSaisies;
+    //    } else{
+     //       $monAngle->delete($_POST['id']);
+     //       header("Location: angle.php");
+     //   }
+   // }      // Fin if ((isset($_POST['libStat'])) ...
+   // else { // Saisies invalides
+   //     $erreur = true;
+   //     $errSaisies =  "Erreur, la saisie est obligatoire !";
+   // }   
 }   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initAngle.php';
@@ -93,13 +114,13 @@ include __DIR__ . '/initAngle.php';
     if (isset($_GET['id'])) {
         //ajouter ctrl saisies ici
 
-        $id=$_GET['id'];
+        $id= ctrlSaisies($_GET['id']);
         $req = $monAngle->get_1Angle($id);
         if ($req) {
             $numAngl = $req['numAngl'];
             $libAngl = $req['libAngl'];
             $numLang = $req['numLang'];
-            $id = $req['numAngl'];
+            
         }
     }
 
