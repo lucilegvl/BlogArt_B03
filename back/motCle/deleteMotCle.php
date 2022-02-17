@@ -46,37 +46,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $Submit = "";
     }
-
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
-        $sameId=$_POST['id'];
-        header("Location: ./deleteMotCle.php?id=".$sameId);
+        header("Location: ./MotCle.php");
     }   
 
-    if (((isset($_POST['libMotCle'])) AND !empty($_POST['libMotCle']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
-
+    elseif (($_POST["Submit"] == "Valider")) {{
+    
+        // Saisies valides
         $erreur = false;
-
         $numMotCle = ctrlSaisies($_POST['id']);
-        $libMotCle = ctrlSaisies($_POST['libMotCle']);
-        $numLang = ctrlSaisies($_POST['TypLang']);
+        $nbMotCle = $monMotCle->get_NbAllMotsClesBynumLang($numMotCle);
         
-        $nbMotCle = $monMembre->get_NbAllMotsClesBynumLang($_POST['id']);
-        //$nbUser = $monUser->get_NbAllUsersByidStat($_POST['id']);
-
-        if (($nbMembre > 0) AND ($nbUser > 0)){
-            $erreur = true;
-            $errSaisies =  "Erreur, la suppression est impossible.";
+        if ($nbMotCle>0) {
+            $erreur=true;
+            $errSaisies = "Erreur, suppression impossible.";
             echo $errSaisies;
-        } else{
-            $monMotCle->delete($idMotCle);
+
+        } else {
+            $erreur=false;
+            $monMotCle->delete($_POST['id']);
             header("Location: ./motCle.php");
-        }
-    }      // Fin if ((isset($_POST['libStat'])) ...
-    else { // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }  
+        } 
+    }
+    
+    }// Fin if
+
+    //else { // Saisies invalides
+        //$erreur = true;
+        //$errSaisies =  "Erreur, la saisie est obligatoire !";
+    //}  
+
 }// End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
