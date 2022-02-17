@@ -41,8 +41,8 @@ $erreur = false;
 // BBCode
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
- // modification effective du Angle
- if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Opérateur ternaire
     $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
@@ -51,27 +51,27 @@ $erreur = false;
     if ((isset($_POST['Submit'])) AND ($_POST["Submit"] === "Annuler")) {
         header("Location: ./thematique.php");
     }
-    // Mode création
 
-    if (isset($_POST['id']) AND $_POST['id']
-    AND isset($_POST['numLang']) AND $_POST['numLang']
-    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
-    
+    // Mode création
+    elseif (($_POST["Submit"] == "Valider")) {{
+
         // Saisies valides
         $erreur = false;
         $numThem = ctrlSaisies($_POST['id']);
-        $nbThematique = (int)($maThematique->get_AllThematiques($numThem));
-        if ($nbThematique<1) {
+        $nbArticle = $monArticle->get_NbAllArticlesByNumThem($numThem);
 
-        $maThematique->delete($numThem);
+        if ($nbArticle>0) {
+            $erreur=true;
+            $errSaisies = "Erreur, suppression impossible.";
+            echo $errSaisies;
+        } else {
+            $erreur=false;
+            $maThematique->delete($_POST['id']);
+            header("Location: ./thematique.php");
+        } 
+    }
+    }  // Fin if
 
-        header("Location: ./thematique.php");
-    } else { // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }  
-
-     }   // Fin if
 } // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
     // delete effective du user
 

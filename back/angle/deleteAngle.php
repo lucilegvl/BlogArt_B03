@@ -44,44 +44,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     // Mode création
 
-    if (isset($_POST['id']) AND $_POST['id']
-    AND isset($_POST['numLang']) AND $_POST['numLang']
-    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) {
+    elseif (($_POST["Submit"] == "Valider")) {{
     
         // Saisies valides
         $erreur = false;
         $numAngl = ctrlSaisies($_POST['id']);
-        $nbArticle = (int)($monArticle->get_NbAllArticlesByNumAngl($nbArticle));
-        if ($nbArticle<1) {
-
-        $monAngle->delete($numAngl);
-
-        header("Location: ./angle.php");
-    } else { // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la supression est impossible, veuillez remplir les champs !";
+        $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($numAngl);
+        
+        if ($nbArticle>0) {
+            $erreur=true;
+            $errSaisies = "Erreur, suppression impossible.";
+            echo $errSaisies;
+        } else {
+            $erreur=false;
+            $monAngle->delete($_POST['id']);
+            header("Location: ./angle.php");
+        } 
     }
-        }
-    //delete effectif du langue
-    //elseif (($_POST["Submit"] == "Valider")) {
-    //    $erreur = false;
+    }// Fin if
 
-    //    $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($_POST['id']);
-
-    //    if ($nbArticle > 0) {
-     //       $erreur = true;
-      //      $errSaisies =  "Erreur, la suppression est impossible.";
-      //      echo $errSaisies;
-    //    } else{
-     //       $monAngle->delete($_POST['id']);
-     //       header("Location: angle.php");
-     //   }
-   // }      // Fin if ((isset($_POST['libStat'])) ...
-   // else { // Saisies invalides
-   //     $erreur = true;
-   //     $errSaisies =  "Erreur, la saisie est obligatoire !";
-   // }   
-}   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
+} // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+// delete effective 
+              
 // Init variables form
 include __DIR__ . '/initAngle.php';
 ?>

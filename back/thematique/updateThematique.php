@@ -62,10 +62,10 @@ if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
 
 } // Fin if saisie valide 
 
-else { // Saisies invalides
-    $erreur = true;
-    $errSaisies =  "Erreur, la saisie est obligatoire !";
-}  
+    else { // Saisies invalides
+         $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }  
 
 }  // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
@@ -92,9 +92,10 @@ include __DIR__ . '/initThematique.php';
     // Modif : récup id à modifier
     // id passé en GET
 
-    if (isset($_GET['id']) AND $_GET['id'] > 0) { //toujours update delete
+    if (isset($_GET['id'])) { //toujours update delete
 
         $id = ctrlSaisies($_GET['id']);
+        echo $id;
         $reqThem = $maThematique->get_1Thematique($id);
         if ($reqThem) {
             $libThem = $reqThem['libThem'];
@@ -111,7 +112,7 @@ include __DIR__ . '/initThematique.php';
 
         <div class="control-group">
             <label class="control-label" for="libThem"><b>Libellé :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libThem" id="libThem" size="80" maxlength="80" value="<?= $libThem; ?>" placeholder="Titre de la thématique" autocomplete="on" autofocus="autofocus" />
+            <input type="text" name="libThem" id="libThem" size="80" maxlength="80" value="<?php echo $libThem; ?>" autofocus="autofocus"/>
         </div>
         <br><br>
 <!-- --------------------------------------------------------------- -->
@@ -133,6 +134,7 @@ include __DIR__ . '/initThematique.php';
                 $listLib1Lang = "";
 
                 $result = $maLangue->get_AllLanguesByLib1Lang();
+                
                 if($result){
                     foreach($result as $row) {
                         $listNumLang = $row["numLang"];
