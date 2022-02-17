@@ -130,8 +130,8 @@ include __DIR__ . '/initLangue.php';
                         $listNumPays= $row["numPays"];
                         $listfrPays = $row["frPays"];
             ?>
-                        <option value="<?= $listNumPays; ?>">
-                            <?= $listfrPays; ?>
+                        <option value="<?php $listNumPays; ?>">
+                            <?php $listfrPays; ?>
                         </option>
             <?php
                     } // End of foreach

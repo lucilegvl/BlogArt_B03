@@ -118,7 +118,7 @@ include __DIR__ . '/initThematique.php';
         $reqThem = $maThematique->get_1Thematique($id);
         if ($reqThem) {
             $libThem = $reqThem['libThem'];
-            $idLang = $reqThem['numLang'];
+            //$idLang = $reqThem['numLang'];
         }
     }
 

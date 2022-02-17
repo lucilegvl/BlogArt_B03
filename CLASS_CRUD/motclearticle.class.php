@@ -31,6 +31,19 @@ class MOTCLEARTICLE{
 		return($allCommentsByArt);
 	}
 
+	function get_NbAllArtsByNumMotCle($numMotCle){
+		global $db;
+
+		// select
+		$query = 'SELECT * FROM MOTCLEARTICLE WHERE numMotCle = ?';
+		// prepare
+		$result = $db->prepare($query);
+		// execute
+		$result->execute([$numMotCle]);
+		$count = $result->rowCount();
+		return($count);
+	}
+
 	function get_AllArtsByLibMotCle($libMotCle){
 		global $db;
 

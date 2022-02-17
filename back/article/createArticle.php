@@ -22,9 +22,29 @@ include __DIR__ . '/initVar.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Article
-
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 // Instanciation de la classe Article
+$monArticle = new ARTICLE();
 
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
+
+// Insertion classe Thematique
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
+// Instanciation de la classe Thematique
+$maThematique = new THEMATIQUE();
+
+// Insertion classe Angle
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+// Instanciation de la classe Angle
+$monAngle = new ANGLE();
+
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -36,14 +56,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // controle des saisies du formulaire
+    if (((isset($_POST['numArt'])) AND !empty($_POST['numArt']))
+    AND ((isset($_POST['dtCreArt'])) AND !empty($_POST['dtCreArt']))
+    AND ((isset($_POST['libTitrArt'])) AND !empty($_POST['libTitrArt']))
+    AND ((isset($_POST['libChapoArt'])) AND !empty($_POST['libChapoArt']))
+    AND ((isset($_POST['libAccrochArt'])) AND !empty($_POST['libAccrochArt']))
+    AND ((isset($_POST['parag1Art'])) AND !empty($_POST['parag1Art']))
+    AND ((isset($_POST['libSsTitr1Art'])) AND !empty($_POST['libSsTitr1Art']))
+    AND ((isset($_POST['parag2Art'])) AND !empty($_POST['parag2Art']))
+    AND ((isset($_POST['libSsTitr2Art'])) AND !empty($_POST['libSsTitr2Art']))
+    AND ((isset($_POST['parag3Art'])) AND !empty($_POST['parag3Art']))
+    AND ((isset($_POST['libConclArt'])) AND !empty($_POST['libConclArt']))
+    AND ((isset($_POST['urlPhotArt'])) AND !empty($_POST['urlPhotArt']))
+    AND ((isset($_POST['numAngl'])) AND !empty($_POST['numAngl']))
+    AND ((isset($_POST['numThem'])) AND !empty($_POST['numThem']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
+        $erreur = false;
+        $dtCreArt = ctrlSaisies(($_POST['dtCreArt']));
+        $libTitrArt = ctrlSaisies(($_POST['libTitrArt']));
+        $libChapoArt = ctrlSaisies(($_POST['libChapoArt']));
+        $libAccrochArt = ctrlSaisies(($_POST['libAccrochArt']));
+        $parag1Art = ctrlSaisies(($_POST['parag1Art']));
+        $libSsTitr1Art = ctrlSaisies(($_POST['libSsTitr1Art']));
+        $parag2Art = ctrlSaisies(($_POST['parag2Art']));
+        $libSsTitr2Art = ctrlSaisies(($_POST['libSsTitr2Art']));
+        $parag3Art = ctrlSaisies(($_POST['parag3Art']));
+        $libConclArt = ctrlSaisies(($_POST['libConclArt']));
+        $urlPhotArt = ctrlSaisies(($_POST['urlPhotArt']));
+        $numAngl = ctrlSaisies(($_POST['numAngl']));
+        $numThem = ctrlSaisies(($_POST['numThem']));
+    
+
+        $numNextArt = $monArticle->getNextNumArt($numLang);
+
+        $monArticle->create($numNextArt, $dtCreAr, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
+
+
+        header("Location: ./article.php");
+    }   // Fin if 
     // création effective de l'article
 
 
 
     // Gestion des erreurs => msg si saisies ko
-
-
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+        echo $errSaisies;
+    }   // End of else erreur saisies
+   
 
     // Traitnemnt : upload image => Nom image à la volée
 
@@ -76,19 +138,19 @@ include __DIR__ . '/initArticle.php';
       <fieldset>
         <legend class="legend1">Formulaire Article...</legend>
 
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+        <input type="hidden" id="id" name="id" value="<?php isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
         <div class="control-group">
             <label class="control-label" for="libTitrArt"><b>Titre :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libTitrArt']; ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
+                <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<?php if(isset($_GET['id'])){echo $_POST['libTitrArt'];} ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
             </div>
         </div>
         <br>
         <div class="control-group">
             <div class="controls">
             <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<? if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
+                <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<?php if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
             </div>
         </div>
         <br>
@@ -102,7 +164,7 @@ include __DIR__ . '/initArticle.php';
         <div class="control-group">
             <label class="control-label" for="libAccrochArt"><b>Accroche paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libAccrochArt" id="libAccrochArt" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libAccrochArt']; else echo $libAccrochArt; ?>" tabindex="40" placeholder="Sur 100 car." />
+                <input type="text" name="libAccrochArt" id="libAccrochArt" size="100" maxlength="100" value="<?php if(isset($_GET['id'])) echo $_POST['libAccrochArt']; else echo $libAccrochArt; ?>" tabindex="40" placeholder="Sur 100 car." />
             </div>
         </div>
         <br>
@@ -114,9 +176,9 @@ include __DIR__ . '/initArticle.php';
         </div>
         <br>
         <div class="control-group">
-            <label class="control-label" for="libSsTitr1Art"><b>Sous-titre 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>b></label>
+            <label class="control-label" for="libSsTitr1Art"><b>Sous-titre 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libSsTitr1Art" id="libSsTitr1Art" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libSsTitr1Art']; else echo $libSsTitr1Art; ?>" tabindex="60" placeholder="Sur 100 car." />
+                <input type="text" name="libSsTitr1Art" id="libSsTitr1Art" size="100" maxlength="100" value="<?php  if(isset($_GET['id'])) echo $_POST['libSsTitr1Art']; else echo $libSsTitr1Art; ?>" tabindex="60" placeholder="Sur 100 car." />
             </div>
         </div>
         <br>
@@ -128,9 +190,9 @@ include __DIR__ . '/initArticle.php';
         </div>
         <br>
         <div class="control-group">
-            <label class="control-label" for="libSsTitr2Art"><b>Sous-titre 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>b></label>
+            <label class="control-label" for="libSsTitr2Art"><b>Sous-titre 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libSsTitr2Art" id="libSsTitr2Art" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libSsTitr2Art']; else echo $libSsTitr2Art; ?>" tabindex="80" placeholder="Sur 100 car." />
+                <input type="text" name="libSsTitr2Art" id="libSsTitr2Art" size="100" maxlength="100" value="<?php if(isset($_GET['id'])) echo $_POST['libSsTitr2Art']; else echo $libSsTitr2Art; ?>" tabindex="80" placeholder="Sur 100 car." />
             </div>
         </div>
         <br>
@@ -165,23 +227,34 @@ include __DIR__ . '/initArticle.php';
 
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Langue -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="LibTypLang">
-                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                </label>
+ <!-- Listbox Langue -->
+<br>
+        <label for="LibTypLang" title="Sélectionnez la langue !">
+            <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idTypLang" name="idTypLang" value="<?php $numLang; ?>" />
+            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <option value="-1">- - - Choisissez une langue - - -</option>
+<?php
+                $listNumLang = "";
+                $listLib1Lang = "";
 
-
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" />
-
-                <!-- Listbox langue => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Langue -->
+                $result = $maLangue->get_AllLanguesByLib1Lang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumLang = $row["numLang"];
+                        $listLib1Lang = $row["lib1Lang"];
+?>
+                        <option value="<?php $listNumLang; ?>">
+                            <?php $listLib1Lang; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
+            
+    <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
 
@@ -189,41 +262,63 @@ include __DIR__ . '/initArticle.php';
     <!-- FK : Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Angle live share -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="LibTypAngl">
-                    <b>Quel angle :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                </label>
+    <!-- Listbox Angle -->
+    <br>
+        <label for="LibTypAngl" title="Sélectionnez l'angle !">
+            <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?php $numAngl; ?>" />
+            <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > -->
+                <option value="-1">- - - Choisissez un angle - - -</option>
+<?php
+                $listNumAngl = "";
+                $listLibAngl = "";
 
-
-                <input type="text" name="idAngl" id="idAngl" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" />
-
-                <!-- Listbox angle => 2ème temps -->
-
-            </div>
-        </div>
+                $result = $monAngle->get_AllLanguesOrderByLibLang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumAngl = $row["numAngl"];
+                        $listLibAngl = $row["libAngl"];
+?>
+                        <option value="<?php $listNumAngl ?>">
+                            <?php $listLibAngl; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
     <!-- FIN Listbox Angle -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Thématique -->
-    <!-- Grp 7 -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="LibTypThem">
-                    <b>Quelle thématique :&nbsp;&nbsp;&nbsp;</b>
-                </label>
+              <br>
+        <label for="LibTypThematique" title="Sélectionnez la thematique!">
+            <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idTypThem" name="idTypThem" value="<?php $numThem; ?>" />
+            <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > -->
+                <option value="-1">- - - Choisissez une thematique - - -</option>
+<?php
+                $listNumThem = "";
+                $listLibThem= "";
 
-
-                <input type="text" name="idThem" id="idThem" size="5" maxlength="5" value="<?= $numThem; ?>" autocomplete="on" />
-
-                <!-- Listbox thematique => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Thématique -->
+                $result = $maThematique->get_AllThematiquesByLang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumThem = $row["numThem"];
+                        $listLibThem = $row["libThem"];
+?>
+                        <option value="<?php $listNumThem; ?>">
+                            <?php $listLibThem; ?>
+                        </option>
+<?php
+                    } // End of foreach
+                }   // if ($result)
+?>
+            </select>
+            
+    <!-- FIN Listbox Thematique-->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
 
@@ -234,7 +329,7 @@ include __DIR__ . '/initArticle.php';
     <div class="controls">
         <label class="control-label" for="LibTypMotsCles1">
             <b>Choisissez les mots clés liés à l'article :&nbsp;&nbsp;&nbsp;</b>
-        </label>
+        </label>é
     </div>
     <!-- A faire dans un 2/3ème temps  -->
 
