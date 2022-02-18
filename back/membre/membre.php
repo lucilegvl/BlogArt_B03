@@ -68,7 +68,6 @@ $errDel = 0;
             <th>&nbsp;Pseudo&nbsp;</th>
             <th>&nbsp;eMail&nbsp;</th>
             <th>&nbsp;Date création&nbsp;</th>
-            <th>&nbsp;Connexion&nbsp;<br />&nbsp;auto&nbsp;</th>
             <th>&nbsp;Accord&nbsp;<br />&nbsp;RGPD&nbsp;</th>
             <th>&nbsp;Statut&nbsp;</th>
             <th colspan="2">&nbsp;Action&nbsp;</th>
@@ -82,7 +81,7 @@ $errDel = 0;
     $to = 'd/m/Y H:i:s';
 
     // Appel méthode : Get toutes les membres en BDD
-    $allMemb = $monMembre->get_AllMembres();
+    $allMemb = $monMembre->get_AllMembersByStat();
 
     // Boucle pour afficher
     
@@ -103,10 +102,9 @@ $errDel = 0;
 
             <td>&nbsp; <?php echo $dtCreaMemb; ?> &nbsp;</td>
 
-            <td>&nbsp; <?php echo $row['accordMemb']; ?> &nbsp;</td>
+            <td>&nbsp; <?php echo $row['accordMemb'] == 1 ? 'Oui' : 'Non' ; ?> &nbsp;</td>
 
-            <!-- Elle voulait libStat ici mais pour l'instant je met l'id -->
-            <td>&nbsp; <?php echo $row['idStat']; ?> &nbsp;</td>
+            <td>&nbsp; <?php echo $row['libStat']; ?> &nbsp;</td>
 
             <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateMembre.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier membre" title="Modifier membre" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
             <br /></td>
