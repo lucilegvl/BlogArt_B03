@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['id'];
+        $sameId=ctrlSaisies($_POST['id']);
         header("Location: ./updateLangue.php?id=".$sameId);
     }  
 
@@ -83,7 +83,7 @@ include __DIR__ . '/initLangue.php';
     <h2>Modification d'une langue</h2>
 <?php
     if (isset($_GET['id'])) {
-        $id=$_GET['id'];
+        $id=ctrlSaisies($_GET['id']);
         $req = $maLangue->get_1Langue($id);
         $lib1Lang = $req['lib1Lang'];
         $lib2Lang = $req['lib2Lang'];
