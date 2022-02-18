@@ -139,33 +139,21 @@ include __DIR__ . '/initThematique.php';
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->
 <!-- --------------------------------------------------------------- -->
-                  <!-- Listbox langue => 2ème temps -->
+
                   </div>
            <!-- Listbox Langue -->
            <br>
-        <label for="LibTypLang" title="Sélectionnez la langue !">
-            <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
-            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
-                <option value="-1"> Choisissez une langue </option>
-<?php
-                $listNumLang = "";
-                $listLib1Lang = "";
+                <label for="LibTypLang" title="Sélectionnez la langue !">
+                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+                </label>
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
-                if($result){
-                    foreach($result as $row) {
-                        $listNumLang = $row["numLang"];
-                        $listLib1Lang = $row["lib1Lang"];
-?>
-                        <option value="<?= $listNumLang; ?>">
-                            <?= $listLib1Lang; ?>
+                <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+                    <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
+
+                        <option value="<?=$idLang; ?>">
+                            <?= $idLang; ?>
                         </option>
-<?php
-                    } // End of foreach
-                }   // if ($result)
-?>
+
             </select>
             
     <!-- FIN Listbox langue-->

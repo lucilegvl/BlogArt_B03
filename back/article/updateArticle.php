@@ -26,20 +26,35 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Article
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 
 // Instanciation de la classe Article
+$monArticle = new ARTICLE();
 
+// Insertion classe Thematique
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
+// Instanciation de la classe Thematique
+$maThematique = new THEMATIQUE();
+
+// Insertion classe Angle
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+// Instanciation de la classe Angle
+$monAngle = new ANGLE();
+
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
 
 // Insertion classe MotCleArticle
-
+require_once __DIR__ . '/../../CLASS_CRUD/motclearticle.class.php';
 // Instanciation de la classe MotCleArticle
-
+$monMotCleArticle = new MOTCLEARTICLE();
 
 // Insertion classe MotCle
-
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 // Instanciation de la classe MotCle
-
-
+$monMotCle = new MOTCLE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -54,13 +69,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // controle des saisies du formulaire
+    if (isset($_POST['numArt']) AND !empty($_POST['numArt'])
+    AND isset($_POST['dtCreArt']) AND !empty($_POST['dtCreArt'])
+    AND isset($_POST['libTitrArt']) AND !empty($_POST['libTitrArt'])
+    AND isset($_POST['libChapoArt']) AND !empty($_POST['libChapoArt'])
+    AND isset($_POST['libAccrochArt']) AND !empty($_POST['libAccrochArt'])
+    AND isset($_POST['parag1Art']) AND !empty($_POST['parag1Art'])
+    AND isset($_POST['libSsTitr1Art']) AND !empty($_POST['libSsTitr1Art'])
+    AND isset($_POST['parag2Art']) AND !empty($_POST['parag2Art'])
+    AND isset($_POST['libSsTitr2Art']) AND !empty($_POST['libSsTitr2Art'])
+    AND isset($_POST['parag3Art']) AND !empty($_POST['parag3Art'])
+    AND isset($_POST['libConclArt']) AND !empty($_POST['libConclArt'])
+    AND isset($_POST['urlPhotArt']) AND !empty($_POST['urlPhotArt'])
+    AND isset($_POST['numAngl']) AND !empty($_POST['numAngl'])
+    AND isset($_POST['numThem']) AND !empty($_POST['numThem'])
+    AND !empty($_POST['Submit']) AND $Submit === "Valider") {
 
+        $erreur = false;
+        $dtCreArt = ctrlSaisies($_POST['dtCreArt']);
+        $libTitrArt = ctrlSaisies($_POST['libTitrArt']);
+        $libChapoArt = ctrlSaisies($_POST['libChapoArt']);
+        $libAccrochArt = ctrlSaisies($_POST['libAccrochArt']);
+        $parag1Art = ctrlSaisies($_POST['parag1Art']);
+        $libSsTitr1Art = ctrlSaisies($_POST['libSsTitr1Art']);
+        $parag2Art = ctrlSaisies($_POST['parag2Art']);
+        $libSsTitr2Art = ctrlSaisies($_POST['libSsTitr2Art']);
+        $parag3Art = ctrlSaisies($_POST['parag3Art']);
+        $libConclArt = ctrlSaisies($_POST['libConclArt']);
+        $urlPhotArt = ctrlSaisies($_POST['urlPhotArt']);
+        $numAngl = ctrlSaisies($_POST['numAngl']);
+        $numThem = ctrlSaisies($_POST['numThem']);
+    
+
+        $numNextArt = $monArticle->getNextNumArt($numLang);
+
+        $monArticle->update($numNextArt, $dtCreAr, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
+
+        header("Location: ./article.php");
+    }   // Fin if 
+   
     // modification effective du article
 
 
 
     // Gestion des erreurs => msg si saisies ko
-
+    else { // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+        echo $errSaisies;
+    }   // End of else erreur saisies
 
     // Traitnemnt : upload image => Chnager image
     // Nom image à la volée
@@ -98,24 +155,42 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
     // id passé en GET
 
 
+    if (isset($_GET['id'])) {
+        //ajouter ctrl saisies ici
 
-
-
-
-
+        $id=$_GET['id'];
+        $req = $monAngle->get_1Angle($id);
+        if ($req) {
+            $numArt = $req['numArt'];
+            $dtCreArt = $req['dtCreArt'];
+            $libTitrArt = $req['libTitrArt'];
+            $libChapoArt = $req['libChapoArt'];
+            $libAccrochArt = $req['libAccrochArt'];
+            $parag1Art = $req['parag1Art'];
+            $libSsTitr1Art = $req['ibSsTitr1Art'];
+            $parag2Art = $req['parag2Art'];
+            $libSsTitr2Art = $req['ibSsTitr2Art'];
+            $parag3Art = $req['parag3Art'];
+            $libConclArt = $req['libConclArt'];
+            $urlPhotArt = $req['urlPhotArt'];
+            $numAngl = $req['numAngl'];
+            $numThem = $req['numThem'];
+            $id = $req['numArt'];   
+        }
+    }
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8" id="chgLang">
+    <form method="POST" action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8" id="chgLang">
 
-      <fieldset>
+    <fieldset>
         <legend class="legend1">Formulaire Article...</legend>
 
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+        <input type="hidden" id="id" name="id" value="<?php isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
         <div class="control-group">
             <label class="control-label" for="libTitrArt"><b>Titre :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<?= $libTitrArt; ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
+                <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<?php $libTitrArt; ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
             </div>
         </div>
 
@@ -123,7 +198,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <div class="controls">
             <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="dtCreArt" id="dtCreArt" value="<?= $dtCreArt; ?>" tabindex="20" placeholder="" disabled />
+            <input type="text" name="dtCreArt" id="dtCreArt" value="<?php  $dtCreArt; ?>" tabindex="20" placeholder="" disabled />
             </div>
         </div>
 
@@ -131,7 +206,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="libChapoArt"><b>Chapeau :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <textarea name="libChapoArt" id="libChapoArt" rows="10" cols="100" tabindex="30" placeholder="Décrivez le chapeau. Sur 500 car." ><?= $libChapoArt; ?></textarea>
+                <textarea name="libChapoArt" id="libChapoArt" rows="10" cols="100" tabindex="30" placeholder="Décrivez le chapeau. Sur 500 car." ><?php $libChapoArt; ?></textarea>
             </div>
         </div>
 
@@ -139,7 +214,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="libAccrochArt"><b>Accroche paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libAccrochArt" id="libAccrochArt" size="100" maxlength="100" value="<?= $libAccrochArt; ?>" tabindex="40" placeholder="Sur 100 car." />
+                <input type="text" name="libAccrochArt" id="libAccrochArt" size="100" maxlength="100" value="<?php $libAccrochArt; ?>" tabindex="40" placeholder="Sur 100 car." />
             </div>
         </div>
 
@@ -147,7 +222,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="parag1Art"><b>Paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <textarea name="parag1Art" id="parag1Art" rows="10" cols="100" tabindex="50" placeholder="Décrivez le premier paragraphe. Sur 1200 car." ><?= $parag1Art; ?></textarea>
+                <textarea name="parag1Art" id="parag1Art" rows="10" cols="100" tabindex="50" placeholder="Décrivez le premier paragraphe. Sur 1200 car." ><?php $parag1Art; ?></textarea>
             </div>
         </div>
 
@@ -155,7 +230,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="libSsTitr1Art"><b>Sous-titre 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libSsTitr1Art" id="libSsTitr1Art" size="100" maxlength="100" value="<?= $libSsTitr1Art; ?>" tabindex="60" placeholder="Sur 100 car." />
+                <input type="text" name="libSsTitr1Art" id="libSsTitr1Art" size="100" maxlength="100" value="<?php $libSsTitr1Art; ?>" tabindex="60" placeholder="Sur 100 car." />
             </div>
         </div>
 
@@ -163,7 +238,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="parag2Art"><b>Paragraphe 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <textarea name="parag2Art" id="parag2Art" rows="10" cols="100" tabindex="70" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car." ><?= $parag2Art; ?></textarea>
+                <textarea name="parag2Art" id="parag2Art" rows="10" cols="100" tabindex="70" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car." ><?php $parag2Art; ?></textarea>
             </div>
         </div>
 
@@ -171,7 +246,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="libSsTitr2Art"><b>Sous-titre 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="text" name="libSsTitr2Art" id="libSsTitr2Art" size="100" maxlength="100" value="<?= $libSsTitr2Art; ?>" tabindex="80" placeholder="Sur 100 car." />
+                <input type="text" name="libSsTitr2Art" id="libSsTitr2Art" size="100" maxlength="100" value="<?php $libSsTitr2Art; ?>" tabindex="80" placeholder="Sur 100 car." />
             </div>
         </div>
 
@@ -179,7 +254,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="parag3Art"><b>Paragraphe 3 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <textarea name="parag3Art" id="parag3Art" rows="10" cols="100" tabindex="90" placeholder="Décrivez le troisième paragraphe. Sur 1200 car." ><?= $parag3Art; ?></textarea>
+                <textarea name="parag3Art" id="parag3Art" rows="10" cols="100" tabindex="90" placeholder="Décrivez le troisième paragraphe. Sur 1200 car." ><?php $parag3Art; ?></textarea>
             </div>
         </div>
 
@@ -187,7 +262,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="libConclArt"><b>Conclusion :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <textarea name="libConclArt" id="libConclArt" rows="10" cols="100" tabindex="100" placeholder="Décrivez la conclusion. Sur 800 car." ><?= $libConclArt; ?></textarea>
+                <textarea name="libConclArt" id="libConclArt" rows="10" cols="100" tabindex="100" placeholder="Décrivez la conclusion. Sur 800 car." ><?php $libConclArt; ?></textarea>
             </div>
         </div>
 
@@ -195,8 +270,8 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <label class="control-label" for="urlPhotArt"><b>Importez l'illustration :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="hidden" name="MAX_FILE_SIZE" id="MAX_FILE_SIZE" value="<?= MAX_SIZE; ?>" />
-                <input type="file" name="monfichier" id="monfichier" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" value="<?= "$urlPhotArt"; ?>" tabindex="110" placeholder="Sur 70 car." title="Recherchez l'image à uploader !" />
+                <input type="hidden" name="MAX_FILE_SIZE" id="MAX_FILE_SIZE" value="<?php MAX_SIZE; ?>" />
+                <input type="file" name="monfichier" id="monfichier" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" value="<?php "$urlPhotArt"; ?>" tabindex="110" placeholder="Sur 70 car." title="Recherchez l'image à uploader !" />
                 <p>
 <?php              // Gestion extension images acceptées
                   $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
@@ -204,7 +279,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                   echo "<i>" . $msgImagesOK . "</i>";
 ?>
                 </p>
-                <p><b><i>Image actuelle :&nbsp;&nbsp;<img src="<?= $targetDir . htmlspecialchars($urlPhotArt); ?>" height="183" width="275" /></i></b></p>
+                <p><b><i>Image actuelle :&nbsp;&nbsp;<img src="<?php $targetDir . htmlspecialchars($urlPhotArt); ?>" height="183" width="275" /></i></b></p>
 
             </div>
         </div>
@@ -220,7 +295,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                 </label>
 
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" />
+                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?php $numAngl; ?>" autocomplete="on" />
 
                 <!-- Listbox langue => 2ème temps -->
 
@@ -234,7 +309,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Angle live share -->
-        <br>
+        </br>
         <div class="control-group">
             <div class="controls">
                 <label class="control-label" for="LibTypAngl">
@@ -242,7 +317,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                 </label>
 
 
-                <input type="text" name="idAngl" id="idAngl" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" />
+                <input type="text" name="idAngl" id="idAngl" size="5" maxlength="5" value="<?php $numAngl; ?>" autocomplete="on" />
 
                 <!-- Listbox angle => 2ème temps -->
 
@@ -260,7 +335,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                 </label>
 
 
-                <input type="text" name="idThem" id="idThem" size="5" maxlength="5" value="<?= $numThem; ?>" autocomplete="on" />
+                <input type="text" name="idThem" id="idThem" size="5" maxlength="5" value="<?php $numThem; ?>" autocomplete="on" />
 
                 <!-- Listbox thematique => 2ème temps -->
 
@@ -312,7 +387,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                 <br>
             </div>
         </div>
-      </fieldset>
+    </fieldset>
     </form>
 
 <!-- --------------------------------------------------------------- -->
