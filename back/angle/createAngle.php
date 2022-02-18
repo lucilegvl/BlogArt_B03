@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     else {
         // Saisies invalides
         $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
+        $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
         }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -114,7 +114,7 @@ include __DIR__ . '/initAngle.php';
                 $listNumLang = "";
                 $listlib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang= $row["numLang"];
