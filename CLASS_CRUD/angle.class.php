@@ -16,15 +16,15 @@ class ANGLE{
 			return($result->fetch());
 	}
 
-	function get_1AngleByLang(string $numLang) {
+	function get_1AngleByLang(string $numAngl) {
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM ANGLE WHERE numLang = ?';
+		$query = 'SELECT * FROM ANGLE AN INNER JOIN LANGUE LA ON AN.numLang = LA.numLang WHERE numAngl = ?;';
 		// prepare
 		$result = $db->prepare($query);
 		// execute
-		$result->execute([$numLang]);
+		$result->execute([$numAngl]);
 		return($result->fetch());
 	}
 
