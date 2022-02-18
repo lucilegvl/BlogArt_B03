@@ -85,7 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
     // VALIDITÉ MAIL
-        // Vérification champs mails
+        // Vérification champs mdp
+
 
         // 2 mails identiques
         if (strcmp($eMail1Memb, $eMail2Memb)==0) {
@@ -128,9 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     AND !empty($_POST['Submit']) AND $Submit === "Valider") { 
         echo "WAW";
         $erreur = false;
-        //application méthode create
         $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $accordRGPD, $idStat);
-        //header("Location: ./membre.php");
+        header("Location: ./membre.php");
     } else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur! Certains champs sont vides ou incorrects. <br>";
