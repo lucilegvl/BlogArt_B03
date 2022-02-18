@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } 
     
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+        $sameId=$_POST['id'];
         header("Location: ./createLangue.php");
     }
 
@@ -41,14 +42,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
     AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
+    AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
         $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
         $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['TypPays']));
+  
 
-        $numLang = $maLangue->getNextNumLang($numPays);
+      $numLang = $maLangue->getNextNumLang($numPays);
 
         $maLangue->create($numLang, $lib1Langue, $lib2Langue, $numPays);
 
@@ -59,17 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errSaisies =  "Erreur, la saisie est obligatoire !";
         echo $errSaisies;
     }   // End of else erreur saisies
-
-    // création effective du user
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
-
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 
@@ -91,6 +83,7 @@ include __DIR__ . '/initLangue.php';
 <body>
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Ajout d'une langue</h2>
+
 
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
@@ -131,7 +124,7 @@ include __DIR__ . '/initLangue.php';
                         $listfrPays = $row["frPays"];
             ?>
                         <option value="<?php $listNumPays; ?>">
-                            <?php $listfrPays; ?>
+                            <?php echo $listfrPays; ?>
                         </option>
             <?php
                     } // End of foreach

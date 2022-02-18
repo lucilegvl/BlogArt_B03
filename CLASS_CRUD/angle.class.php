@@ -56,7 +56,7 @@ class ANGLE{
 	function get_AllLanguesOrderByLibLang(){
         global $db;
 
-        $query = 'SELECT * FROM LANGUE ORDER BY lib1Lang';
+        $query = 'SELECT * FROM ANGLE AN INNER JOIN LANGUE LA ON AN.numLang = LA.numLang';
         $result = $db->query($query);
         $allLanguesOrderByLibLang = $result->fetchAll();
         return($allLanguesOrderByLibLang);
