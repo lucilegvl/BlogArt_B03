@@ -123,6 +123,7 @@ include __DIR__ . '/initMotCle.php';
         if ($req) {
             $libMotCle = $req['libMotCle'];
             $idLang = $req['numLang'];
+            
         }
     }
 ?>
@@ -151,22 +152,22 @@ include __DIR__ . '/initMotCle.php';
             <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
                 <option value="-1"> Choisissez une langue </option>
 <?php
-                $listNumLang = "";
-                $listLib1Lang = "";
+                //$listNumLang = "";
+                //$listLib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                //$result = $maLangue->get_AllLanguesByLib1Lang();
 
-                if($result){
-                    foreach($result as $row) {
-                        $listNumLang = $row["numLang"];
-                        $listLib1Lang = $row["lib1Lang"];
-?>
-                        <option value="<?= $listNumLang; ?>">
-                            <?= $listLib1Lang; ?>
+                //if($result){
+                    //foreach($result as $row) {
+                       // $listNumLang = $row["numLang"];
+                        //$listLib1Lang = $row["lib1Lang"];
+?> 
+                        <option value="<?= $idLang; ?>">
+                            <?= $idLang; ?>
                         </option>
 <?php
-                    } // End of foreach
-                }   // if ($result)
+                     // End of foreach
+                   // if ($result)
 ?>
             </select>
         </div>
