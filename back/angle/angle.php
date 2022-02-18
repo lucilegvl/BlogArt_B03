@@ -80,7 +80,7 @@ $errDel = 0;
     <tbody>
 <?php
     // Appel méthode : Get tous les angles en BDD
-    $allAngles = $monAngle->get_AllLanguesOrderByLibLang();
+    $allAngles = $monAngle->get_AllAnglesByLang();
     // Boucle pour afficher
     //foreach($all as $row) {
     foreach($allAngles as $row) {

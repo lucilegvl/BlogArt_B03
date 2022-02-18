@@ -40,24 +40,23 @@ class ANGLE{
 		return($allAngles);
 	}
 
-	function get_AllAnglesByLang($numLang) {
+	function get_AllAnglesByLang() {
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM ANGLE WHERE numLang=?;';
-		// preparg
-		$result = $db->query($query);
+        $query = 'SELECT * FROM ANGLE AN INNER JOIN LANGUE LA ON AN.numLang = LA.numLang';
+		// prepare
+        $result = $db->query($query);
 		// execute
-		$result->execute([$numLang]);
 		$allAnglesByLang = $result->fetchAll();
 		return($allAnglesByLang);
 	}
 
 	function get_AllLanguesOrderByLibLang(){
         global $db;
-
-        $query = 'SELECT * FROM ANGLE AN INNER JOIN LANGUE LA ON AN.numLang = LA.numLang';
-        $result = $db->query($query);
+		// select
+		// prepare
+		// execute
         $allLanguesOrderByLibLang = $result->fetchAll();
         return($allLanguesOrderByLibLang);
     }

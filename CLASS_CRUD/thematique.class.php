@@ -41,17 +41,15 @@ class THEMATIQUE{
 		return($allThematiques);
 	}
 
-	function get_AllThematiquesByLang($numThem){
+	function get_AllThematiquesByLang(){
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM THEMATIQUE WHERE numThem=?';
+        $query = 'SELECT * FROM THEMATIQUE TH INNER JOIN LANGUE LA ON TH.numLang = LA.numLang';
 		// prepare
-		$result = $db->query($query);
+        $result = $db->query($query);
 		// execute
-		$result->execute([$numThem]);
 		$allThematiquesByLang = $result->fetchAll();
-
 		return($allThematiquesByLang);
 	}
 
