@@ -119,11 +119,14 @@ include __DIR__ . '/initMotCle.php';
 
         $id = ctrlSaisies($_GET['id']);
         echo $id;
+
         $req = $monMotCle->get_1MotCle($id);
         if ($req) {
             $libMotCle = $req['libMotCle'];
-            $idLang = $req['numLang'];
-        }
+            $numLang = $req['numLang'];
+            
+            $request = $maLangue->get_1Langue($numLang);
+            $lib1Lang=$request['lib1Lang'];         }
     }
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -149,24 +152,24 @@ include __DIR__ . '/initMotCle.php';
         </label>
         <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
             <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
-                <option value="-1"> Choisissez une langue </option>
+                <!-- <option value="-1"> Choisissez une langue </option> -->
 <?php
-                $listNumLang = "";
-                $listLib1Lang = "";
+                //$listNumLang = "";
+                //$listLib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                //$result = $maLangue->get_AllLanguesByLib1Lang();
 
-                if($result){
-                    foreach($result as $row) {
-                        $listNumLang = $row["numLang"];
-                        $listLib1Lang = $row["lib1Lang"];
-?>
-                        <option value="<?= $listNumLang; ?>">
-                            <?= $listLib1Lang; ?>
+                //if($result){
+                    //foreach($result as $row) {
+                       // $listNumLang = $row["numLang"];
+                        //$listLib1Lang = $row["lib1Lang"];
+?> 
+                        <option value="<?= $lib1Lang; ?>">
+                            <?= $lib1Lang; ?>
                         </option>
 <?php
-                    } // End of foreach
-                }   // if ($result)
+                     // End of foreach
+                   // if ($result)
 ?>
             </select>
         </div>

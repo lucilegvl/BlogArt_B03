@@ -45,13 +45,25 @@ class THEMATIQUE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM THEMATIQUE WHERE numThem=?';
+        $query = 'SELECT * FROM THEMATIQUE TH INNER JOIN LANGUE LA ON TH.numLang = LA.numLang';
+		// prepare
+        $result = $db->query($query);
+		// execute
+		$allThematiquesByLang = $result->fetchAll();
+		return($allThematiquesByLang);
+	}
+
+	function get_AllThematiquesByLibThem(){
+		global $db;
+
+		// select
+		$query = 'SELECT * FROM THEMATIQUE ORDER BY libThem;';
 		// prepare
 		$result = $db->query($query);
 		// execute
-		$allThematiquesByLang = $result->fetchAll();
+		$allThematiquesByLibThem = $result->fetchAll();
 
-		return($allThematiquesByLang);
+		return($allThematiquesByLibThem);
 	}
 	function get_AllLanguesOrderByLibLang(){
         global $db;
