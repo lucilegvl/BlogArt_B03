@@ -37,6 +37,7 @@ class ARTICLE{
 		$result = $db->query($query);
 		// execute
 		$allArticles = $result->fetchAll();
+		
 		return($allArticles);
 	}
 
@@ -62,7 +63,7 @@ class ARTICLE{
 		// execute
 		$allNbArticlesBynumAngl->execute([$numAngl]);
 		$count = $allNbArticlesBynumAngl->rowCount();
-		return($allNbArticlesBynumAngl);
+		return($count);
 	}
 
 	function get_NbAllArticlesByNumThem($numThem){
@@ -145,8 +146,11 @@ class ARTICLE{
 			$db->beginTransaction();
 
 			// insert
+			$query = 'INSERT INTO ARTICLE (dtCreArt, libTitrArt, $ibChapoArt, libAccrochArt, parag1Art, libSsTitr1Art, parag2Art, libSsTitr2Art, parag3Art, libConclArt, urlPhotArt, numAngl, numThem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?,?)';
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -164,8 +168,11 @@ class ARTICLE{
 			$db->beginTransaction();
 
 			// update
+			$query = "UPDATE THEMATIQUE SET NumAngl = ?,  libChapoArt = ?, libTitrArt = ?, libAccrochArt = ?, parag1Art = ?, libSsTitr1Art = ?, parag2Art = ?, libSsTitr2Art = ?, parag3Art = ?, libConclArt = ?, urlPhotArt = ?, numThem = ?, WHERE numArt = ?";
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$numAngl, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numThem, $numArt]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -183,10 +190,15 @@ class ARTICLE{
 			$db->beginTransaction();
 
 			// delete
+			$query="DELETE FROM ARTICLE WHERE numArt = ?";
 			// prepare
+			$request=$db->prepare($query);
 			// execute
+			$request->execute([$numArt]);
+			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();
+			return($count);
 		}
 		catch (PDOException $e) {
 			$db->rollBack();

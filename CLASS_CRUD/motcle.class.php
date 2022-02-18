@@ -47,12 +47,11 @@ class MOTCLE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM MOTCLE WHERE numMotCle=?';
+        $query = 'SELECT * FROM MOTCLE MC INNER JOIN LANGUE LA ON MC.numLang = LA.numLang';
 		// prepare
 		$result = $db->query($query);
 		// execute
-		$allMotsClesByPays = $result->fetchAll();
-
+		$allMotsClesByLang = $result->fetchAll();
 		return($allMotsClesByLang);
 	}
 
@@ -60,13 +59,13 @@ class MOTCLE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM MOTCLE ORDER BY libMotCle;';
+		$query = 'SELECT * FROM MOTCLE ORDER BY numLang=?';
 		// prepare
 		$result = $db->query($query);
 		// execute
-		$NbAllMotsClesBynumLang = $result->fetchAll();
-
-		return($allNbMotsClesBynumLang);
+		$result->execute([$numLang]);
+		$count = $result->rowCount();
+		return($count);
 	}
 
 	// Sortir mots clés déjà sélectionnés dans MOTCLE (TJ) dans ARTICLE
@@ -197,8 +196,11 @@ class MOTCLE{
 			$db->beginTransaction();
 
 			// delete
+			$query="DELETE FROM MOTCLE WHERE numMotCle = ?";
 			// prepare
+			$request=$db->prepare($query);
 			// execute
+			$request->execute([$numMotCle]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } 
     
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-    
+        $sameId=$_POST['id'];
         header("Location: ./createAngle.php");
     }
 

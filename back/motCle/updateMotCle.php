@@ -19,6 +19,11 @@ require_once __DIR__ . '/../../CLASS_CRUD/motCle.class.php';
 // Instanciation de la classe MotCle
 $monMotCle = new MOTCLE();
 
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+
+// Instanciation de la classe langue
+$maLangue = new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -32,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId=$_POST['id'];
+        $sameId= $_POST['id'];
         header("Location: ./updateMotCle.php?id=".$sameId);
     }  
 
@@ -42,17 +47,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $erreur = false;
 
+        $numMotCle = ctrlSaisies($_POST['id']);
         $libMotCle = ctrlSaisies($_POST['libMotCle']);
         $numLang = ctrlSaisies($_POST['TypLang']);
-        $numMotCle = ctrlSaisies($_POST['id']);
+       
 
-        $monMotCle->update($libMotCle, $numLang); //modification effective du mot clé
+        $monMotCle->update($numMotCle, $libMotCle, $numLang); //modification effective du mot clé
 
         header("Location: ./motCle.php");
     }   // Fin if ((isset($_POST['libStat'])) 
     
 
     else { // Saisies invalides
+        echo "aie";
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }
@@ -81,18 +88,19 @@ include __DIR__ . '/initMotCle.php';
     // Modif : récup id à modifier
     // id passé en GET
 
-    if (isset($_GET['id'])) {
         //ajouter ctrl saisies ici
 
-        $id=$_GET['id'];
-        $req = $monMotCle->get_1MotCle($id);
-        
-        if ($req) {
-            $libMotCle = $req['libMotCle'];
-            $numLang = $req['id'];
-            $id = $req['numLang'];
+        if (isset($_GET['id'])) { //toujours update delete
+
+            $id = ctrlSaisies($_GET['id']);
+            echo $id;
+            $req = $monMotCle->get_1MotCle($id);
+            if ($req) {
+                $libMotCle = $req['libMotCle'];
+                $idLang = $req['numLang'];
+            }
         }
-    }
+        
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
@@ -110,23 +118,21 @@ include __DIR__ . '/initMotCle.php';
     <!-- FK : Langue -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox langue -->
-        <br>
-
-        <div class="control-group">
-            <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
-                <!-- Listbox langue => 2ème temps -->
-                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                    <option value="-1">- - - Choisissez une langue - - -</option>
-                <option value="-1">- - - Choisissez une langue - - -</option>
+    <br>
+        <label for="LibTypLang" title="Sélectionnez la langue !">
+            <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+        </label>
+        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+                <option value="-1"> Choisissez une langue </option>
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";
+
                 $result = $maLangue->get_AllLanguesByLib1Lang();
 
                 if($result){
-                    
                     foreach($result as $row) {
-
                         $listNumLang = $row["numLang"];
                         $listLib1Lang = $row["lib1Lang"];
 ?>
