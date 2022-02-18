@@ -40,14 +40,15 @@ class ANGLE{
 		return($allAngles);
 	}
 
-	function get_AllAnglesByLang() {
+	function get_AllAnglesByLang($numLang) {
 		global $db;
 
 		// select
 		$query = 'SELECT * FROM ANGLE WHERE numLang=?;';
-		// prepare
+		// preparg
 		$result = $db->query($query);
 		// execute
+		$result->execute([$numLang]);
 		$allAnglesByLang = $result->fetchAll();
 		return($allAnglesByLang);
 	}

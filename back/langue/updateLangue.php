@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+        $sameId=$_POST['id'];
         header("Location: ./updateLangue.php?id=".$sameId);
     }  
 
@@ -81,18 +82,17 @@ include __DIR__ . '/initLangue.php';
     <h1>BLOGART22 Admin - CRUD Langue</h1>
     <h2>Modification d'une langue</h2>
 <?php
-        if (isset($_GET['id'])) {
+    if (isset($_GET['id'])) {
+        $id=$_GET['id'];
+        $req = $maLangue->get_1Langue($id);
+        $lib1Lang = $req['lib1Lang'];
+        $lib2Lang = $req['lib2Lang'];
+        $numLang = $req['numLang'];
+        $numPays = $req['numPays'];
 
-            $id=$_GET['id'];
-            $req = $maLangue->get_1Langue($id);
-
-            if ($req) {
-                $lib1Lang = $req['lib1Lang'];
-                $lib2Lang = $req['lib2Lang'];
-                $numLang = $req['numLang'];
-                $id = $req['numLang'];
-            }
-        }
+        $request=$monPays->get_1Pays($numPays);
+        $frPays=$request['frPays'];
+    }
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -117,9 +117,10 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $id; ?>" />
+        <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
-                <option value="-1">- - - Choisissez un pays - - -</option>
+                <option value="-1"><?= $frPays; ?>
+                </option>
 <?php
                 $listNumPays = "";
                 $listfrPays = "";
