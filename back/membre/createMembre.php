@@ -45,9 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
     if (isset($_POST["Submit"]) AND $Submit === "Initialiser") {
-
         header("Location: ./createMembre.php");
-    }   // End of if ((isset($_POST["submit"])) ...
+    }
 
     if (isset($_POST['prenomMemb']) AND !empty($_POST['prenomMemb'])
         AND isset($_POST['nomMemb']) AND !empty($_POST['nomMemb'])
@@ -57,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         AND isset($_POST['eMail1Memb']) AND !empty($_POST['eMail1Memb'])
         AND isset($_POST['eMail2Memb']) AND !empty($_POST['eMail2Memb'])
         AND isset($_POST['accordMemb']) AND !empty($_POST['accordMemb'])
-        AND isset($_POST['TypStat']) AND !empty($_POST['TypStat'])
+        AND isset($_POST['idStat']) AND !empty($_POST['idStat'])
         AND !empty($_POST['Submit']) AND $Submit === "Valider") {
 
         // Saisies valides
@@ -74,26 +73,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $dtCreaMemb = date("Y-m-d-H-i-s");
         $valAccordMemb = ctrlSaisies($_POST['accordMemb']); // Form
         $accordMemb = ($valAccordMemb == "on") ? 1 : 0; // test avant insert
-        $idStat = ctrlSaisies($_POST['TypStat']);
+        $idStat = ctrlSaisies($_POST['idStat']);
 
-        // ----------------------------------------------------------------
         // CTRL saisies
         // PSEUDO
         if($pseudoLength >= 6 AND $pseudoLength <= 70){
-            $pseudoExist = $monMembre->get_ExistPseudo($pseudoMemb);
-            if($pseudoExist == 0){
-                $pseudoExistF1 = 1;
-                $msgErrExistPseudo = "";
-            }else{
-                $pseudoExistF1 = 0;
-                $msgErrExistPseudo = "&nbsp;&nbsp;- Ce pseudo existe déjà<br>";
-            }
             $pseudoF1 = 1;
             $msgErrPseudo = "";
         }else{
             $pseudoF1 = 0;
-            $msgErrPseudo = "&nbsp;&nbsp;- Le pseudo doit être compris entre 6 et 70 caractères<br>";
+            $msgErrPseudo = "&nbsp;&nbsp;- Votre pseudo doit être constitué de 6 à 70 caractères. <br>";
         }
+
+        $pseudoExist = $monMembre->get_ExistPseudo($pseudoMemb);
+        if($pseudoExist == 0){
+            $pseudoExistF1 = 1;
+            $msgErrExistPseudo = "";
+        }else{
+            $pseudoExistF1 = 0;
+            $msgErrExistPseudo = "&nbsp;&nbsp;- Ce pseudo existe déjà<br>";
+        }
+
         // ----------------------------------------------------------------
         // VALIDITÉ MAIL : Avec la fonction filter_var() ou un regex
         if(filter_var($eMail1Memb, FILTER_VALIDATE_EMAIL)){
@@ -103,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail1F1 = 0;    // FALSE
             $msgErrMail1 = "&nbsp;&nbsp;- Premier mail invalide<br>";
         }
+
         if(filter_var($eMail2Memb, FILTER_VALIDATE_EMAIL)){
             $mail2F1 = 1;    // TRUE
             $msgErrMail2 = "";
@@ -118,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $msgErrMailIdentiq = "";
             }else{
                 $mailIdentiqF1 = 0;
-                $msgErrMailIdentiq = "&nbsp;&nbsp;- Les 2 mails doivent être identiques<br>";
+                $msgErrMailIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mails différents. <br>";
             }
         }
         // ----------------------------------------------------------------
@@ -126,20 +127,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if($pass1Memb == $pass2Memb){
             $passIdentiqF1 = 1;
             $msgErrPassIdentiq = "";
-            if(isPassWord($pass1Memb)){
-                $passValidF1 = 1;
-                $msgErrPassValid = "";
-                // Cryptage du password
-                // cost : meilleur coût algo cryptage (10: defaut)
-                // $pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
-            }else{
-                $passValidF1 = 0;
-                $msgErrPassValid = "&nbsp;&nbsp;- Le password n'est pas valide<br>";
-            }
         }else{
             $passIdentiqF1 = 0;
-            $msgErrPassIdentiq = "&nbsp;&nbsp;- Les 2 passwords doivent être identiques<br>";
+            $msgErrPassIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mots de passe différents. <br>";
         }
+
+        if(isPassWord($pass1Memb)){
+            $passValidF1 = 1;
+            $msgErrPassValid = "";
+            // Cryptage du password
+            // cost : meilleur coût algo cryptage (10: defaut)
+            // $pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
+        }else{
+            $passValidF1 = 0;
+            $msgErrPassValid = "&nbsp;&nbsp;- Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre, <br> 
+            un caractère spécial, et être compris entre 6 et 15 carcatères.";
+        }
+
         // ----------------------------------------------------------------
         // ACCORD RGPD
         if($accordMemb == 1){
@@ -173,6 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }   // Fin else erreur saisies
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
+
 // Init variables form
 include __DIR__ . '/initMembre.php';
 ?>
@@ -297,11 +302,9 @@ include __DIR__ . '/initMembre.php';
         <!-- Listbox statut -->
             <br><br>
             <div class="control-group">
-                <label class="control-label" for="LibTypStat"><b>Statut :&nbsp;&nbsp;&nbsp;</b></label>
+                <label class="control-label" for="LibTypStat"><b>Statut :&nbsp;&nbsp;&nbsp;</b></label>   
 
-                <input type="hidden" id="idStat" name="idStat" value="<?php echo $idStat;?>" />    
-
-                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez un statut." >
+                <select size="1" name="idStat" id="idStat"  class="form-control form-control-create" title="Sélectionnez un statut." >
                     <option value="-1">- - - Choisissez un statut - - -</option>
 
                     <?php
