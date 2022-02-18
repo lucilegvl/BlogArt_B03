@@ -53,6 +53,19 @@ class THEMATIQUE{
 
 		return($allThematiquesByLang);
 	}
+
+	function get_AllThematiquesByLibThem(){
+		global $db;
+
+		// select
+		$query = 'SELECT * FROM THEMATIQUE ORDER BY libThem;';
+		// prepare
+		$result = $db->query($query);
+		// execute
+		$allThematiquesByLibThem = $result->fetchAll();
+
+		return($allThematiquesByLibThem);
+	}
 	function get_AllLanguesOrderByLibLang(){
         global $db;
 

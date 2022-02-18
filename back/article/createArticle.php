@@ -26,11 +26,6 @@ require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();
 
-// Insertion classe Langue
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
-// Instanciation de la classe Langue
-$maLangue = new LANGUE();
-
 // Insertion classe Thematique
 require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe Thematique
@@ -56,9 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // controle des saisies du formulaire
-    if (((isset($_POST['numArt'])) AND !empty($_POST['numArt']))
-    AND ((isset($_POST['dtCreArt'])) AND !empty($_POST['dtCreArt']))
-    AND ((isset($_POST['libTitrArt'])) AND !empty($_POST['libTitrArt']))
+    if (((isset($_POST['libTitrArt'])) AND !empty($_POST['libTitrArt']))
     AND ((isset($_POST['libChapoArt'])) AND !empty($_POST['libChapoArt']))
     AND ((isset($_POST['libAccrochArt'])) AND !empty($_POST['libAccrochArt']))
     AND ((isset($_POST['parag1Art'])) AND !empty($_POST['parag1Art']))
@@ -68,8 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     AND ((isset($_POST['parag3Art'])) AND !empty($_POST['parag3Art']))
     AND ((isset($_POST['libConclArt'])) AND !empty($_POST['libConclArt']))
     AND ((isset($_POST['urlPhotArt'])) AND !empty($_POST['urlPhotArt']))
-    AND ((isset($_POST['numAngl'])) AND !empty($_POST['numAngl']))
-    AND ((isset($_POST['numThem'])) AND !empty($_POST['numThem']))
+    //AND ((isset($_POST['numAngl'])) AND !empty($_POST['numAngl']))
+    //AND ((isset($_POST['dtCreArt'])) AND !empty($_POST['dtCreArt']))
+    //AND ((isset($_POST['numThem'])) AND !empty($_POST['numThem']))
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
 
         $erreur = false;
@@ -90,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numNextArt = $monArticle->getNextNumArt($numLang);
 
-        $monArticle->create($numNextArt, $dtCreAr, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
+        $monArticle->create($numNextArt, $dtCreArt, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
 
 
         header("Location: ./article.php");
@@ -228,31 +222,41 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
  <!-- Listbox Langue -->
-<br>
-        <label for="LibTypLang" title="Sélectionnez la langue !">
-            <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-        <input type="hidden" id="idTypLang" name="idTypLang" value="<?php $numLang; ?>" />
-            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+ <br>
+        <div class="control-group">
+            <div class="controls">
+            <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
+                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+            </label>
+
+            <!-- Listbox langue => 2ème temps -->
+
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
                 <option value="-1">- - - Choisissez une langue - - -</option>
-<?php
+
+            <?php
                 $listNumLang = "";
-                $listLib1Lang = "";
+                $listlib1Lang = "";
 
                 $result = $maLangue->get_AllLanguesByLib1Lang();
                 if($result){
                     foreach($result as $row) {
-                        $listNumLang = $row["numLang"];
-                        $listLib1Lang = $row["lib1Lang"];
-?>
-                        <option value="<?php $listNumLang; ?>">
-                            <?php $listLib1Lang; ?>
+                        $listNumLang= $row["numLang"];
+                        $listlib1Lang = $row["lib1Lang"];
+            ?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listlib1Lang; ?>
                         </option>
-<?php
+            <?php
                     } // End of foreach
                 }   // if ($result)
-?>
+            ?>
+
             </select>
+
+            </div>
+        </div>
             
     <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->
@@ -264,59 +268,79 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Angle -->
     <br>
-        <label for="LibTypAngl" title="Sélectionnez l'angle !">
-            <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-        <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?php $numAngl; ?>" />
-            <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > -->
-                <option value="-1">- - - Choisissez un angle - - -</option>
-<?php
-                $listNumAngl = "";
-                $listLibAngl = "";
+        <div class="control-group">
+            <div class="controls">
+            <label class="control-label" for="LibTypAngl" title="Sélectionnez l'angle !">
+                <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
+            </label>
 
-                $result = $monAngle->get_AllLanguesOrderByLibLang();
+            <!-- Listbox Angle => 2ème temps -->
+
+            <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
+                <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
+                <option value="-1">- - - Choisissez un angle - - -</option>
+
+            <?php
+                $listNumAngl = "";
+                $listlibAngl = "";
+
+                $result = $monAngle-> get_AllAnglesByLibAngl();
                 if($result){
                     foreach($result as $row) {
-                        $listNumAngl = $row["numAngl"];
-                        $listLibAngl = $row["libAngl"];
-?>
-                        <option value="<?php $listNumAngl ?>">
-                            <?php $listLibAngl; ?>
+                        $listNumAngl= $row["numAngl"];
+                        $listlibAngl = $row["libAngl"];
+            ?>
+                        <option value="<?= $listNumAngl; ?>">
+                            <?= $listlibAngl; ?>
                         </option>
-<?php
+            <?php
                     } // End of foreach
                 }   // if ($result)
-?>
+            ?>
+
             </select>
+
+            </div>
+        </div>
     <!-- FIN Listbox Angle -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Thématique -->
-              <br>
-        <label for="LibTypThematique" title="Sélectionnez la thematique!">
-            <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-        <input type="hidden" id="idTypThem" name="idTypThem" value="<?php $numThem; ?>" />
-            <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > -->
-                <option value="-1">- - - Choisissez une thematique - - -</option>
-<?php
-                $listNumThem = "";
-                $listLibThem= "";
+    <br>
+        <div class="control-group">
+            <div class="controls">
+            <label class="control-label" for="LibTypThem" title="Sélectionnez la thematique !">
+                <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
+            </label>
 
-                $result = $maThematique->get_AllThematiquesByLang();
+            <!-- Listbox Thématique=> 2ème temps -->
+
+            <input type="hidden" id="idTypThem" name="idTypThem" value="<?= $numThem; ?>" />
+                <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > 
+                <option value="-1">- - - Choisissez une thematique - - -</option>
+
+            <?php
+                $listNumThem = "";
+                $listlibThem = "";
+
+                $result = $maThematique->get_AllThematiquesByLibThem ();
                 if($result){
                     foreach($result as $row) {
-                        $listNumThem = $row["numThem"];
-                        $listLibThem = $row["libThem"];
-?>
-                        <option value="<?php $listNumThem; ?>">
-                            <?php $listLibThem; ?>
+                        $listNumThem= $row["numThem"];
+                        $listlibThem = $row["libThem"];
+            ?>
+                        <option value="<?= $listNumThem; ?>">
+                            <?= $listlibThem; ?>
                         </option>
-<?php
+            <?php
                     } // End of foreach
                 }   // if ($result)
-?>
+            ?>
+
             </select>
+
+            </div>
+        </div>
             
     <!-- FIN Listbox Thematique-->
 <!-- --------------------------------------------------------------- -->
@@ -329,7 +353,7 @@ include __DIR__ . '/initArticle.php';
     <div class="controls">
         <label class="control-label" for="LibTypMotsCles1">
             <b>Choisissez les mots clés liés à l'article :&nbsp;&nbsp;&nbsp;</b>
-        </label>é
+        </label>
     </div>
     <!-- A faire dans un 2/3ème temps  -->
 
