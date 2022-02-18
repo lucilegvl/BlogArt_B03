@@ -57,7 +57,7 @@ class LANGUE{
 		return($allLanguesByPays);
 	}
 
-	function get_AllLanguesByLib1Lang(){
+	function get_AllLanguesOrderByLib1Lang(){
 		global $db;
 
 		// select
