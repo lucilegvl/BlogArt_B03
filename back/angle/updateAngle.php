@@ -88,16 +88,16 @@ include __DIR__ . '/initAngle.php';
     if (isset($_GET['id'])) {
         //ajouter ctrl saisies ici
 
-        $id=$_GET['id'];
+        $id=ctrlSaisies($_GET['id']);
         $req = $monAngle->get_1Angle($id);
-        if ($req) {
+
             $numAngl = $req['numAngl'];
             $libAngl = $req['libAngl'];
             $numLang = $req['numLang'];
 
             $request = $maLangue->get_1Langue($numLang);
             $lib1Lang=$request['lib1Lang'];
-        }
+        
     }
 ?>
 
