@@ -27,7 +27,6 @@ require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Article
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
-
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();
 
@@ -243,7 +242,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         //ajouter ctrl saisies ici
 
         $id=$_GET['id'];
-        $req = $monAngle->get_1Angle($id);
+        $req = $monArticle->get_1Article ($id);
         if ($req) {
             $numArt = $req['numArt'];
             $dtCreArt = $req['dtCreArt'];
@@ -251,9 +250,9 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
             $libChapoArt = $req['libChapoArt'];
             $libAccrochArt = $req['libAccrochArt'];
             $parag1Art = $req['parag1Art'];
-            $libSsTitr1Art = $req['ibSsTitr1Art'];
+            $libSsTitr1Art = $req['libSsTitr1Art'];
             $parag2Art = $req['parag2Art'];
-            $libSsTitr2Art = $req['ibSsTitr2Art'];
+            $libSsTitr2Art = $req['libSsTitr2Art'];
             $parag3Art = $req['parag3Art'];
             $libConclArt = $req['libConclArt'];
             $urlPhotArt = $req['urlPhotArt'];
