@@ -75,7 +75,7 @@ $errDel = 0;
     <tbody>
 <?php
     // Appel méthode : Get toutes les langues en BDD
-    $allLangues = $maLangue->get_allLangues();
+    $allLangues = $maLangue->get_AllLanguesByPays();
     $pays = $monPays->get_AllPays();
     // Boucle pour afficher
 
@@ -88,7 +88,7 @@ $errDel = 0;
 
         <td>&nbsp; <?php echo $row['lib2Lang']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?php echo $row["numPays"]; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo $row["frPays"]; ?> &nbsp;</td>
 
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLangue.php?id=<?=$row['numLang']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier langue" title="Modifier langue" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>

@@ -49,12 +49,11 @@ class LANGUE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM LANGUE WHERE numPays=?';
+        $query = 'SELECT * FROM LANGUE LA INNER JOIN PAYS PA ON LA.numPays = PA.numPays';
 		// prepare
 		$result = $db->query($query);
 		// execute
 		$allLanguesByPays = $result->fetchAll();
-
 		return($allLanguesByPays);
 	}
 
