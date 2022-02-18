@@ -21,7 +21,7 @@ class MOTCLE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM MOTCLE WHERE numMotCle = ?';
+		$query = 'SELECT * FROM MOTCLE MC INNER JOIN LANGUE LA ON MC.numLang = LA.numLang WHERE numMotCle = ?;';
 		// prepare
 		$result = $db->prepare($query);
 		// execute
