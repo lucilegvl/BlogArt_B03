@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pass2Memb = ctrlSaisies($_POST['pass2Memb']);
     $eMail1Memb = ctrlSaisies($_POST['eMail1Memb']);
     $eMail2Memb = ctrlSaisies($_POST['eMail2Memb']);
-    $idStat = ctrlSaisies($_POST['idStat']);
+    $idStat = ctrlSaisies($_POST['TypLang']);
 
     // VALIDITÉ PSEUDO
         // Disponible ou non
@@ -129,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "WAW";
         $erreur = false;
         //application méthode create
-        $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $accordRGPD, $listlibStat);
+        $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $accordRGPD, $idStat);
         //header("Location: ./membre.php");
     } else { // Saisies invalides
         $erreur = true;
