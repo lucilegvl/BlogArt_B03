@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     else {
         // Saisies invalides
         $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
+        $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
         }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
