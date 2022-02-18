@@ -49,6 +49,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
+    // images uploadées sur DD (serveur)
+    //
+    // Script : ctrlerUploadImage.php
+    // Init constantes
+    include __DIR__ . '/initConst.php';
+    
+    // Init variables
+    include __DIR__ . '/initVar.php';
+    
+    /************************************************************
+     * Creation dossier cible si inexistant
+     *************************************************************/
+    if (!is_dir(TARGET)) {
+        if (!mkdir(TARGET, 0755)) {
+          exit("<p><font color='red'>Erreur : création du dossier 'uploads' impossible ! <br>Vérifiez les droits en création ou créer le dossier en amont !</font>");
+        } // End of if (!mkdir(TARGET, 0755))
+    } else {
+        $target_OK = true;
+    }
 
     // controle des saisies du formulaire
     if (((isset($_POST['libTitrArt'])) AND !empty($_POST['libTitrArt']))

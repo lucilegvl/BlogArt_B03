@@ -41,7 +41,7 @@ class THEMATIQUE{
 		return($allThematiques);
 	}
 
-	function get_AllThematiquesByLang(){
+	function get_AllThematiquesByLang($numThem){
 		global $db;
 
 		// select
@@ -49,6 +49,7 @@ class THEMATIQUE{
 		// prepare
 		$result = $db->query($query);
 		// execute
+		$result->execute([$numThem]);
 		$allThematiquesByLang = $result->fetchAll();
 
 		return($allThematiquesByLang);

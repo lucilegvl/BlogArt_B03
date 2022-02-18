@@ -66,6 +66,90 @@ $targetDir = TARGET;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+/************************************************************
+ * Script d'upload
+ *************************************************************/
+
+/*-- --------------------------------------------------------------- --*/
+// Recuperation extension fichier
+$extension  = pathinfo($_FILES['monfichier']['name'], PATHINFO_EXTENSION);
+
+// verif extension fichier
+if (in_array(strtolower($extension), $tabExt)) {
+  // recup dimensions fichier
+  $infosImg = getimagesize($_FILES['monfichier']['tmp_name']);
+
+  // verif type image
+  if ($infosImg[2] >= 1 AND $infosImg[2] <= 14) {
+    // verif dimensions et taille image
+    if (($infosImg[0] <= WIDTH_MAX) AND ($infosImg[1] <= HEIGHT_MAX) AND
+        (filesize($_FILES['monfichier']['tmp_name']) <= MAX_SIZE)) {
+      // Parcours tableau erreurs
+      if (isset($_FILES['monfichier']['error']) AND
+         UPLOAD_ERR_OK === $_FILES['monfichier']['error']) { // Vérif typage
+        // rename fichier
+        $nomImage = 'imgArt' . md5(uniqid()) . '.' . $extension;
+
+        if (move_uploaded_file($_FILES['monfichier']['tmp_name'], TARGET.$nomImage)) {
+            // upload OK
+            $etatImg = 1;
+            $uploadOK = true;
+        } else {
+            // erreur systeme
+            $etatImg = 2;
+        }
+      } else {
+          // erreur interne
+          $etatImg = 3;
+      }
+    } else {
+        // erreur dimensions et taille image
+        $etatImg = 4;
+    }
+  } else {
+      // erreur type image
+      $etatImg = 5;
+  }
+} else {
+  // erreur pour l'extension
+  $etatImg = 6;
+}
+/*-- --------------------------------------------------------------- --*/
+    switch ($etatImg) {
+        // Si OK, test upload
+        case 1:
+            $msg = "<p>Upload d'une image sur le serveur :<br>";
+            $msg .= "<font color='green'>&nbsp;&nbsp;=>>&nbsp;&nbsp;L'envoi de l'image a bien été effectué !</font><br /></p>";
+          break;
+        case 2:
+             // Sinon affiche erreur systeme
+            $msg = "<p>Upload d'une image sur le serveur :<br>";
+            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;Erreur systeme. Problème lors de l'upload !</font></p>";
+          break;
+        case 3:
+            $msg = "<p>Upload d'une image sur le serveur :<br>";
+            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;Upload de l'image impossible : erreur interne !</font></p>";
+          break;
+        case 4:
+            $msg = "<p>Upload d'une image sur le serveur :<br>";
+            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;Erreur dimensions : ";
+            $msg .= "Le fichier est trop volumineux :<br />";
+            $msg .= "<b>(Poids limité à 2Go) !</b></font></p>";
+          break;
+        case 5:
+            $msg = "<p>Upload d'une image sur le serveur :<br>";
+            $msg .= '<font color="red">&nbsp;&nbsp;=>>&nbsp;&nbsp;Upload de l\'image impossible : Le fichier n\'est pas une image !</font></p>';
+          break;
+        case 6:
+            $msg = "<p>Upload d'une image sur le serveur :<br>";
+            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;L'extension du fichier n'est pas autorisée. <br /></font>";
+            $msg .= "<font color='red'>(Seuls les fichiers jpg, jpeg, gif, png sont acceptés.)</font></p>";
+          break;
+        default:
+            $msg = '<p><font color="red">&nbsp;&nbsp;=>>&nbsp;&nbsp;Problème lors de l\'upload ! Contactez l\'administrateur.</font> </p>';
+            break;
+    }
+/*-- --------------------------------------------------------------- --*/
 
 
     // controle des saisies du formulaire
@@ -287,61 +371,126 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Langue -->
-        <br>
+ <br>
         <div class="control-group">
             <div class="controls">
-                <label class="control-label" for="LibTypLang">
-                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                </label>
+            <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
+                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+            </label>
 
+            <!-- Listbox langue => 2ème temps -->
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?php $numAngl; ?>" autocomplete="on" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
+                <option value="-1">- - - Choisissez une langue - - -</option>
 
-                <!-- Listbox langue => 2ème temps -->
+            <?php
+                $listNumLang = "";
+                $listlib1Lang = "";
+
+                $result = $maLangue->get_AllLanguesByLib1Lang();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumLang= $row["numLang"];
+                        $listlib1Lang = $row["lib1Lang"];
+            ?>
+                        <option value="<?= $listNumLang; ?>">
+                            <?= $listlib1Lang; ?>
+                        </option>
+            <?php
+                    } // End of foreach
+                }   // if ($result)
+            ?>
+
+            </select>
 
             </div>
         </div>
-    <!-- FIN Listbox Langue -->
+            
+    <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->
 
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Angle live share -->
-        </br>
+    <!-- Listbox Angle -->
+    <br>
         <div class="control-group">
             <div class="controls">
-                <label class="control-label" for="LibTypAngl">
-                    <b>Quel angle :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                </label>
+            <label class="control-label" for="LibTypAngl" title="Sélectionnez l'angle !">
+                <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
+            </label>
 
+            <!-- Listbox Angle => 2ème temps -->
 
-                <input type="text" name="idAngl" id="idAngl" size="5" maxlength="5" value="<?php $numAngl; ?>" autocomplete="on" />
+            <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
+                <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
+                <option value="-1">- - - Choisissez un angle - - -</option>
 
-                <!-- Listbox angle => 2ème temps -->
+            <?php
+                $listNumAngl = "";
+                $listlibAngl = "";
+
+                $result = $monAngle-> get_AllAnglesByLibAngl();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumAngl= $row["numAngl"];
+                        $listlibAngl = $row["libAngl"];
+            ?>
+                        <option value="<?= $listNumAngl; ?>">
+                            <?= $listlibAngl; ?>
+                        </option>
+            <?php
+                    } // End of foreach
+                }   // if ($result)
+            ?>
+
+            </select>
 
             </div>
         </div>
     <!-- FIN Listbox Angle -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- Listbox Thématique -->
-        <br>
+     <!-- Listbox Thématique -->
+     <br>
         <div class="control-group">
             <div class="controls">
-                <label class="control-label" for="LibTypThem">
-                    <b>Quelle thématique :&nbsp;&nbsp;&nbsp;</b>
-                </label>
+            <label class="control-label" for="LibTypThem" title="Sélectionnez la thematique !">
+                <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
+            </label>
 
+            <!-- Listbox Thématique=> 2ème temps -->
 
-                <input type="text" name="idThem" id="idThem" size="5" maxlength="5" value="<?php $numThem; ?>" autocomplete="on" />
+            <input type="hidden" id="idTypThem" name="idTypThem" value="<?= $numThem; ?>" />
+                <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > 
+                <option value="-1">- - - Choisissez une thematique - - -</option>
 
-                <!-- Listbox thematique => 2ème temps -->
+            <?php
+                $listNumThem = "";
+                $listlibThem = "";
+
+                $result = $maThematique->get_AllThematiquesByLibThem ();
+                if($result){
+                    foreach($result as $row) {
+                        $listNumThem= $row["numThem"];
+                        $listlibThem = $row["libThem"];
+            ?>
+                        <option value="<?= $listNumThem; ?>">
+                            <?= $listlibThem; ?>
+                        </option>
+            <?php
+                    } // End of foreach
+                }   // if ($result)
+            ?>
+
+            </select>
 
             </div>
         </div>
-    <!-- FIN Listbox Thématique -->
+            
+    <!-- FIN Listbox Thematique-->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
