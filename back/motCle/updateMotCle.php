@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-        $sameId= ctrlSaisies ($_POST['id']);
+        $sameId= $_POST['id'];
         header("Location: ./updateMotCle.php?id=".$sameId);
     }  
 
@@ -59,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 
     else { // Saisies invalides
+        echo "aie";
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }
