@@ -95,18 +95,18 @@ class MEMBRE{
 	}*/
 
 	// Inscription membre
-	function create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $accordMemb, $idStat){
+	function create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat){
 		global $db;
 
 		try {
 			$db->beginTransaction();
 
 			// insert
-			$query = 'INSERT INTO MEMBRE (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)';
+			$query = 'INSERT INTO MEMBRE (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 			// prepare
 			$request = $db->prepare($query);
 			// execute
-			$request->execute([$prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $accordMemb, $idStat]);
+			$request->execute([$prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat]);
 
 			$db->commit();
 			$request->closeCursor();

@@ -1,57 +1,44 @@
 <?php
-///////////////////////////////////////////////////////
-//
-//  Script : regex.php
-//  Modifié : 28 déc. 21 - 19h15
-//
-//  CTRL password à partir des expressions régulières
-//  CTRL email à partir des expressions régulières
-//
-///////////////////////////////////////////////////////
-/******************************************************
-*
-*   Le "i" après le délimiteur du pattern indique :
-*       => que la recherche est insensible à la casse
-*
-*   Délimiteur du pattern : /
-*   Début de la chaine : ^
-*   Fin de la chaine : $
-*
-*   Caractères autorisés :
-*       [-a-z0-9\._-]+
-*     - (autant que désirés, de 1 à n) : +
-*     - (autant que désirés, de 0 à n) : *
-*     - (lettres, chiffres, point, souligné) : [-a-z0-9\._-]
-*
-*   Nombre de caracteres (2 car mini, 7 car maxi) :
-*       {2,7}
-*
-*   Autres écritures de pattern :
-*
-*       $pattern = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,7}$#';
-*       $pattern = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,7}$/";
-*
-*******************************************************/
+/* ----------------------------------------------------------------
+**
+**  Script : regex.php
+**  Modifié : 15 févr. 22 - 19h15
+**
+**  CTRL à partir des expressions régulières :
+**    - password 
+**    - email
+**
+** ---------------------------------------------------------------- */
 
-// password
-// KO erreur format :
-// (preg_match("#\;\,\!\?\*\#\:\%[a-zA-Z0-9_-.]{6,70}#", $pass1Memb))
-// OK, valide :
-// $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/";
+// Pattern sur password
 function isPassWord(string $password) {
-    // Pattern à appliquer à la chaine $password
-    // Password doit comporter des lettres, chiffres et au moins un caractère spécial
-    // Password doit avoir 6 caractères au mini et 15 au maxi
-    $pattern = "/^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%])[0-9A-Za-z!@#$%]{6,15}$/";
+    /*
+    Detail pattern ci-dessus :
+        ^  ->  ancré au début de la chaîne
+        \S*  ->  n'importe quel ensemble de caractères
+        (?=\S{8,15}) ->  d'au moins longueur 8 et au max longueur 15
+        (?=\S*[a-z]) ->  contenant au moins une lettre minuscule
+        (?=\S*[A-Z]) ->  et au moins une lettre majuscule
+        (?=\S*[\d])  ->  et au moins un chiffre
+        (?=\S*[\W])  ->  pour inclure car spéciaux (car. non verbaux)
+        $  ->  ancré au bout de la corde
+     */
+    $pattern = "/^\S*(?=\S{8,15})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/";
 
     return (preg_match ($pattern, $password)) ? true : false;
 }
 
-// eMail
-// (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $eMail1Memb))
+// Pattern sur eMail
 function isEmail(string $eMail) {
-    // Pattern à appliquer à la chaine $eMail
-    $pattern = "/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9\._-]+\.[a-z]{6,70}$/i";
+    $pattern = '/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d' .
+    '{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/';
+
+    return (preg_match ($pattern, $eMail)) ? true : false;
+}
+
+// Pattern sur eMail
+function isEmail1(string $eMail) {
+    $pattern = "/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/";
 
     return (preg_match ($pattern, $eMail)) ? true : false;
 }
