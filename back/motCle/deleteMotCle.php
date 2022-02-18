@@ -121,13 +121,12 @@ include __DIR__ . '/initMotCle.php';
         echo $id;
 
         $req = $monMotCle->get_1MotCle($id);
-        //$req1 = $maLangue->get_1Langue($id);
-
         if ($req) {
             $libMotCle = $req['libMotCle'];
-            $idLang = $req['numLang'];
+            $numLang = $req['numLang'];
             
-        }
+            $request = $maLangue->get_1Langue($numLang);
+            $lib1Lang=$request['lib1Lang'];         }
     }
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -165,8 +164,8 @@ include __DIR__ . '/initMotCle.php';
                        // $listNumLang = $row["numLang"];
                         //$listLib1Lang = $row["lib1Lang"];
 ?> 
-                        <option value="<?= $idLang; ?>">
-                            <?= $idLang; ?>
+                        <option value="<?= $lib1Lang; ?>">
+                            <?= $lib1Lang; ?>
                         </option>
 <?php
                      // End of foreach

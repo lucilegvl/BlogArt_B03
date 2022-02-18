@@ -94,6 +94,7 @@ include __DIR__ . '/initMotCle.php';
 
             $id = ctrlSaisies($_GET['id']);
             echo $id;
+           
             $req = $monMotCle->get_1MotCle($id);
             if ($req) {
                 $libMotCle = $req['libMotCle'];
