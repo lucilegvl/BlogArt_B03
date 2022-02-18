@@ -53,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-         $numNextAngl = $monAngle->getNextNumAngl($numLang);
     // modification effective du angle
     $monAngle->update($numAngl, $libAngl, $numLang);
 
@@ -95,7 +94,9 @@ include __DIR__ . '/initAngle.php';
             $numAngl = $req['numAngl'];
             $libAngl = $req['libAngl'];
             $numLang = $req['numLang'];
-            $id = $req['numAngl'];
+
+            $request = $maLangue->get_1Langue($numLang);
+            $lib1Lang=$request['lib1Lang'];
         }
     }
 ?>
@@ -125,8 +126,8 @@ include __DIR__ . '/initAngle.php';
             <!-- Listbox langue => 2ème temps -->
 
             <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
-                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
-                <option value="-1">- - - Choisissez une langue - - -</option>
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
+                <option value="-1"><?= $lib1Lang; ?></option>
 
             <?php
                 $listNumLang = "";
@@ -139,7 +140,7 @@ include __DIR__ . '/initAngle.php';
                         $listlib1Lang = $row["lib1Lang"];
             ?>
                         <option value="<?= $listNumLang; ?>">
-                            <?= $listlib1Lang; ?>
+                            <?php echo $listlib1Lang; ?>
                         </option>
             <?php
                     } // End of foreach
