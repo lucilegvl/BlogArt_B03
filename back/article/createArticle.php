@@ -287,25 +287,26 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Thématique -->
-              <br>
-        <label for="LibTypThematique" title="Sélectionnez la thematique!">
-            <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
+    <br />
+        <label for="LibTypThem" title="Sélectionnez la thématique  !">
+            <b>Quelle thématique :&nbsp;&nbsp;&nbsp;</b>
         </label>
         <input type="hidden" id="idTypThem" name="idTypThem" value="<?php $numThem; ?>" />
-            <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > -->
-                <option value="-1">- - - Choisissez une thematique - - -</option>
+            <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thématique !" > -->
+                <option value="-1">- - - Choisissez une thématique- - -</option>
 <?php
                 $listNumThem = "";
-                $listLibThem= "";
+                $listLibThem = "";
 
-                $result = $maThematique->get_AllThematiquesByLang();
+                $result = $maThematique->get_NbAllThematiquesBynumLang($numThemg);
                 if($result){
                     foreach($result as $row) {
                         $listNumThem = $row["numThem"];
                         $listLibThem = $row["libThem"];
+
 ?>
-                        <option value="<?php $listNumThem; ?>">
-                            <?php $listLibThem; ?>
+                        <option value="<?= $listNumThem; ?>">
+                            <?= $listLibThem; ?>
                         </option>
 <?php
                     } // End of foreach
