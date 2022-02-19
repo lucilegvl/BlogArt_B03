@@ -95,12 +95,14 @@ include __DIR__ . '/initThematique.php';
     if (isset($_GET['id'])) { //toujours update delete
 
         $id = ctrlSaisies($_GET['id']);
-        echo $id;
         $reqThem = $maThematique->get_1Thematique($id);
-        if ($reqThem) {
+
             $libThem = $reqThem['libThem'];
-            $idLang = $reqThem['numLang'];
-        }
+            $numLang = $reqThem['numLang'];
+
+            $request = $maLangue->get_1Langue($numLang);
+            $lib1Lang=$request['lib1Lang'];
+        
     }
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -117,9 +119,7 @@ include __DIR__ . '/initThematique.php';
         <br><br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-    <!-- FK : Langue -->
 
-                <!-- Listbox langue => 2ème temps -->
         </div>
            <!-- Listbox Langue -->
            <br>
@@ -128,7 +128,7 @@ include __DIR__ . '/initThematique.php';
         </label>
         <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
             <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
-                <option value="-1"> Choisissez une langue </option>
+                <option value="-1"><?= $lib1Lang; ?> </option>
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";

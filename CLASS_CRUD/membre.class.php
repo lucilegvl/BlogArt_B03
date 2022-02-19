@@ -44,23 +44,32 @@ class MEMBRE{
 		return($allMembres);
 	}
 
-/*	function get_ExistPseudo($pseudoMemb) {
+	function get_ExistPseudo($pseudoMemb) {
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MEMBRE WHERE pseudoMemb = ?';
 		// prepare
+		$allNbPseudo = $db->prepare($query);
 		// execute
-		return($result->rowCount());
+		$allNbPseudo->execute([$pseudoMemb]);
+		$count = $allNbPseudo->rowCount();
+
+		return($count);
 	}
 
 	function get_AllMembersByStat(){
 		global $db;
 
 		// select
+		$query = "SELECT * FROM MEMBRE ME INNER JOIN STATUT ST ON ME.idStat = ST.idStat";
 		// prepare
+		$result=$db->query($query);
 		// execute
+		$allMembersByStat = $result->fetchAll();
+
 		return($allMembersByStat);
-	} */
+	}
 
 	function get_NbAllMembersByidStat($idStat){
 		global $db;
@@ -72,6 +81,7 @@ class MEMBRE{
 		// execute
 		$allNbMembersByStat->execute([$idStat]);
 		$count = $allNbMembersByStat->rowCount(); 
+
 		return($count);
 	}
 
