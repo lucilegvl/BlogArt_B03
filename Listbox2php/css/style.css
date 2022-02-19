@@ -1,0 +1,65 @@
+/**
+ * Description of script style.css
+ *
+ *  Version : 2 listbox dynamiques
+ *
+ * @author Martine Bornerie
+ */
+
+fieldset {
+	background-color:#FDF5E6;	/* color: oldlace */
+	max-width:400px;			/* largeur maximale cadre */
+	padding:16px;				/* marge interne / sépare le contenu de la bordure	*/	
+	/* Coins arrondis et couleur du cadre */
+	border:2px solid grey;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+}
+
+.legend1 {
+	color: #CC9900;			/* color: yellow; */
+}
+
+.hr1 {
+	margin: 10px 0 10px;
+	padding: 0;
+	width: 120pt;
+	height: 3px;
+	color: #CCCCCC;			/* color: grey; */
+	background: #FF8C00;	/* color: orange; */
+	border-top: 2px dashed;
+}
+
+.span1 {
+	color: #CC9900;			/* color: yellow; */
+}
+
+/*
+	Test de la partie responsive
+*/
+
+/*Si la taille de l'écran d'un visiteur est inférieure à 480px, la couleur
+ *de fond de notre élément body (donc de notre page) sera orange */
+@media screen and (max-width: 680px){
+    body{
+        background-color: orange;
+    }
+}
+
+/*Pour les écrans ayant une taille entre 481px et 1179px, la couleur de
+ *fond de notre page sera bleue */
+@media screen and (min-width: 681px) and (max-width: 1279px){ 
+    body{
+        background-color: blue;
+    }
+}
+
+/*Pour les écrans d'une taille supérieure à 1280px, le fond de la page sera
+ *de couleur blanche */
+@media screen and (min-width: 1280px){
+    body{
+        background-color: white;
+    }
+}
+
