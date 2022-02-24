@@ -118,32 +118,34 @@ class MEMBRE{
 		}
 	}
 
-/*	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat){
+	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat) {
 		global $db;
 
 		try {
 			$db->beginTransaction();
 			
 			// update
+			$query = "UPDATE ANGLE SET prenomMemb = ?,  nomMemb = ?,  passMemb = ?,  eMailMemb = ?,  idStat = ? WHERE numAngl = ?";
 			// prepare
+			$request1 = $db->prepare($query);
 			// execute
-				$db->commit();
-				$request2->closeCursor();
-			}
-		}
-		catch (PDOException $e) {
+			$request1->execute([$numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat]);
+			$db->commit();
+			$request1->closeCursor();
+
+		} catch (PDOException $e) {
 			$db->rollBack();
 			if ($passMemb == -1) {
 				$request1->closeCursor();
 			} else {
-				$request2->closeCursor();
+				$request1->closeCursor();
 			}
 			die('Erreur update MEMBRE : ' . $e->getMessage());
 		}
 	}
 
 	// Ctrl FK sur COMMENT avec del
-	function delete($numMemb){
+	/*function delete($numMemb){
 		global $db;
 		
 		try {
