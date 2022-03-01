@@ -114,6 +114,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
 
         $id=$_GET['id'];
         $req = $monArticle->get_1Article($id);
+        echo "coucou";
         if ($req) {
             $numArt = $req['numArt'];
             $dtCreArt = $req['dtCreArt'];
