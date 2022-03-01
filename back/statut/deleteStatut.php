@@ -47,8 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
-        $sameId=$_POST['id'];
-        header("Location: ./deleteStatut.php?id=".$sameId);
+        header("Location: ./deleteStatut.php");
     }   
 
     if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))

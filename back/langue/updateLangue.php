@@ -127,7 +127,6 @@ include __DIR__ . '/initLangue.php';
         </label>
         <input type="hidden" id="idTypPays" name="idTypPays" value="<?= $numLang; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
-            <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
                 $listNumPays = "";
                 $listfrPays = "";

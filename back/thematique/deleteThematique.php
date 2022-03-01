@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Mode création
-    elseif (($_POST["Submit"] == "Valider")) {{
+    elseif (($_POST["Submit"] == "Valider")) {
 
         // Saisies valides
         $erreur = false;
@@ -69,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $maThematique->delete($_POST['id']);
             header("Location: ./thematique.php");
         } 
-    }
     }  // Fin if
 
 } // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
@@ -120,6 +119,11 @@ include __DIR__ . '/initThematique.php';
             $libThem = $reqThem['libThem'];
             $idLang = $reqThem['numLang'];
         }
+
+        $request = $maLangue->get_1Langue($idLang);
+        if ($request) {
+            $lib1Lang = $request['lib1Lang'];
+        }
     }
 
 ?>
@@ -151,7 +155,7 @@ include __DIR__ . '/initThematique.php';
                     <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
 
                         <option value="<?=$idLang; ?>">
-                            <?= $idLang; ?>
+                            <?= $lib1Lang; ?>
                         </option>
 
             </select>
