@@ -16,19 +16,45 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Membre
-
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
+$monMembre = new MEMBRE();
 
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+// Instanciation de la classe Statut
+$monStatut = new STATUT();
 
 // Insertion classe Comment
-
-// Instanciation de la classe Comment
-
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php';
+// Instanciation de la classe Statut
+$monCommentaire = new COMMENT();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    // Opérateur ternaire
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
+    if (isset($_POST["Submit"]) AND $Submit === "Annuler") {
+        header("Location: ./Membre.php");
+    }
+
+    if ($_POST['Submit'] == 'Valider'){
+        $erreur = false;
+        $numMemb=$_POST['id'];
+        $nbComments = $monCommentaire->get_NbAllCommentsBynumMemb($numMemb);
+        if ($nbComments>0){
+            $erreur = true;
+            $errSaisie = 'Erreur, suppression impossible. <br> Ce membre a posté des commentaires.';
+            echo $errSaisie;
+        } else {
+            $erreur = false;
+            $errSaisie = '';
+            $monMembre->delete($numMemb);
+            header("Location: ./membre.php");
+        }
+    }
 
     // controle CIR
 
@@ -44,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+
 // Init variables form
 include __DIR__ . '/initMembre.php';
 ?>
@@ -71,14 +98,30 @@ include __DIR__ . '/initMembre.php';
     <h1>BLOGART22 Admin - CRUD Membre</h1>
     <h2>Suppression d'un membre</h2>
 <?php
-    // Supp : récup id à supprimer
-    // id passé en GET
 
+    if (isset($_GET['id'])) {
 
+        $id=ctrlSaisies($_GET['id']);
+        $req = $monMembre->get_1Membre($id);
 
+        if ($req) {
+            $nomMemb = $req['nomMemb'];
+            $prenomMemb = $req['prenomMemb']; 
+            $pseudoMemb = $req['pseudoMemb'];
+            $eMail1Memb = $req['eMailMemb'];
+            $pass1Memb = $req['passMemb']; 
+            $accordMemb = 1;
+            $idStat = $req['idStat'];
+            $dtCreaMemb = $req['dtCreaMemb'];
+            $numMemb = $req['numMemb'];
+        }
 
-
-
+        $request = $monStatut->get_1Statut($idStat);
+        if ($request) {
+            $libStat = $request['libStat'];
+        }
+    }
+    
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
@@ -112,10 +155,10 @@ include __DIR__ . '/initMembre.php';
             <div class="controls">
                <fieldset>
                   <input type="radio" name="accordMemb"
-                  <? if($accordMemb == 1) echo 'checked="checked"'; ?>
+                  <?php if($accordMemb == 1) echo 'checked="checked"'; ?>
                   value="on" disabled />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
                   <input type="radio" name="accordMemb"
-                  <? if($accordMemb == 0) echo 'checked="checked"'; ?>
+                  <?php if($accordMemb == 0) echo 'checked="checked"'; ?>
                   value="off" disabled />&nbsp;&nbsp;Non
                </fieldset>
             </div>
@@ -129,11 +172,13 @@ include __DIR__ . '/initMembre.php';
     <!-- Listbox statut -->
         <div class="control-group">
             <label class="control-label" for="LibTypStat"><b>Statut :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idStat" name="idStat" value="<?= isset($_GET['idStat']) ? $_GET['idStat'] : '' ?>" />
+                <input type="hidden" id="idStat" name="idStat" value="<?= $idStat ?>" />
 
-                <input type="text" name="idStat" id="idStat" size="5" maxlength="5" value="<?= $idStat; ?>" autocomplete="on" />
-
-                <!-- Listbox statut disabled => 2ème temps -->
+                <select size="1" name="TypStat" id="TypStat"  class="form-control form-control-create" title="Sélectionnez la langue !" >
+                    <option value="<?php $idStat; ?>">
+                        <?php echo $libStat; ?>
+                    </option>
+                </select>
 
         </div>
 
