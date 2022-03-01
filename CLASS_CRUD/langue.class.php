@@ -19,15 +19,15 @@ class LANGUE{
 		return($result->fetch());
 	}
 
-	function get_1LangueByPays($numPays){
+	function get_1LangueByPays($numLang){
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM LANGUE WHERE numPays = ?';
+		$query = 'SELECT * FROM LANGUE LA INNER JOIN PAYS PA ON LA.numPays = PA.numPays WHERE numLang = ?;';
 		// prepare
 		$result = $db->prepare($query);
 		// execute
-		$result->execute([$numPays]);
+		$result->execute([$numLang]);
 
 		return($result->fetch());
 	}
@@ -199,4 +199,16 @@ class PAYS {
 		return($result->fetch());
     }
 
+	function get_AllPaysOrderByNumPays(){
+		global $db;
+
+		// select
+		$query = 'SELECT * FROM PAYS ORDER BY numPays;';
+		// prepare
+		$result = $db->query($query);
+		// execute
+		$allPaysOrderBynumPays = $result->fetchAll();
+
+		return($allPaysOrderBynumPays);
+	}
 }

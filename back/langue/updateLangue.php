@@ -45,12 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
 
         $erreur = false;
-        $lib1Langue = ctrlSaisies(($_POST['lib1Lang']));
-        $lib2Langue = ctrlSaisies(($_POST['lib2Lang']));
+        $lib1Lang = ctrlSaisies(($_POST['lib1Lang']));
+        $lib2Lang = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['TypPays']));
         $numLang = ctrlSaisies(($_POST['id']));
 
-        $maLangue->update($numLang, $lib1Langue, $lib2Langue, $numPays);
+        $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
 
         header("Location: ./langue.php");
     }   // Fin if ((isset($_POST['libStat'])) 
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     else { // Saisies invalides
         $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
+        $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
     }   // End of else erreur saisies
 
 }  // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
@@ -84,15 +84,16 @@ include __DIR__ . '/initLangue.php';
 <?php
     if (isset($_GET['id'])) {
         $id=ctrlSaisies($_GET['id']);
-        $req = $maLangue->get_1Langue($id);
-        $lib1Lang = $req['lib1Lang'];
-        $lib2Lang = $req['lib2Lang'];
-        $numLang = $req['numLang'];
-        $numPays = $req['numPays'];
-
-        $request=$monPays->get_1Pays($numPays);
-        $frPays=$request['frPays'];
-    }
+       
+        $req = $maLangue->get_1LangueByPays($id);
+        if ($req) {
+            $lib1Lang = $req['lib1Lang'];
+            $lib2Lang = $req['lib2Lang'];
+            $idPays = $req['numPays'];   
+            //$numLang = $req['numLang'];          
+       
+        } 
+     }
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -117,23 +118,25 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idPays" name="idPays" value="<?= $numPays; ?>" />
+        <input type="hidden" id="idTypPays" name="idTypPays" value="<?= $idPays; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
-                <option value="-1"><?= $frPays; ?>
-                </option>
+            <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
                 $listNumPays = "";
                 $listfrPays = "";
 
-                $result = $monPays->get_AllPays();
+                $result = $monPays->get_AllPaysOrderByNumPays();
                 if($result){
                     foreach($result as $row) {
-                        $listNumPays= $row["numPays"];
+                        $listNumPays = $row["numPays"];
                         $listfrPays = $row["frPays"];
 ?>
-                        <option value="<?= $listNumPays; ?>">
-                            <?= $listfrPays; ?>
+                        <option value="<?= ($listNumPays); ?>" <?= ((isset($idPays) && $idPays == $listNumPays) ? " selected='selected'" : null); ?>>
+                                <?= $listfrPays; ?>
                         </option>
+
+
+
 <?php
                     } // End of foreach
                 }   // if ($result)
