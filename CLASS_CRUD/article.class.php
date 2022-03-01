@@ -167,7 +167,11 @@ class ARTICLE{
 
 		try {
 			$db->beginTransaction();
+ // if $urlPhotArt = -1 {
 
+
+
+ //}
 			// update
 			$query = "UPDATE THEMATIQUE SET NumAngl = ?,  libChapoArt = ?, libTitrArt = ?, libAccrochArt = ?, parag1Art = ?, libSsTitr1Art = ?, parag2Art = ?, libSsTitr2Art = ?, parag3Art = ?, libConclArt = ?, urlPhotArt = ?, numThem = ?, WHERE numArt = ?";
 			// prepare
@@ -182,6 +186,8 @@ class ARTICLE{
 			$request->closeCursor();
 			die('Erreur update ARTICLE : ' . $e->getMessage());
 		}
+
+		
 	}
 
 	function delete($numArt){

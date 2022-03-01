@@ -15,9 +15,9 @@
 require_once __DIR__ . '/../../util/utilErrOn.php';
 
 // Init constantes
-include __DIR__ . '/initConst.php';
+require_once __DIR__ . '/initConst.php';
 // Init variables
-include __DIR__ . '/initVar.php';
+require_once __DIR__ . '/initVar.php';
 
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
@@ -82,10 +82,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libSsTitr2Art = ctrlSaisies($_POST['libSsTitr2Art']);
         $parag3Art = ctrlSaisies($_POST['parag3Art']);
         $libConclArt = ctrlSaisies($_POST['libConclArt']);
+
         $numAngl = ctrlSaisies($_POST['TypAngl']);
         $numThem = ctrlSaisies($_POST['TypThem']);
-        
-        require_once __DIR__ . '/../../ctrlerUploadImage.php';
+require_once __DIR__ . './ctrlerUploadImage.php';
 
 $urlPhotArt = $monImage ; 
 
@@ -302,6 +302,7 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Thématique -->
+
     <br>
         <div class="control-group">
             <div class="controls">

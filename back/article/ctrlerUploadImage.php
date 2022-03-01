@@ -3,10 +3,10 @@
 //
 // Script : ctrlerUploadImage.php
 // Init constantes
-include __DIR__ . '/initConst.php';
+require_once __DIR__ . '/initConst.php';
 
 // Init variables
-include __DIR__ . '/initVar.php';
+require_once __DIR__ . '/initVar.php';
 
 /************************************************************
  * Creation dossier cible si inexistant
@@ -18,6 +18,7 @@ if (!is_dir(TARGET)) {
 } else {
     $target_OK = true;
 }
+
 
 /************************************************************
  * Script d'upload
