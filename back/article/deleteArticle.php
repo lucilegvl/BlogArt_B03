@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initArticle.php';
 // En dur
-$urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
+$urlPhotArt = "../uploads/?";
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
