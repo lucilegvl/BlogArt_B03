@@ -16,14 +16,19 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Membre
-
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
+$monMembre = new MEMBRE();
 
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+// Instanciation de la classe Statut
+$monStatut = new STATUT();
 
 // Insertion classe Comment
-
-// Instanciation de la classe Comment
-
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php';
+// Instanciation de la classe Statut
+$monStatut = new COMMENT();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
