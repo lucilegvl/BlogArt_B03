@@ -9,6 +9,7 @@
 
 // Mode DEV
 require_once __DIR__ . '/../../util/utilErrOn.php';
+require_once __DIR__ . '/../../util/regex.php';
 
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
@@ -21,33 +22,147 @@ require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+// Instanciation de la classe Statut
+$monStatut = new STATUT();
+
 // Gestion des erreurs de saisie
 $erreur = false;
-// Init msg
-
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    // Opérateur ternaire
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
+    if (isset($_POST["Submit"]) AND $Submit === "Initialiser") {
+        $sameId=$_POST['id'];
+        header("Location: ./updateMembre.php?id=".$sameId);
+    }
 
-    // controle des saisies du formulaire
+    if (isset($_POST['prenomMemb']) AND !empty($_POST['prenomMemb'])
+        AND isset($_POST['nomMemb']) AND !empty($_POST['nomMemb'])
+        AND isset($_POST['pass1Memb']) AND !empty($_POST['pass1Memb'])
+        AND isset($_POST['eMail1Memb']) AND !empty($_POST['eMail1Memb'])
+        AND !empty($_POST['Submit']) AND $Submit === "Valider") {
+        echo 1;
+        // Saisies valides
+        $erreur = false;
 
-    // modification effective du membre
+        $prenomMemb = ctrlSaisies($_POST['prenomMemb']);
+        $nomMemb = ctrlSaisies($_POST['nomMemb']);
+        $pass1Memb = ctrlSaisies($_POST['pass1Memb']);
+        $pass2Memb = (isset($_POST['pass2Memb']) AND !empty($_POST['pass2Memb'])) ? ctrlSaisies($_POST['pass2Memb']) : '';
+        $eMail1Memb = ctrlSaisies($_POST['eMail1Memb']);
+        $eMail2Memb = $eMail2Memb = (isset($_POST['eMail2Memb']) AND !empty($_POST['eMail2Memb'])) ? ctrlSaisies($_POST['eMail2Memb']) : '';
+        $idStat = ctrlSaisies($_POST['idStat']);
+        $numMemb = ctrlSaisies($_POST['id']);
 
+        // CTRL saisies
+        // VALIDITÉ MAIL : Avec la fonction filter_var() ou un regex
+        if(filter_var($eMail1Memb, FILTER_VALIDATE_EMAIL)){
+            $mail1F1 = 1;    // TRUE
+            $msgErrMail1 = "";
+        }else{
+            $mail1F1 = 0;    // FALSE
+            $msgErrMail1 = "&nbsp;&nbsp;- Premier mail invalide<br>";
+        }
 
+        //VERIFICATION DEUXIEME MAIL
+        if ($eMail2Memb != ''){
+            //VERIFICATION fonction regex
+            if(filter_var($eMail2Memb, FILTER_VALIDATE_EMAIL)){
+                $mail2F1 = 1;    // TRUE
+                $msgErrMail2 = "";
+            }else{
+                $mail2F1 = 0;    // FALSE
+                $msgErrMail2 = "&nbsp;&nbsp;- Deuxième mail invalide<br>";
+            }
 
-    // Gestion des erreurs => msg si saisies ko
+            //VERIFICATION mails identiques
+            if($mail1F1 == 1 AND $mail2F1 == 1){
+                if($eMail1Memb == $eMail2Memb){
+                    $mailIdentiqF1 = 1;
+                    $msgErrMailIdentiq = "";
+                }else{
+                    $mailIdentiqF1 = 0;
+                    $msgErrMailIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mails différents. <br>";
+                }
+            }
+        } else {
+            $mail2F1 = 1;
+            $mailIdentiqF1 = 1;
+            $testEMail2Memb = -1;
+            $msgErrMail2 = '';
+            $msgErrMailIdentiq = '';
+        }
 
-            // CTRL saisies
-            // VALIDITÉ MAIL
+        // ----------------------------------------------------------------
+        // PASS VALIDE
+        if(isPassWord($pass1Memb)){
+            $passValid1F1 = 1;
+            $msgErrPassValid1 = "";
+            // Cryptage du password
+            // cost : meilleur coût algo cryptage (10: defaut)
+            // $pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
+        }else{
+            $passValidF1 = 0;
+            $msgErrPassValid = "&nbsp;&nbsp;- Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre, <br> 
+            un caractère spécial, et être compris entre 6 et 15 carcatères.";
+        }
 
-            // MAIL IDENTIQUE
-            // TEST MODIF PASS
+        if ($pass2Memb != '') {
+            if(isPassWord($pass2Memb)){
+                $passValid2F1 = 1;
+                $msgErrPassValid2 = "";
+                // Cryptage du password
+                // cost : meilleur coût algo cryptage (10: defaut)
+                // $pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
+            }else{
+                $passValid2F1 = 0;
+                $msgErrPassValid2 = "&nbsp;&nbsp;- Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre, <br> 
+                un caractère spécial, et être compris entre 6 et 15 carcatères.";
+            }
 
+            if($pass1Memb == $pass2Memb){
+                $passIdentiqF1 = 1;
+                $msgErrPassIdentiq = "";
+            }else{
+                $passIdentiqF1 = 0;
+                $msgErrPassIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mots de passe différents. <br>";
+            }
 
+        } else {
+            $passIdentiqF1 = 1;
+            $passValid2F1 = 1;
+            $testPass2Memb = -1;
+            $msgErrPassValid2 = '';
+            $msgErrPassIdentiq = '';
+        }
 
+        // ----------------------------------------------------------------
+        // Ctrl cohérence de tous les différents éléments saisis avant insert
+        if($prenomMemb != "" AND $nomMemb != "" 
+            AND $mailIdentiqF1 == 1 AND $passIdentiqF1 == 1 AND $passValid1F1 == 1 AND $passValid2F1 == 1 
+            AND $mail1F1 == 1 AND $mail2F1 == 1){
 
+            $monMembre->update($numMemb, $prenomMemb, $nomMemb, $pass1Memb, $eMail1Memb, $idStat, $testPass2Memb, $testEMail2Memb);
+
+            header("Location: ./membre.php");
+        }else{
+            // Saisies invalides
+            $erreur = true;
+            $errSaisies = "Création impossible, incohérence des données saisies :<br>" . 
+            $msgErrMail1 . $msgErrMail2 . $msgErrMailIdentiq . 
+            $msgErrPassIdentiq . $msgErrPassValid1 . $msgErrPassValid2;
+        }
+    }   // Fin if ((isset($_POST['prenomMemb'])) ...
+    else{
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // Fin else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
@@ -88,14 +203,24 @@ include __DIR__ . '/initMembre.php';
     <h1>BLOGART22 Admin - CRUD Membre</h1>
     <h2>Modification d'un membre</h2>
 <?php
-    // Modif : récup id à modifier
-    // id passé en GET
 
+    if (isset($_GET['id'])) {
 
+        $id=ctrlSaisies($_GET['id']);
+        $req = $monMembre->get_1Membre($id);
 
-
-
-
+        if ($req) {
+            $nomMemb = $req['nomMemb'];
+            $prenomMemb = $req['prenomMemb']; 
+            $pseudoMemb = $req['pseudoMemb'];
+            $eMail1Memb = $req['eMailMemb'];
+            $pass1Memb = $req['passMemb']; 
+            $accordMemb = 1;
+            $idStat = $req['idStat'];
+            $dtCreaMemb = $req['dtCreaMemb'];
+            $numMemb = $req['numMemb'];
+        } 
+    }
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -141,7 +266,7 @@ include __DIR__ . '/initMembre.php';
             &nbsp;&nbsp;
             <label><i>Afficher mot de passe</i></label>
         </div>
-        <small class="error">*Champ obligatoire si nouveau passe</small><br>
+        <small class="error">*Champ obligatoire si nouveau mot de passe</small><br>
         <br>
         <div class="control-group">
             <label class="control-label" for="eMail1Memb"><b>eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
@@ -153,7 +278,7 @@ include __DIR__ . '/initMembre.php';
             <label class="control-label" for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMail2Memb; ?>" autocomplete="on" />
         </div>
-        <small class="error">*Champ obligatoire si nouveau eMail</small><br>
+        <small class="error">*Champ obligatoire si nouveau email</small><br>
 
         <br>
         <div class="control-group">
@@ -161,10 +286,10 @@ include __DIR__ . '/initMembre.php';
             <div class="controls">
                <fieldset>
                   <input type="radio" name="accordMemb"
-                  <? if($accordMemb == 1) echo 'checked="checked"'; ?>
+                  <?php if($accordMemb == 1) echo 'checked="checked"'; ?>
                   value="on" disabled />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
                   <input type="radio" name="accordMemb"
-                  <? if($accordMemb == 0) echo 'checked="checked"'; ?>
+                  <?php if($accordMemb == 0) echo 'checked="checked"'; ?>
                   value="off" disabled />&nbsp;&nbsp;Non
                </fieldset>
             </div>
@@ -180,9 +305,27 @@ include __DIR__ . '/initMembre.php';
             <label class="control-label" for="LibTypStat"><b>Statut :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idStat" name="idStat" value="<?= isset($_GET['idStat']) ? $_GET['idStat'] : '' ?>" />
 
-                <input type="text" name="idStat" id="idStat" size="5" maxlength="5" value="<?= $idStat; ?>" autocomplete="on" />
+                <select size="1" name="idStat" id="idStat"  class="form-control form-control-create" title="Sélectionnez un statut." >
+                    <option value="-1">- - - Choisissez un statut - - -</option>
 
-                <!-- Listbox statut => 2ème temps -->
+                    <?php
+                        $listidStat = "";
+                        $listlibStat = "";
+
+                        $result = $monStatut->get_AllStatuts();
+                        if($result){
+                            foreach($result as $row) {
+                                $listidStat= $row["idStat"];
+                                $listlibStat = $row["libStat"];
+                    ?>
+                                <option value="<?= $listidStat; ?>"  <?= ((isset($idStat) && $idStat == $listidStat) ? " selected='selected'" : null); ?>>
+                                    <?= $listlibStat; ?>
+                                </option>
+                    <?php
+                            } // End of foreach
+                        }   // if ($result)
+                    ?>
+                </select>
 
         </div>
     <!-- FIN Listbox statut -->

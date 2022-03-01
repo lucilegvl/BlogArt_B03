@@ -118,27 +118,60 @@ class MEMBRE{
 		}
 	}
 
-	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat) {
+	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat, $testPass2Memb, $testEMail2Memb) {
 		global $db;
 
 		try {
 			$db->beginTransaction();
 			
-			// update
-			$query = "UPDATE ANGLE SET prenomMemb = ?,  nomMemb = ?,  passMemb = ?,  eMailMemb = ?,  idStat = ? WHERE numAngl = ?";
-			// prepare
-			$request1 = $db->prepare($query);
-			// execute
-			$request1->execute([$numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat]);
-			$db->commit();
-			$request1->closeCursor();
+			if ($testPass2Memb == -1 AND $testEMail2Memb == -1) {
+				// update
+				$query = "UPDATE MEMBRE SET prenomMemb = ?,  nomMemb = ?, idStat = ? WHERE numMemb = ?";
+				// prepare
+				$request = $db->prepare($query);
+				// execute
+				$request->execute([$prenomMemb, $nomMemb, $idStat, $numMemb]);
+				$db->commit();
+				$request->closeCursor();
+			} else {
+				if ($testPass2Memb != -1 AND $testEMail2Memb == -1) {
+					// update
+					$query = "UPDATE MEMBRE SET prenomMemb = ?, nomMemb = ?, passMemb = ?, idStat = ? WHERE numMemb = ?";
+					// prepare
+					$request = $db->prepare($query);
+					// execute
+					$request->execute([$prenomMemb, $nomMemb, $passMemb, $idStat, $numMemb]);
+					$db->commit();
+					$request->closeCursor();
+				}
+				if ($testPass2Memb == -1 AND $testEMail2Memb != -1) {
+					// update
+					$query = "UPDATE MEMBRE SET prenomMemb = ?, nomMemb = ?, eMailMemb = ?, idStat = ? WHERE numMemb = ?";
+					// prepare
+					$request = $db->prepare($query);
+					// execute
+					$request->execute([$prenomMemb, $nomMemb, $eMailMemb, $idStat, $numMemb]);
+					$db->commit();
+					$request->closeCursor();
+				}
+				if ($testPass2Memb != -1 AND $testEMail2Memb != -1) {
+					// update
+					$query = "UPDATE MEMBRE SET prenomMemb = ?,  nomMemb = ?,  passMemb = ?,  eMailMemb = ?,  idStat = ? WHERE numMemb = ?";
+					// prepare
+					$request = $db->prepare($query);
+					// execute
+					$request->execute([$prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat, $numMemb]);
+					$db->commit();
+					$request->closeCursor();
+				}
+			}
 
 		} catch (PDOException $e) {
 			$db->rollBack();
 			if ($passMemb == -1) {
-				$request1->closeCursor();
+				$request->closeCursor();
 			} else {
-				$request1->closeCursor();
+				$request->closeCursor();
 			}
 			die('Erreur update MEMBRE : ' . $e->getMessage());
 		}
