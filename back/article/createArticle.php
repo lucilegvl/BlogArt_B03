@@ -15,9 +15,9 @@
 require_once __DIR__ . '/../../util/utilErrOn.php';
 
 // Init constantes
-include __DIR__ . '/initConst.php';
+require_once __DIR__ . '/initConst.php';
 // Init variables
-include __DIR__ . '/initVar.php';
+require_once __DIR__ . '/initVar.php';
 
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
@@ -82,10 +82,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libSsTitr2Art = ctrlSaisies($_POST['libSsTitr2Art']);
         $parag3Art = ctrlSaisies($_POST['parag3Art']);
         $libConclArt = ctrlSaisies($_POST['libConclArt']);
+
         $numAngl = ctrlSaisies($_POST['TypAngl']);
         $numThem = ctrlSaisies($_POST['TypThem']);
-        
-        require_once __DIR__ . '/../../ctrlerUploadImage.php';
+require_once __DIR__ . './ctrlerUploadImage.php';
 
 $urlPhotArt = $monImage ; 
 
@@ -302,28 +302,7 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Thématique -->
-<<<<<<< HEAD
-    <br />
-        <label for="LibTypThem" title="Sélectionnez la thématique  !">
-            <b>Quelle thématique :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-        <input type="hidden" id="idTypThem" name="idTypThem" value="<?php $numThem; ?>" />
-            <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thématique !" > -->
-                <option value="-1">- - - Choisissez une thématique- - -</option>
-<?php
-                $listNumThem = "";
-                $listLibThem = "";
 
-                $result = $maThematique->get_NbAllThematiquesBynumLang($numThemg);
-                if($result){
-                    foreach($result as $row) {
-                        $listNumThem = $row["numThem"];
-                        $listLibThem = $row["libThem"];
-
-?>
-                        <option value="<?= $listNumThem; ?>">
-                            <?= $listLibThem; ?>
-=======
     <br>
         <div class="control-group">
             <div class="controls">
@@ -348,7 +327,6 @@ include __DIR__ . '/initArticle.php';
             ?>
                         <option value="<?= $listNumThem; ?>">
                             <?= $listlibThem; ?>
->>>>>>> f24bb35d450d58394a0b72233ad2991dd65dc6f6
                         </option>
             <?php
                     } // End of foreach
