@@ -97,7 +97,7 @@ include __DIR__ . '/initMotCle.php';
             if ($req) {
                 $libMotCle = $req['libMotCle'];
                 $idLang = $req['numLang'];               
-            //    $lib1Lang=$req['lib1Lang']; //
+
             }
         }
         
