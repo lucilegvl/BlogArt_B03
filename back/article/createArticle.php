@@ -1,4 +1,4 @@
-<?php
+ <?php
 ////////////////////////////////////////////////////////////
 //
 //  CRUD ARTICLE (PDO) - Modifié : 10 Juillet 2021
@@ -243,7 +243,7 @@ include __DIR__ . '/initArticle.php';
                         $listlib1Lang = $row["lib1Lang"];
             ?>
                         <option value="<?= $listNumLang; ?>">
-                            <? $listlib1Lang; ?>
+                            <?= $listlib1Lang; ?>
                         </option>
             <?php
                     } // End of foreach

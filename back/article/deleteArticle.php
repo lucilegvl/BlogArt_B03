@@ -242,7 +242,6 @@ $urlPhotArt = "../uploads/?";
 
             <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-                <option value="-1">- - - Choisissez une langue - - -</option>
 
             <?php
                 $listNumLang = "";

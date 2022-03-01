@@ -104,7 +104,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 
 if (isset($_FILES['monfichier']['tmp_name']) AND !empty($_FILES['monfichier']['tmp_name'])) {
-    $delFile = $targetDir . $urlPhotArt;
+    $target_file = $targetDir . $urlPhotArt;
+    // $delFile = $targetDir . $urlPhotArt; voir si ça fonctionne
     // Del old image sur serveur
     if(file_exists($delFile)){
         // delete
