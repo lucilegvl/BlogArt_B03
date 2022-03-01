@@ -10,21 +10,6 @@
 // => del + insert dans TJ motclearticle
 // => upload image & update path si modif
 
-if (isset($_FILES['monfichier']['tmp_name']) AND !empty($_FILES['monfichier']['tmp_name'])) {
-    $delFile = $targetDir . $urlPhotArt;
-    // Del old image sur serveur
-    if(file_exists($delFile)){
-
-        // del
-    }
-    // Traitnemnt : upload image => Chnager image
-    require_once __DIR__ . '/ctrlerUploadImage.php';
-
-    // Nom image à la volée
-    $urlPhotArt = $nomImage;
-} else {
-    $urlPhotArt = -1;
-}
 //
 // Mode DEV
 require_once __DIR__ . '/../../util/utilErrOn.php';
@@ -81,95 +66,17 @@ $targetDir = TARGET;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-/************************************************************
- * Script d'upload
- *************************************************************/
+    // Opérateur ternaire
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
-/*-- --------------------------------------------------------------- --*/
-// Recuperation extension fichier
-$extension  = pathinfo($_FILES['monfichier']['name'], PATHINFO_EXTENSION);
-
-// verif extension fichier
-if (in_array(strtolower($extension), $tabExt)) {
-  // recup dimensions fichier
-  $infosImg = getimagesize($_FILES['monfichier']['tmp_name']);
-
-  // verif type image
-  if ($infosImg[2] >= 1 AND $infosImg[2] <= 14) {
-    // verif dimensions et taille image
-    if (($infosImg[0] <= WIDTH_MAX) AND ($infosImg[1] <= HEIGHT_MAX) AND
-        (filesize($_FILES['monfichier']['tmp_name']) <= MAX_SIZE)) {
-      // Parcours tableau erreurs
-      if (isset($_FILES['monfichier']['error']) AND
-         UPLOAD_ERR_OK === $_FILES['monfichier']['error']) { // Vérif typage
-        // rename fichier
-        $nomImage = 'imgArt' . md5(uniqid()) . '.' . $extension;
-
-        if (move_uploaded_file($_FILES['monfichier']['tmp_name'], TARGET.$nomImage)) {
-            // upload OK
-            $etatImg = 1;
-            $uploadOK = true;
-        } else {
-            // erreur systeme
-            $etatImg = 2;
-        }
-      } else {
-          // erreur interne
-          $etatImg = 3;
-      }
-    } else {
-        // erreur dimensions et taille image
-        $etatImg = 4;
+    if (isset($_POST["Submit"]) AND $Submit === "Initialiser") {
+        $sameId=$_POST['id'];
+        header("Location: ./updateArticle.php?id=".$sameId);
     }
-  } else {
-      // erreur type image
-      $etatImg = 5;
-  }
-} else {
-  // erreur pour l'extension
-  $etatImg = 6;
-}
-/*-- --------------------------------------------------------------- --*/
-    switch ($etatImg) {
-        // Si OK, test upload
-        case 1:
-            $msg = "<p>Upload d'une image sur le serveur :<br>";
-            $msg .= "<font color='green'>&nbsp;&nbsp;=>>&nbsp;&nbsp;L'envoi de l'image a bien été effectué !</font><br /></p>";
-          break;
-        case 2:
-             // Sinon affiche erreur systeme
-            $msg = "<p>Upload d'une image sur le serveur :<br>";
-            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;Erreur systeme. Problème lors de l'upload !</font></p>";
-          break;
-        case 3:
-            $msg = "<p>Upload d'une image sur le serveur :<br>";
-            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;Upload de l'image impossible : erreur interne !</font></p>";
-          break;
-        case 4:
-            $msg = "<p>Upload d'une image sur le serveur :<br>";
-            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;Erreur dimensions : ";
-            $msg .= "Le fichier est trop volumineux :<br />";
-            $msg .= "<b>(Poids limité à 2Go) !</b></font></p>";
-          break;
-        case 5:
-            $msg = "<p>Upload d'une image sur le serveur :<br>";
-            $msg .= '<font color="red">&nbsp;&nbsp;=>>&nbsp;&nbsp;Upload de l\'image impossible : Le fichier n\'est pas une image !</font></p>';
-          break;
-        case 6:
-            $msg = "<p>Upload d'une image sur le serveur :<br>";
-            $msg .= "<font color='red'>&nbsp;&nbsp;=>>&nbsp;&nbsp;L'extension du fichier n'est pas autorisée. <br /></font>";
-            $msg .= "<font color='red'>(Seuls les fichiers jpg, jpeg, gif, png sont acceptés.)</font></p>";
-          break;
-        default:
-            $msg = '<p><font color="red">&nbsp;&nbsp;=>>&nbsp;&nbsp;Problème lors de l\'upload ! Contactez l\'administrateur.</font> </p>';
-            break;
-    }
-/*-- --------------------------------------------------------------- --*/
-
 
     // controle des saisies du formulaire
-    if (
-    isset($_POST['libTitrArt']) and !empty($_POST['libTitrArt'])
+    if (isset($_POST['dtCreArt']) and !empty($_POST['dtCreArt'])
+    and isset($_POST['libTitrArt']) and !empty($_POST['libTitrArt'])
     and isset($_POST['libChapoArt']) and !empty($_POST['libChapoArt'])
     and isset($_POST['libAccrochArt']) and !empty($_POST['libAccrochArt'])
     and isset($_POST['parag1Art']) and !empty($_POST['parag1Art'])
@@ -196,13 +103,28 @@ if (in_array(strtolower($extension), $tabExt)) {
         $numThem = ctrlSaisies($_POST['numThem']);
     
 
-        $numNextArt = $monArticle->getNextNumArt($numLang);
-        require_once __DIR__ . './ctrlerUploadImage.php';
+if (isset($_FILES['monfichier']['tmp_name']) AND !empty($_FILES['monfichier']['tmp_name'])) {
+    $target_file = $targetDir . $urlPhotArt;
+    // $delFile = $targetDir . $urlPhotArt; voir si ça fonctionne
+    // Del old image sur serveur
+    if(file_exists($delFile)){
+        // delete
+        unlink("./uploads/" . $urlPhotArt['urlPhotArt']);
+        move_uploaded_file($_FILES['monfichier']['tmp_name'], $target_file);
+    }
+    // Traitnemnt : upload image => Chnager image
+    require_once __DIR__ . '/ctrlerUploadImage.php';
 
-        $urlPhotArt = $monImage ; 
-        $monArticle->update($numNextArt, $dtCreAr, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
+    // Nom image à la volée
+    $urlPhotArt = $nomImage;
+} else {
+    $urlPhotArt = -1;
+}
+$monArticle->update($numArt, $_POST['libTitrArt'], $_POST['libChapoArt'], $_POST['libAccrochArt'], $_POST['parag1Art'], $_POST['libSsTitr1Art'], $_POST['parag2Art'], $_POST['libSsTitr2Art'], $_POST['parag3Art'], $_POST['libConclArt'], $urlPhotArt, $_POST['numAngl'], $_POST['numThem']);
+       // $monArticle->update($numNextArt, $dtCreArt, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
 
         header("Location: ./article.php");
+
     }   // Fin if 
    
     // modification effective du article
@@ -216,8 +138,7 @@ if (in_array(strtolower($extension), $tabExt)) {
         echo $errSaisies;
     }   // End of else erreur saisies
 
-    // Traitnemnt : upload image => Chnager image
-    // Nom image à la volée
+
 
 
 
@@ -406,8 +327,8 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                         $listNumLang= $row["numLang"];
                         $listlib1Lang = $row["lib1Lang"];
             ?>
-                        <option value="<?= $listNumLang; ?>">
-                            <?= $listlib1Lang; ?>
+                        <option value="<?= ($listNumLang); ?>" <?= ((isset($idLang) && $idLang == $listNumLang) ? " selected='selected'" : null); ?>>
+                            <?php echo $listlib1Lang; ?>
                         </option>
             <?php
                     } // End of foreach
