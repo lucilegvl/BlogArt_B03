@@ -8,8 +8,9 @@
 ////////////////////////////////////////////////////////////
 
 // insert dans TJ motclearticle
-// upload image & insert path
-//
+// images uploadées sur DD (serveur)
+
+
 // Mode DEV
 require_once __DIR__ . '/../../util/utilErrOn.php';
 
@@ -44,85 +45,63 @@ $maLangue = new LANGUE();
 // Gestion des erreurs de saisie
 $erreur = false;
 
+
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
-    // images uploadées sur DD (serveur)
-    //
-    // Script : ctrlerUploadImage.php
-    // Init constantes
-    include __DIR__ . '/initConst.php';
-    
-    // Init variables
-    include __DIR__ . '/initVar.php';
-    
-    /************************************************************
-     * Creation dossier cible si inexistant
-     *************************************************************/
-    if (!is_dir(TARGET)) {
-        if (!mkdir(TARGET, 0755)) {
-          exit("<p><font color='red'>Erreur : création du dossier 'uploads' impossible ! <br>Vérifiez les droits en création ou créer le dossier en amont !</font>");
-        } // End of if (!mkdir(TARGET, 0755))
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
     } else {
-        $target_OK = true;
-    }
+        $Submit = "";
+    } 
 
     // controle des saisies du formulaire
-    if (((isset($_POST['libTitrArt'])) AND !empty($_POST['libTitrArt']))
-    AND ((isset($_POST['libChapoArt'])) AND !empty($_POST['libChapoArt']))
-    AND ((isset($_POST['libAccrochArt'])) AND !empty($_POST['libAccrochArt']))
-    AND ((isset($_POST['parag1Art'])) AND !empty($_POST['parag1Art']))
-    AND ((isset($_POST['libSsTitr1Art'])) AND !empty($_POST['libSsTitr1Art']))
-    AND ((isset($_POST['parag2Art'])) AND !empty($_POST['parag2Art']))
-    AND ((isset($_POST['libSsTitr2Art'])) AND !empty($_POST['libSsTitr2Art']))
-    AND ((isset($_POST['parag3Art'])) AND !empty($_POST['parag3Art']))
-    AND ((isset($_POST['libConclArt'])) AND !empty($_POST['libConclArt']))
-    AND ((isset($_POST['urlPhotArt'])) AND !empty($_POST['urlPhotArt']))
-    //AND ((isset($_POST['numAngl'])) AND !empty($_POST['numAngl']))
-    //AND ((isset($_POST['dtCreArt'])) AND !empty($_POST['dtCreArt']))
-    //AND ((isset($_POST['numThem'])) AND !empty($_POST['numThem']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    if (
+      /*  isset($_POST['dtCretArt']) and !empty($_POST['dtCretArt'])
+    and*/
+    isset($_POST['libTitrArt']) and !empty($_POST['libTitrArt'])
+    and isset($_POST['libChapoArt']) and !empty($_POST['libChapoArt'])
+    and isset($_POST['libAccrochArt']) and !empty($_POST['libAccrochArt'])
+    and isset($_POST['parag1Art']) and !empty($_POST['parag1Art'])
+    and isset($_POST['libSsTitr1Art']) and !empty($_POST['libSsTitr1Art'])
+    and isset($_POST['parag2Art']) and !empty($_POST['parag2Art'])
+    and isset($_POST['libSsTitr2Art']) and !empty($_POST['libSsTitr2Art'])
+    and isset($_POST['parag3Art']) and !empty($_POST['parag3Art'])
+    and isset($_POST['libConclArt']) and !empty($_POST['libConclArt'])
+    and isset($_FILES['monfichier']['tmp_name']) and !empty($_FILES['monfichier']['tmp_name'])
+    and !empty($_POST['Submit']) and $Submit === "Valider") {
 
         $erreur = false;
-        $dtCreArt = ctrlSaisies(($_POST['dtCreArt']));
-        $libTitrArt = ctrlSaisies(($_POST['libTitrArt']));
-        $libChapoArt = ctrlSaisies(($_POST['libChapoArt']));
-        $libAccrochArt = ctrlSaisies(($_POST['libAccrochArt']));
-        $parag1Art = ctrlSaisies(($_POST['parag1Art']));
-        $libSsTitr1Art = ctrlSaisies(($_POST['libSsTitr1Art']));
-        $parag2Art = ctrlSaisies(($_POST['parag2Art']));
-        $libSsTitr2Art = ctrlSaisies(($_POST['libSsTitr2Art']));
-        $parag3Art = ctrlSaisies(($_POST['parag3Art']));
-        $libConclArt = ctrlSaisies(($_POST['libConclArt']));
-        $urlPhotArt = ctrlSaisies(($_POST['urlPhotArt']));
-        $numAngl = ctrlSaisies(($_POST['numAngl']));
-        $numThem = ctrlSaisies(($_POST['numThem']));
-    
+        $dtCreArt = ctrlSaisies($_POST['dtCreArt']);
+        $libTitrArt = ctrlSaisies($_POST['libTitrArt']);
+        $libChapoArt = ctrlSaisies($_POST['libChapoArt']);
+        $libAccrochArt = ctrlSaisies($_POST['libAccrochArt']);
+        $parag1Art = ctrlSaisies($_POST['parag1Art']);
+        $libSsTitr1Art = ctrlSaisies($_POST['libSsTitr1Art']);
+        $parag2Art = ctrlSaisies($_POST['parag2Art']);
+        $libSsTitr2Art = ctrlSaisies($_POST['libSsTitr2Art']);
+        $parag3Art = ctrlSaisies($_POST['parag3Art']);
+        $libConclArt = ctrlSaisies($_POST['libConclArt']);
+        $numAngl = ctrlSaisies($_POST['TypAngl']);
+        $numThem = ctrlSaisies($_POST['TypThem']);
+        
+        require_once __DIR__ . '/../../ctrlerUploadImage.php';
 
-        $numNextArt = $monArticle->getNextNumArt($numLang);
+$urlPhotArt = $monImage ; 
 
-        $monArticle->create($numNextArt, $dtCreArt, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
+        $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
 
         header("Location: ./article.php");
+
     }   // Fin if 
-    // création effective de l'article
-
-
-
-    // Gestion des erreurs => msg si saisies ko
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
         echo $errSaisies;
     }   // End of else erreur saisies
-   
 
     // Traitnemnt : upload image => Nom image à la volée
-
-
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initArticle.php';
@@ -250,7 +229,6 @@ include __DIR__ . '/initArticle.php';
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
@@ -258,7 +236,7 @@ include __DIR__ . '/initArticle.php';
                 $listNumLang = "";
                 $listlib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang= $row["numLang"];
@@ -295,7 +273,6 @@ include __DIR__ . '/initArticle.php';
 
             <!-- Listbox Angle => 2ème temps -->
 
-            <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
                 <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
                 <option value="-1">- - - Choisissez un angle - - -</option>
 
@@ -356,7 +333,6 @@ include __DIR__ . '/initArticle.php';
 
             <!-- Listbox Thématique=> 2ème temps -->
 
-            <input type="hidden" id="idTypThem" name="idTypThem" value="<?= $numThem; ?>" />
                 <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > 
                 <option value="-1">- - - Choisissez une thematique - - -</option>
 

@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 else {
 // Gestion des erreurs => msg si saisies ko
     $erreur = true;
-    $errSaisies =  "Erreur, la saisie est obligatoire !";
+    $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
     }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
@@ -89,15 +89,13 @@ include __DIR__ . '/initAngle.php';
         //ajouter ctrl saisies ici
 
         $id=ctrlSaisies($_GET['id']);
-        $req = $monAngle->get_1Angle($id);
+        $req = $monAngle->get_1AngleByLang($id);
 
-            $numAngl = $req['numAngl'];
+        if ($req) {
             $libAngl = $req['libAngl'];
-            $numLang = $req['numLang'];
-
-            $request = $maLangue->get_1Langue($numLang);
-            $lib1Lang=$request['lib1Lang'];
-        
+            $idLang = $req['numLang'];    
+             $numAngl = $req['numAngl'];
+        } 
     }
 ?>
 
@@ -125,21 +123,21 @@ include __DIR__ . '/initAngle.php';
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-                <option value="-1"><?= $lib1Lang; ?></option>
+                    <option value="-1">- - - Choisissez une langue - - -</option>
 
             <?php
                 $listNumLang = "";
                 $listlib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang= $row["numLang"];
                         $listlib1Lang = $row["lib1Lang"];
             ?>
-                        <option value="<?= $listNumLang; ?>">
+                        <option value="<?= ($listNumLang); ?>" <?= ((isset($idLang) && $idLang == $listNumLang) ? " selected='selected'" : null); ?>>
                             <?php echo $listlib1Lang; ?>
                         </option>
             <?php

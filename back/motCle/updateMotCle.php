@@ -59,9 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 
     else { // Saisies invalides
-        echo "aie";
         $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
+        $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
     }
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
@@ -93,7 +92,6 @@ include __DIR__ . '/initMotCle.php';
         if (isset($_GET['id'])) { //toujours update delete
 
             $id = ctrlSaisies($_GET['id']);
-            echo $id;
            
             $req = $monMotCle->get_1MotCleByLang($id);
             if ($req) {
@@ -125,7 +123,7 @@ include __DIR__ . '/initMotCle.php';
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
         <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
-            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
+            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
 <?php

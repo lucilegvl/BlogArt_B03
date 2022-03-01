@@ -124,6 +124,7 @@ class ARTICLE{
 	} // End of function
 
 	// Fonction pour recupérer la dernière PK de ARTICLE
+	
 	// avant insert des n occurr dans TJ MOTCLEARTICLE
 	function get_LastNumArt(){
 		global $db;
@@ -146,7 +147,7 @@ class ARTICLE{
 			$db->beginTransaction();
 
 			// insert
-			$query = 'INSERT INTO ARTICLE (dtCreArt, libTitrArt, $ibChapoArt, libAccrochArt, parag1Art, libSsTitr1Art, parag2Art, libSsTitr2Art, parag3Art, libConclArt, urlPhotArt, numAngl, numThem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?,?)';
+			$query = 'INSERT INTO ARTICLE (dtCreArt, libTitrArt, libChapoArt, libAccrochArt, parag1Art, libSsTitr1Art, parag2Art, libSsTitr2Art, parag3Art, libConclArt, urlPhotArt, numAngl, numThem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?,?)';
 			// prepare
 			$request = $db->prepare($query);
 			// execute

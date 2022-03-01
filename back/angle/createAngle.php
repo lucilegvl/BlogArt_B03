@@ -114,7 +114,7 @@ include __DIR__ . '/initAngle.php';
                 $listNumLang = "";
                 $listlib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang= $row["numLang"];
