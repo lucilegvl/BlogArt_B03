@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libThem = ctrlSaisies($_POST['libThem']);
         $numLang = ctrlSaisies($_POST['TypLang']);
 
-        $numNextThem = $maThematique->getNextNumThem($numLang);
+        $numNextThem = $maThematique->get_NextNumThem($numLang);
 
         $maThematique->create($numNextThem, $libThem, $numLang);
 
@@ -119,7 +119,7 @@ include __DIR__ . '/initThematique.php';
                 $listNumLang = "";
                 $listLib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang = $row["numLang"];

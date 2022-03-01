@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sameId=ctrlSaisies($_POST['id']);
         header("Location: ./updateLangue.php?id=".$sameId);
     }  
+    
 
     if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
     AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
@@ -49,6 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $lib2Lang = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['TypPays']));
         $numLang = ctrlSaisies(($_POST['id']));
+
+
 
         $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
 
@@ -90,7 +93,7 @@ include __DIR__ . '/initLangue.php';
             $lib1Lang = $req['lib1Lang'];
             $lib2Lang = $req['lib2Lang'];
             $idPays = $req['numPays'];   
-            //$numLang = $req['numLang'];          
+            $numLang = $req['numLang'];          
        
         } 
      }
