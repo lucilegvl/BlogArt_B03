@@ -1,5 +1,4 @@
 <?php
-echo "ici";
 ////////////////////////////////////////////////////////////
 //
 //  CRUD MOTCLE (PDO) - Modifié : 4 Juillet 2021
@@ -27,7 +26,6 @@ $maLangue= new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
-echo "la";
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -40,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-
+        $sameId=$_POST['id'];
         header("Location: ./createMotCle.php");
 
     }   // End of if ((isset($_POST["submit"]))
@@ -114,13 +112,13 @@ include __DIR__ . '/initMotCle.php';
                 <!-- <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" /> -->
 
                 <!-- Listbox langue => 2ème temps -->
-                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                    <option value="-1">- - - Choisissez une langue - - -</option>
+                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >                   
                     <option value="-1">- - - Choisissez une langue - - -</option>
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
 
                 if($result){
                     

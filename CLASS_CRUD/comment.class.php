@@ -4,7 +4,7 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class COMMENT{
-	function get_1Comment($numSeqCom, $numArt){
+/*	function get_1Comment($numSeqCom, $numArt){
 		global $db;
 
 		// select
@@ -57,16 +57,23 @@ class COMMENT{
 		// execute
 		return($allCommentsByArticleByMemb);
 	}
-
+*/
 	function get_NbAllCommentsBynumMemb($numMemb){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM COMMENT WHERE numMemb = ?';
 		// prepare
+		$allNbAllCommentsBynumMemb = $db->prepare($query);
 		// execute
-		return($allNbAllCommentsBynumMemb);
+		$allNbAllCommentsBynumMemb->execute([$numMemb]);
+
+		$count = $allNbAllCommentsBynumMemb->rowCount(); 
+
+		return($count);
 	}
 
+/*
 	// Fonction : recupérer next numéro séquence de article recherché (PK COMMENT)
 	// Commentaire suivant sur un article
 	// => Pour table COMMENT & table COMMENTPLUS
@@ -181,5 +188,5 @@ class COMMENT{
 			$request->closeCursor();
 			die('Erreur delete COMMENT : ' . $e->getMessage());
 		}
-	}
+	} */
 }	// End of class

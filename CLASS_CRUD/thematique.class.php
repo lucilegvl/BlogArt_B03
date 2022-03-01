@@ -87,7 +87,7 @@ class THEMATIQUE{
 	}
 
 	// Récup dernière PK NumThem
-	function hNextNumThem($numLang) {
+	function get_NextNumThem($numLang) {
 		global $db;
 	
 		// Découpage FK LANGUE
