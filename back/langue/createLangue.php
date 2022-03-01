@@ -39,27 +39,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // controle des saisies du formulaire    
-    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
-    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
+    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
+    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
+    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) { // Saisies valides
         $erreur = false;
-        $lib1Lang = ctrlSaisies(($_POST['lib1Lang']));
-        $lib2Lang = ctrlSaisies(($_POST['lib2Lang']));
-        $numPays = ctrlSaisies(($_POST['TypPays']));
-  
-        
-        $numLang = $maLangue->getNextNumLang($numPays);
-        $maLangue->create($numLang, $lib1Lang, $lib2Lang, $numPays);
 
-        header("Location: ./langue.php");
-    }   // Fin if ((isset($_POST['libStat'])) ...
-    else { // Saisies invalides
+        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
+        $lib1Lenght = strlen($lib1Lang);
+        $lib2Lang = ctrlSaisies($_POST['lib2Lang']);
+        $lib2Lenght = strlen($lib2Lang);
+        $numPays = ctrlSaisies($_POST['TypPays']);
+  
+        if ($lib1Lenght <= 30 AND $lib2Lenght <= 60) {
+            $numLang = $maLangue->getNextNumLang($numPays);
+            $maLangue->create($numLang, $lib1Lang, $lib2Lang, $numPays);
+
+            header("Location: ./langue.php");
+        } else {
+            $erreur = true;
+            $errSaisies = "Le(s) libellé(s) dépasse(nt) le nombre maximal de caractères.";
+        }
+    } else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
     }   // End of else erreur saisies
+
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
-
-
 
 // Init variables form
 include __DIR__ . '/initLangue.php';

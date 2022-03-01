@@ -49,15 +49,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numMotCle = ctrlSaisies($_POST['id']);
         $libMotCle = ctrlSaisies($_POST['libMotCle']);
+        $TailleMotCle = strlen($libMotCle);
         $numLang = ctrlSaisies($_POST['TypLang']);
        
+        if ($TailleMotCle <= 60){
+            $monMotCle->update($numMotCle, $libMotCle, $numLang); //modification effective du mot clé
 
-        $monMotCle->update($numMotCle, $libMotCle, $numLang); //modification effective du mot clé
-
-        header("Location: ./motCle.php");
+            header("Location: ./motCle.php");
+        } else {
+            $erreur = true;
+            $errSaisies = "Erreur, le libellé est trop long.";
+        }
     }   // Fin if ((isset($_POST['libStat'])) 
-    
-
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";

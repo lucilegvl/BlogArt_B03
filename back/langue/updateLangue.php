@@ -39,25 +39,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ./updateLangue.php?id=".$sameId);
     }  
     
-
-    if (((isset($_POST['lib1Lang'])) AND !empty($_POST['lib1Lang']))
-    AND ((isset($_POST['lib2Lang'])) AND !empty($_POST['lib2Lang']))
-    AND ((isset($_POST['TypPays'])) AND !empty($_POST['TypPays']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) { // Saisies valides
+    if (isset($_POST['lib1Lang']) AND !empty($_POST['lib1Lang'])
+    AND isset($_POST['lib2Lang']) AND !empty($_POST['lib2Lang'])
+    AND isset($_POST['TypPays']) AND !empty($_POST['TypPays'])
+    AND !empty($_POST['Submit']) AND ($Submit === "Valider")) { // Saisies valides
 
         $erreur = false;
-        $lib1Lang = ctrlSaisies(($_POST['lib1Lang']));
-        $lib2Lang = ctrlSaisies(($_POST['lib2Lang']));
+
+        $lib1Lang = ctrlSaisies($_POST['lib1Lang']);
+        $lib1Lenght = strlen($lib1Lang);
+        $lib2Lang = ctrlSaisies($_POST['lib2Lang']);
+        $lib2Lenght = strlen($lib2Lang);
         $numPays = ctrlSaisies(($_POST['TypPays']));
         $numLang = ctrlSaisies(($_POST['id']));
 
+        if ($lib1Lenght <= 30 AND $lib2Lenght <= 60) {
+            $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
 
-
-        $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
-
-        header("Location: ./langue.php");
+            header("Location: ./langue.php");
+        } else {
+            $erreur = true;
+            $errSaisies = "Le(s) libellé(s) dépasse(nt) le nombre maximal de caractères.";
+        }
     }   // Fin if ((isset($_POST['libStat'])) 
-    
     
     else { // Saisies invalides
         $erreur = true;
@@ -121,7 +125,7 @@ include __DIR__ . '/initLangue.php';
 <label for="LibTypPays" title="Sélectionnez le pays !">
             <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idTypPays" name="idTypPays" value="<?= $idPays; ?>" />
+        <input type="hidden" id="idTypPays" name="idTypPays" value="<?= $numLang; ?>" />
             <select size="1" name="TypPays" id="TypPays"  class="form-control form-control-create" title="Sélectionnez le pays!" >
             <option value="-1">- - - Choisissez un pays - - -</option>
 <?php
