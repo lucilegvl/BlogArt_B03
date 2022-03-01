@@ -62,9 +62,15 @@ class COMMENT{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM COMMENT WHERE numMemb = ?';
 		// prepare
+		$allNbAllCommentsBynumMemb = $db->prepare($query);
 		// execute
-		return($allNbAllCommentsBynumMemb);
+		$allNbAllCommentsBynumMemb->execute([$numMemb]);
+
+		$count = $allNbAllCommentsBynumMemb->rowCount(); 
+
+		return($count);
 	}
 
 /*
