@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $lib2Lang = ctrlSaisies(($_POST['lib2Lang']));
         $numPays = ctrlSaisies(($_POST['TypPays']));
   
-
+        
         $numLang = $maLangue->getNextNumLang($numPays);
         $maLangue->create($numLang, $lib1Lang, $lib2Lang, $numPays);
 

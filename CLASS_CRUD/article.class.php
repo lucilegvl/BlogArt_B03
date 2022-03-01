@@ -13,6 +13,7 @@ class ARTICLE{
 		$result = $db->prepare($query);
 		// execute
 		$result->execute([$numArt]);
+		
 		return($result->fetch());
 	}
 
@@ -167,28 +168,35 @@ class ARTICLE{
 
 		try {
 			$db->beginTransaction();
- // if $urlPhotArt = -1 {
 
+			if ($urlPhotArt = -1) {
 
+				// update
+				$query = "UPDATE ARTICLE SET dtCreArt = ? , libTitrArt = ? , libChapoArt = ?, libAccrochArt = ?, parag1Art = ?, libSsTitr1Art = ? , parag2Art = ?, libSsTitr2Art = ?, parag3Art = ?, libConclArt = ?, numAngl = ?, numThem = ? WHERE numArt = ?";
+				// prepare
+				$request = $db->prepare($query);
+				// execute
+				$request->execute([$numArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $numAngl, $numThem]);
+				$db->commit();
+				$request->closeCursor();
+			} else {
 
- //}
-			// update
-			$query = "UPDATE THEMATIQUE SET NumAngl = ?,  libChapoArt = ?, libTitrArt = ?, libAccrochArt = ?, parag1Art = ?, libSsTitr1Art = ?, parag2Art = ?, libSsTitr2Art = ?, parag3Art = ?, libConclArt = ?, urlPhotArt = ?, numThem = ?, WHERE numArt = ?";
-			// prepare
-			$request = $db->prepare($query);
-			// execute
-			$request->execute([$numAngl, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numThem, $numArt]);
-			$db->commit();
-			$request->closeCursor();
-		}
-		catch (PDOException $e) {
+				// update
+				$query = "UPDATE ARTICLE SET dtCreArt = ? , libTitrArt = ? , libChapoArt = ?, libAccrochArt = ?, parag1Art = ?, libSsTitr1Art = ? , parag2Art = ?, libSsTitr2Art = ?, parag3Art = ?, libConclArt = ?, urlPhotArt = ? numAngl = ?, numThem = ? WHERE numArt = ?";
+				// prepare
+				$request = $db->prepare($query);
+				// execute
+				$request->execute([$numArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem]);
+				$db->commit();
+				$request->closeCursor();
+			} // fin else
+		} catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
 			die('Erreur update ARTICLE : ' . $e->getMessage());
-		}
+		} // fin du try
+	} // fin du function
 
-		
-	}
 
 	function delete($numArt){
 		global $db;
