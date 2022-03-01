@@ -9,6 +9,22 @@
 
 // => del + insert dans TJ motclearticle
 // => upload image & update path si modif
+
+if (isset($_FILES['monfichier']['tmp_name']) AND !empty($_FILES['monfichier']['tmp_name'])) {
+    $delFile = $targetDir . $urlPhotArt;
+    // Del old image sur serveur
+    if(file_exists($delFile)){
+
+        // del
+    }
+    // Traitnemnt : upload image => Chnager image
+    require_once __DIR__ . '/ctrlerUploadImage.php';
+
+    // Nom image à la volée
+    $urlPhotArt = $nomImage;
+} else {
+    $urlPhotArt = -1;
+}
 //
 // Mode DEV
 require_once __DIR__ . '/../../util/utilErrOn.php';
@@ -16,9 +32,9 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/preparerTags.php';
 
 // Init constantes
-include __DIR__ . '/initConst.php';
+require_once __DIR__ . '/initConst.php';
 // Init variables
-include __DIR__ . '/initVar.php';
+require_once __DIR__ . '/initVar.php';
 
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
@@ -152,21 +168,18 @@ if (in_array(strtolower($extension), $tabExt)) {
 
 
     // controle des saisies du formulaire
-    if (isset($_POST['numArt']) AND !empty($_POST['numArt'])
-    AND isset($_POST['dtCreArt']) AND !empty($_POST['dtCreArt'])
-    AND isset($_POST['libTitrArt']) AND !empty($_POST['libTitrArt'])
-    AND isset($_POST['libChapoArt']) AND !empty($_POST['libChapoArt'])
-    AND isset($_POST['libAccrochArt']) AND !empty($_POST['libAccrochArt'])
-    AND isset($_POST['parag1Art']) AND !empty($_POST['parag1Art'])
-    AND isset($_POST['libSsTitr1Art']) AND !empty($_POST['libSsTitr1Art'])
-    AND isset($_POST['parag2Art']) AND !empty($_POST['parag2Art'])
-    AND isset($_POST['libSsTitr2Art']) AND !empty($_POST['libSsTitr2Art'])
-    AND isset($_POST['parag3Art']) AND !empty($_POST['parag3Art'])
-    AND isset($_POST['libConclArt']) AND !empty($_POST['libConclArt'])
-    AND isset($_POST['urlPhotArt']) AND !empty($_POST['urlPhotArt'])
-    AND isset($_POST['numAngl']) AND !empty($_POST['numAngl'])
-    AND isset($_POST['numThem']) AND !empty($_POST['numThem'])
-    AND !empty($_POST['Submit']) AND $Submit === "Valider") {
+    if (
+    isset($_POST['libTitrArt']) and !empty($_POST['libTitrArt'])
+    and isset($_POST['libChapoArt']) and !empty($_POST['libChapoArt'])
+    and isset($_POST['libAccrochArt']) and !empty($_POST['libAccrochArt'])
+    and isset($_POST['parag1Art']) and !empty($_POST['parag1Art'])
+    and isset($_POST['libSsTitr1Art']) and !empty($_POST['libSsTitr1Art'])
+    and isset($_POST['parag2Art']) and !empty($_POST['parag2Art'])
+    and isset($_POST['libSsTitr2Art']) and !empty($_POST['libSsTitr2Art'])
+    and isset($_POST['parag3Art']) and !empty($_POST['parag3Art'])
+    and isset($_POST['libConclArt']) and !empty($_POST['libConclArt'])
+    and isset($_FILES['monfichier']['tmp_name']) and !empty($_FILES['monfichier']['tmp_name'])
+    and !empty($_POST['Submit']) and $Submit === "Valider") {
 
         $erreur = false;
         $dtCreArt = ctrlSaisies($_POST['dtCreArt']);
@@ -179,13 +192,14 @@ if (in_array(strtolower($extension), $tabExt)) {
         $libSsTitr2Art = ctrlSaisies($_POST['libSsTitr2Art']);
         $parag3Art = ctrlSaisies($_POST['parag3Art']);
         $libConclArt = ctrlSaisies($_POST['libConclArt']);
-        $urlPhotArt = ctrlSaisies($_POST['urlPhotArt']);
         $numAngl = ctrlSaisies($_POST['numAngl']);
         $numThem = ctrlSaisies($_POST['numThem']);
     
 
         $numNextArt = $monArticle->getNextNumArt($numLang);
+        require_once __DIR__ . './ctrlerUploadImage.php';
 
+        $urlPhotArt = $monImage ; 
         $monArticle->update($numNextArt, $dtCreAr, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
 
         header("Location: ./article.php");
@@ -379,7 +393,6 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
                 <option value="-1">- - - Choisissez une langue - - -</option>
 
@@ -387,7 +400,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                 $listNumLang = "";
                 $listlib1Lang = "";
 
-                $result = $maLangue->get_AllLanguesByLib1Lang();
+                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
                 if($result){
                     foreach($result as $row) {
                         $listNumLang= $row["numLang"];

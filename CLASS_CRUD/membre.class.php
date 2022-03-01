@@ -95,18 +95,18 @@ class MEMBRE{
 	}*/
 
 	// Inscription membre
-	function create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $accordMemb, $idStat){
+	function create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat){
 		global $db;
 
 		try {
 			$db->beginTransaction();
 
 			// insert
-			$query = 'INSERT INTO MEMBRE (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)';
+			$query = 'INSERT INTO MEMBRE (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 			// prepare
 			$request = $db->prepare($query);
 			// execute
-			$request->execute([$prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $accordMemb, $idStat]);
+			$request->execute([$prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat]);
 
 			$db->commit();
 			$request->closeCursor();
@@ -118,32 +118,67 @@ class MEMBRE{
 		}
 	}
 
-/*	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat){
+	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat, $testPass2Memb, $testEMail2Memb) {
 		global $db;
 
 		try {
 			$db->beginTransaction();
 			
-			// update
-			// prepare
-			// execute
+			if ($testPass2Memb == -1 AND $testEMail2Memb == -1) {
+				// update
+				$query = "UPDATE MEMBRE SET prenomMemb = ?,  nomMemb = ?, idStat = ? WHERE numMemb = ?";
+				// prepare
+				$request = $db->prepare($query);
+				// execute
+				$request->execute([$prenomMemb, $nomMemb, $idStat, $numMemb]);
 				$db->commit();
-				$request2->closeCursor();
+				$request->closeCursor();
+			} else {
+				if ($testPass2Memb != -1 AND $testEMail2Memb == -1) {
+					// update
+					$query = "UPDATE MEMBRE SET prenomMemb = ?, nomMemb = ?, passMemb = ?, idStat = ? WHERE numMemb = ?";
+					// prepare
+					$request = $db->prepare($query);
+					// execute
+					$request->execute([$prenomMemb, $nomMemb, $passMemb, $idStat, $numMemb]);
+					$db->commit();
+					$request->closeCursor();
+				}
+				if ($testPass2Memb == -1 AND $testEMail2Memb != -1) {
+					// update
+					$query = "UPDATE MEMBRE SET prenomMemb = ?, nomMemb = ?, eMailMemb = ?, idStat = ? WHERE numMemb = ?";
+					// prepare
+					$request = $db->prepare($query);
+					// execute
+					$request->execute([$prenomMemb, $nomMemb, $eMailMemb, $idStat, $numMemb]);
+					$db->commit();
+					$request->closeCursor();
+				}
+				if ($testPass2Memb != -1 AND $testEMail2Memb != -1) {
+					// update
+					$query = "UPDATE MEMBRE SET prenomMemb = ?,  nomMemb = ?,  passMemb = ?,  eMailMemb = ?,  idStat = ? WHERE numMemb = ?";
+					// prepare
+					$request = $db->prepare($query);
+					// execute
+					$request->execute([$prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat, $numMemb]);
+					$db->commit();
+					$request->closeCursor();
+				}
 			}
-		}
-		catch (PDOException $e) {
+
+		} catch (PDOException $e) {
 			$db->rollBack();
 			if ($passMemb == -1) {
-				$request1->closeCursor();
+				$request->closeCursor();
 			} else {
-				$request2->closeCursor();
+				$request->closeCursor();
 			}
 			die('Erreur update MEMBRE : ' . $e->getMessage());
 		}
 	}
 
 	// Ctrl FK sur COMMENT avec del
-	function delete($numMemb){
+	/*function delete($numMemb){
 		global $db;
 		
 		try {
