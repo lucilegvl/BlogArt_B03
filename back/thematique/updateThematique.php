@@ -55,10 +55,16 @@ if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
     $numThem = ctrlSaisies($_POST['id']);
     $libThem = ctrlSaisies($_POST['libThem']);
     $numLang = ctrlSaisies($_POST['TypLang']);
+    $ThemLenght = strlen($libThem);
 
-    $maThematique->update($numThem, $libThem, $numLang);
+    if ($ThemLenght <= 60) {
+        $maThematique->update($numThem, $libThem, $numLang);
 
-    header("Location: ./thematique.php");
+        header("Location: ./thematique.php");
+    } else {
+        $erreur = true;
+        $errSaisies = "Erreur, le libellé est trop long.";
+    }
 
 } // Fin if saisie valide 
 
@@ -96,12 +102,15 @@ include __DIR__ . '/initThematique.php';
 
         $id = ctrlSaisies($_GET['id']);
         $reqThem = $maThematique->get_1Thematique($id);
-
+        if ($reqThem) {
             $libThem = $reqThem['libThem'];
             $numLang = $reqThem['numLang'];
+        }
 
-            $request = $maLangue->get_1Langue($numLang);
+        $request = $maLangue->get_1Langue($numLang);
+        if ($request) {
             $lib1Lang=$request['lib1Lang'];
+        }
         
     }
 ?>
@@ -126,9 +135,8 @@ include __DIR__ . '/initThematique.php';
         <label for="LibTypLang" title="Sélectionnez la langue !">
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
-        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
-            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > -->
-                <option value="-1"><?= $lib1Lang; ?> </option>
+        <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";
@@ -140,8 +148,8 @@ include __DIR__ . '/initThematique.php';
                         $listNumLang = $row["numLang"];
                         $listLib1Lang = $row["lib1Lang"];
 ?>
-                        <option value="<?= $listNumLang; ?>">
-                            <?= $listLib1Lang; ?>
+                        <option value="<?= ($listNumLang); ?>" <?= ((isset($idLang) && $idLang == $listNumLang) ? " selected='selected'" : null); ?>>
+                            <?php echo $listLib1Lang; ?>
                         </option>
 <?php
                     } // End of foreach

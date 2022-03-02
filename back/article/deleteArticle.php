@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initArticle.php';
 // En dur
-$urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
+$urlPhotArt = "../uploads/?";
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -242,7 +242,6 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
 
             <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-                <option value="-1">- - - Choisissez une langue - - -</option>
 
             <?php
                 $listNumLang = "";

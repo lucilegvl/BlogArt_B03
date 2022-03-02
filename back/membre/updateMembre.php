@@ -306,7 +306,6 @@ include __DIR__ . '/initMembre.php';
                 <input type="hidden" id="idStat" name="idStat" value="<?= isset($_GET['idStat']) ? $_GET['idStat'] : '' ?>" />
 
                 <select size="1" name="idStat" id="idStat"  class="form-control form-control-create" title="Sélectionnez un statut." >
-                    <option value="-1">- - - Choisissez un statut - - -</option>
 
                     <?php
                         $listidStat = "";

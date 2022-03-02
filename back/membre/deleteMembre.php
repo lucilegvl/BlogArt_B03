@@ -56,19 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // controle CIR
-
-    // delete effective du user
-
-
-
-
-
-
-
-
-
-
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form

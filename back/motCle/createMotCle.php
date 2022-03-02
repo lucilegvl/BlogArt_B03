@@ -46,17 +46,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // controle des saisies du formulaire
 
     
-    if (((isset($_POST['libMotCle'])) AND !empty($_POST['libMotCle']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    if (isset($_POST['libMotCle']) AND !empty($_POST['libMotCle'])
+    AND isset($_POST['TypLang']) AND !empty($_POST['TypLang'])
+    AND !empty($_POST['Submit']) AND $Submit === "Valider") {
         $erreur = false;
 
         // controle des saisies du formulaire
-        $libMotCle = ctrlSaisies(($_POST['libMotCle']));
         // Saisies valides
-        // creation effective de la MotCle
-        $monMotCle->create($libMotCle, $_POST["TypLang"]); 
+        $libMotCle = ctrlSaisies(($_POST['libMotCle']));
+        $TailleMotCle = strlen($libMotCle);
+        $numLang = ctrlSaisies($_POST['TypLang']);
 
-        header("Location: ./MotCle.php");
+        if ($TailleMotCle <= 60){
+            // creation effective de la MotCle
+            $monMotCle->create($libMotCle, $_POST["TypLang"]); 
+
+            header("Location: ./MotCle.php");
+
+        } else {
+            $erreur = true;
+            $errSaisies = "Erreur, le libellé est trop long.";
+        }
     }   // Fin if ((isset($_POST['libStat'])) ...
     else {
         // Saisies invalides
