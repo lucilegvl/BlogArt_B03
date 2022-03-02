@@ -33,14 +33,14 @@ h2{
 	text-transform:uppercase;
 	text-decoration:none;
 	color:#0e1a24;
-	/* padding:30px; */
+	margin-top:30px; 
 }
 
 .menu-back {
 	background-color:#f1f2f2;
 	text-align: center;
-	/* margin-right:60px;
-	margin-left:60px; */
+
+	padding:30px;
 }
 
 .parentback{
@@ -48,7 +48,8 @@ h2{
 	justify-content: space-between;
 	margin-right: 90px;
 	margin-left:90px;
-
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 
 fieldset {
@@ -114,7 +115,7 @@ label, button {
 }
 
 span {
-	background-color: purple;
+	/* background-color: purple; */
 }
 
 input {

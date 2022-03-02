@@ -91,7 +91,7 @@ include __DIR__ . '/initStatut.php';
 </head>
 <body>
     <h1> Mon espace administrateur</h1>
-    <h2>Créer un statut</h2>
+    
     <!-- <h2>Ajout d'un statut</h2> -->
 
     <div class=parentback>
@@ -136,6 +136,7 @@ include __DIR__ . '/initStatut.php';
         </div>
 
         <div class=formulaire>
+            <h2>Créer un statut</h2>
 
             <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
