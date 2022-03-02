@@ -91,11 +91,13 @@ $monArticle = new ARTICLE();
     //
 ?>
         <tr>
-         <td><h4>&nbsp; <?= $row["numMemb"]; ?> &nbsp;</h4></td>
+        <td><h4>&nbsp; <?= $row["numMemb"]; ?> &nbsp;</h4></td>
 
-         <td>&nbsp; <?= $row["numArt"]; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row["numArt"]; ?> &nbsp;</td>
 
-         <td>&nbsp; <?= ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</td>
+        <td>&nbsp;<span class="OK">&nbsp; <?= "ici (un)like"; ?> &nbsp;</span></td>
+
+        <td>&nbsp; <?= ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</td>
 
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLikeArt.php?id1=<?=["numMemb"]; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier like article" title="Modifier like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(Un)like</span>&nbsp;
         <br /></td>

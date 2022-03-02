@@ -22,7 +22,7 @@
         }
 
 fieldset {
-    background-color: #FDF5E6;  /* color: oldlace */
+    background-color: red;  /* color: oldlace */
     max-width: 800px;           /* largeur maximale cadre */
     padding: 16px;              /* marge interne / sépare le contenu de la bordure  */  
     /* Coins arrondis et couleur du cadre */
