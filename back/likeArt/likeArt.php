@@ -87,13 +87,11 @@ $monArticle = new ARTICLE();
     $allLikesArt = $monLikeArt->get_AllLikesArt();
     foreach($allLikesArt as $row) {
     // Boucle pour afficher
-
-    //
 ?>
         <tr>
-        <td><h4>&nbsp; <?= $row["numMemb"]; ?> &nbsp;</h4></td>
+        <td><h4>&nbsp; <?= $row["pseudoMemb"]; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= $row["numArt"]; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row["libTitrArt"]; ?> &nbsp;</td>
 
         <td>&nbsp;<span class="OK">&nbsp; <?= ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</span></td>
 

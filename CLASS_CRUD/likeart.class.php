@@ -18,11 +18,11 @@ class LIKEART{
 
 	function get_AllLikesArt(){
 		global $db;
-
+	
 		// select
-		$query = 'SELECT * FROM LIKEART';
+		$query = "SELECT * FROM LIKEART LKA , ARTICLE ART , MEMBRE ME WHERE LKA.numMemb = ME.numMemb AND LKA.numArt = ART.numArt";
 		// prepare
-		$result = $db->query($query);
+		$result=$db->query($query);
 		// execute
 		$allLikesArt = $result->fetchAll();
 		return($allLikesArt);
