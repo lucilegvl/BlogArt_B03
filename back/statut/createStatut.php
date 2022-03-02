@@ -15,6 +15,10 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+
+require_once("../../front/includes/commons/___headerFront.html"); 
+
+
 // Instanciation de la classe Statut
 $monStatut = new STATUT();
 
@@ -80,6 +84,8 @@ include __DIR__ . '/initStatut.php';
     <meta name="author" content="" />
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../css/header.css" rel="stylesheet" type="text/css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Assistant:wght@300;600&display=swap" rel="stylesheet">
