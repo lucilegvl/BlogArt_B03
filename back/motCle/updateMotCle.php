@@ -49,15 +49,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numMotCle = ctrlSaisies($_POST['id']);
         $libMotCle = ctrlSaisies($_POST['libMotCle']);
+        $TailleMotCle = strlen($libMotCle);
         $numLang = ctrlSaisies($_POST['TypLang']);
        
+        if ($TailleMotCle <= 60){
+            $monMotCle->update($numMotCle, $libMotCle, $numLang); //modification effective du mot clé
 
-        $monMotCle->update($numMotCle, $libMotCle, $numLang); //modification effective du mot clé
-
-        header("Location: ./motCle.php");
+            header("Location: ./motCle.php");
+        } else {
+            $erreur = true;
+            $errSaisies = "Erreur, le libellé est trop long.";
+        }
     }   // Fin if ((isset($_POST['libStat'])) 
-    
-
     else { // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
@@ -123,9 +126,7 @@ include __DIR__ . '/initMotCle.php';
             <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
         </label>
         <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
-            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-                <option value="-1">- - - Choisissez une langue - - -</option>
-
+            <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" >
 <?php
                 $listNumLang = "";
                 $listLib1Lang = "";

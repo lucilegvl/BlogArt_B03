@@ -47,8 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
-        $sameId=$_POST['id'];
-        header("Location: ./deleteStatut.php?id=".$sameId);
+        header("Location: ./deleteStatut.php");
     }   
 
     if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
@@ -140,7 +139,7 @@ include __DIR__ . '/initStatut.php';
 
         <div class="control-group">
             <label class="control-label" for="libStat"><b>Nom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libStat" id="libStat" size="80" maxlength="80" value="<?php echo $libStat; ?>" />
+            <input type="text" name="libStat" id="libStat" size="80" maxlength="80" value="<?php echo $libStat; ?>"  />
         </div>
 
         <div class="control-group">

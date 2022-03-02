@@ -52,12 +52,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = false;
         $libThem = ctrlSaisies($_POST['libThem']);
         $numLang = ctrlSaisies($_POST['TypLang']);
+        $ThemLenght = strlen($libThem);
 
-        $numNextThem = $maThematique->get_NextNumThem($numLang);
+        if ($ThemLenght <= 60) {
+            $numNextThem = $maThematique->get_NextNumThem($numLang);
 
-        $maThematique->create($numNextThem, $libThem, $numLang);
+            $maThematique->create($numNextThem, $libThem, $numLang);
 
-        header("Location: ./thematique.php");
+            header("Location: ./thematique.php");
+        } else {
+            $erreur = true;
+            $errSaisies = "Erreur, le libellé est trop long.";
+        }
     }   // Fin if 
 
     // Gestion des erreurs => msg si saisies ko

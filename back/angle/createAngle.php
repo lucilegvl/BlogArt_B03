@@ -40,28 +40,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ./createAngle.php");
     }
 
- // controle des saisies du formulaire
+    // controle des saisies du formulaire
     // Saisies valides
     if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
-    AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
-    //AND ((isset($_POST['numLang'])) AND !empty($_POST['numLang']))
+    AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang'])) 
     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         $erreur = false;
-
         $libAngl = ctrlSaisies(($_POST['libAngl']));
+        $AngleLenght = strlen($libAngl);
         $numLang = ctrlSaisies(($_POST['TypLang']));
 
-        $numNextAngl = $monAngle->getNextNumAngl($numLang);
+        if ($AngleLenght <= 60) {
+            $numNextAngl = $monAngle->getNextNumAngl($numLang);
+            $monAngle->create($numNextAngl,$libAngl, $numLang);
 
-        $monAngle->create($numNextAngl,$libAngl, $numLang);
+            header("Location: ./angle.php");
 
-        header("Location: ./angle.php");
-    }   // Fin if ((isset($_POST['libStat'])) ...
-    else {
+        } else {
+            $erreur = true;
+            $errSaisies = "Erreur, le libellé est trop long.";
+        }
+
+    } else {
         // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
-        }
+        var_dump($_POST);
+    }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form

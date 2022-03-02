@@ -47,10 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = false;
 
         $libStat = ctrlSaisies(($_POST['libStat']));
-        // insertion effective du statut
-        $monStatut->create($libStat);
+        $StatutLenght = strlen($libStat);
+        if ($StatutLenght <= 60) {
+            // insertion effective du statut
+            $monStatut->create($libStat);
 
-        header("Location: ./statut.php");
+            header("Location: ./statut.php");
+        } else {
+            $erreur = true;
+            $errSaisies = "Erreur, le libellé est trop long.";
+        }
     }   // Fin if ((isset($_POST['libStat'])) ...
     else {
         // Saisies invalides

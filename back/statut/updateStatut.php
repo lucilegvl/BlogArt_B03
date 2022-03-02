@@ -44,10 +44,16 @@
 
             $libStat = ctrlSaisies(($_POST['libStat']));
             $idStat = ctrlSaisies(($_POST['id']));
+            $StatutLenght = strlen($libStat);
 
-            $monStatut->update($idStat, $libStat);
+            if ($StatutLenght <= 60) {
+                $monStatut->update($idStat, $libStat);
 
-            header("Location: ./statut.php");
+                header("Location: ./statut.php");
+            } else {
+                $erreur = true;
+                $errSaisies = "Erreur, le libellé est trop long.";
+            }
         }      // Fin if ((isset($_POST['libStat'])) ...
         else { // Saisies invalides
             $erreur = true;
@@ -100,10 +106,6 @@
                     <div class="error">
                         <?php
                         if ($erreur) {
-                            echo ($errSaisies);
-                        }
-                        else {
-                            $errSaisies = "Données mises à jour";
                             echo ($errSaisies);
                         }
                         ?>
