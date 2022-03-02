@@ -42,9 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // controle des saisies du formulaire
     // Saisies valides
-    if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
-    AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang'])) 
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    if (isset($_POST['libAngl']) AND !empty($_POST['libAngl'])
+    AND isset($_POST['TypLang']) AND !empty($_POST['TypLang']) AND $_POST['TypLang'] != -1
+    AND !empty($_POST['Submit']) AND $Submit === "Valider") {
         $erreur = false;
         $libAngl = ctrlSaisies(($_POST['libAngl']));
         $AngleLenght = strlen($libAngl);
@@ -65,7 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
-        var_dump($_POST);
     }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")

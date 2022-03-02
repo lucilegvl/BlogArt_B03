@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numAngl = ctrlSaisies($_POST['TypAngl']);
         $numThem = ctrlSaisies($_POST['TypThem']);
-require_once __DIR__ . './ctrlerUploadImage.php';
+require_once ROOT . '/back/article/ctrlerUploadImage.php';
 
 $urlPhotArt = $monImage ; 
 
