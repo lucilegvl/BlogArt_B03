@@ -9,6 +9,8 @@
 
 // Mode DEV
 require_once __DIR__ . '/util/utilErrOn.php';
+//require_once ROOT . '/front/includes/commons/___headerFront.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
