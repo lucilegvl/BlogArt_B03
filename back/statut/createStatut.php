@@ -87,9 +87,8 @@ include __DIR__ . '/initStatut.php';
 
     </head>
 <body>
-    <h1> Mon espace administrateur</h1>
+    <h1> mon espace administrateur</h1>
     
-    <!-- <h2>Ajout d'un statut</h2> -->
 
     <div class=parentback>
         <div class=menu-back>
