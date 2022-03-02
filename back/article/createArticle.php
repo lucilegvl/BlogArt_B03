@@ -191,7 +191,6 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
                 <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                     <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<?php if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
                 </div>
-
             </div>
             <br>
             <div class="control-group">
