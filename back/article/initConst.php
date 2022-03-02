@@ -10,7 +10,7 @@
 // Constantes
 
 // Dossier cible
-define('TARGET', "../../uploads/");
+define('TARGET', "./uploads/");
 
 // Parametres max fichier image
 define('MAX_SIZE', 200000000);    // Taille en octets

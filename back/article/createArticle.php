@@ -1,4 +1,5 @@
  <?php
+ 
 ////////////////////////////////////////////////////////////
 //
 //  CRUD ARTICLE (PDO) - Modifié : 10 Juillet 2021
@@ -10,22 +11,17 @@
 // insert dans TJ motclearticle
 // images uploadées sur DD (serveur)
 
+// constante
+define('MAX_SIZE', 200000000); 
 
 // Mode DEV
 require_once __DIR__ . '/../../util/utilErrOn.php';
 
-// Init constantes
-require_once __DIR__ . '/initConst.php';
-// Init variables
-require_once __DIR__ . '/initVar.php';
-
-// controle des saisies du formulaire
+// controle des saisies du formulaireg
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Article
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
-
-require_once ROOT . '/front/includes/commons/___headerFront.php';
 
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();
@@ -90,13 +86,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numAngl = ctrlSaisies($_POST['TypAngl']);
         $numThem = ctrlSaisies($_POST['TypThem']);
 
-require_once ROOT . '/back/article/ctrlerUploadImage.php';
-$urlPhotArt = $nomImage ; 
+    require_once ROOT . '/back/article/ctrlerUploadImage.php';
+    $urlPhotArt = $nomImage ; 
 
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
 
-        header("Location: ./article.php");
+        //header("Location: ./article.php");
 
     }   // Fin if 
     else { // Saisies invalides
@@ -126,6 +122,11 @@ include __DIR__ . '/initArticle.php';
 
 </head>
 <body>
+
+<?php
+require_once ROOT . '/front/includes/commons/___headerFront.php';
+?>
+
     <h1>mon espace administrateur</h1>
 
     <div class=parentback>
@@ -184,21 +185,13 @@ include __DIR__ . '/initArticle.php';
                     <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<?php if(isset($_GET['id'])){echo $_POST['libTitrArt'];} ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
                 </div>
             </div>
-<<<<<<< HEAD
-        </div>
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<?php if(isset($_GET['id'])) echo $dtCreArt; ?>" tabindex="20" placeholder="" />
-=======
             <br>
             <div class="control-group">
                 <div class="controls">
                 <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                     <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<?php if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
                 </div>
->>>>>>> 1e5dac2eb99c9d55b19b5f55b2237b6903286a65
+
             </div>
             <br>
             <div class="control-group">
@@ -257,6 +250,7 @@ include __DIR__ . '/initArticle.php';
                 </div>
             </div>
             <br>
+
             <div class="control-group">
                 <label class="control-label" for="urlPhotArt"><b>Importez l'illustration :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <div class="controls">
