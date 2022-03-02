@@ -104,7 +104,11 @@ include __DIR__ . '/initAngle.php';
             $numAngl = $req['numAngl'];
             $libAngl = $req['libAngl'];
             $numLang = $req['numLang'];
-            
+        }
+
+        $request = $maLangue->get_1Langue($numLang);
+        if ($request) {
+            $lib1Lang = $request['lib1Lang'];
         }
     }
 ?>
@@ -136,7 +140,7 @@ include __DIR__ . '/initAngle.php';
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
 
                     <option value="<?=$numLang; ?>">
-                        <?= $numLang; ?>
+                        <?php echo $lib1Lang; ?>
                     </option>
 
                 </select>

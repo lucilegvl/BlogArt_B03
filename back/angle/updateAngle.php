@@ -39,29 +39,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sameId=$_POST['id'];
         header("Location: ./updateAngle.php?id=".$sameId);
     }  
+
     // controle des saisies du formulaire
-     // Saisies valides
-     if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
-     AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
-     AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    // Saisies valides
+    if (((isset($_POST['libAngl'])) AND !empty($_POST['libAngl']))
+    AND ((isset($_POST['TypLang'])) AND !empty($_POST['TypLang']))
+    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         
         $erreur = false;
  
-         $libAngl = ctrlSaisies(($_POST['libAngl']));
-         $numLang = ctrlSaisies(($_POST['TypLang']));
-         $numAngl = ctrlSaisies(($_POST['id']));
+        $libAngl = ctrlSaisies(($_POST['libAngl']));
+        $AngleLenght = strlen($libAngl);
+        $numLang = ctrlSaisies(($_POST['TypLang']));
+        $numAngl = ctrlSaisies(($_POST['id']));
 
+        if ($AngleLenght <= 60) {
+            // modification effective du angle
+            $monAngle->update($numAngl, $libAngl, $numLang);
 
+            header("Location: ./angle.php");
+        } else {
+            $erreur = true;
+            $errSaisies = "Erreur, le libellé est trop long.";
+        }
 
-    // modification effective du angle
-    $monAngle->update($numAngl, $libAngl, $numLang);
-
-        header("Location: ./angle.php");
-}  
-else {
-// Gestion des erreurs => msg si saisies ko
-    $erreur = true;
-    $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
+    }  else {
+        // Gestion des erreurs => msg si saisies ko
+        $erreur = true;
+        $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
     }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
@@ -94,7 +99,7 @@ include __DIR__ . '/initAngle.php';
         if ($req) {
             $libAngl = $req['libAngl'];
             $idLang = $req['numLang'];    
-             $numAngl = $req['numAngl'];
+            $numAngl = $req['numAngl'];
         } 
     }
 ?>
@@ -123,9 +128,8 @@ include __DIR__ . '/initAngle.php';
 
             <!-- Listbox langue => 2ème temps -->
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $idLang; ?>" />
+            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
                 <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-                    <option value="-1">- - - Choisissez une langue - - -</option>
 
             <?php
                 $listNumLang = "";

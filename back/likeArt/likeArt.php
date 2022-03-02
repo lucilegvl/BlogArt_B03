@@ -14,11 +14,22 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Likeart
+require_once __DIR__ . '/../../CLASS_CRUD/likeArt.class.php';
 
 // Instanciation de la classe Likeart
+$monLikeArt = new LIKEART();
 
+// Insertion classe Membre
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 
+// Instanciation de la classe Membre
+$monMembre = new MEMBRE();
 
+// Insertion classe Article
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+
+// Instanciation de la classe Article
+$monArticle = new ARTICLE();
 
 ?>
 <!DOCTYPE html>
@@ -72,27 +83,28 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
     </thead>
     <tbody>
 <?php
-    // Appel méthode : Get tous les users en BDD
-
+    // Appel des méthodes : Get tous les users en BDD
+    $allStatuts = $monLikeArt->get_AllLikesArt();
+    foreach($allStatuts as $row) {
     // Boucle pour afficher
-    //foreach($all as $row) {
+
     //
 ?>
         <tr>
-         <td><h4>&nbsp; <?= "ici pseudoMemb"; ?> &nbsp;</h4></td>
+         <td><h4>&nbsp; <?= $row["numMemb"]; ?> &nbsp;</h4></td>
 
-         <td>&nbsp; <?= "ici libTitrArt"; ?> &nbsp;</td>
+         <td>&nbsp; <?= $row["numArt"]; ?> &nbsp;</td>
 
-        <td>&nbsp;<span class="OK">&nbsp; <?= "ici (un)like"; ?> &nbsp;</span></td>
+         <td>&nbsp; <?= ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</td>
 
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLikeArt.php?id1=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier like article" title="Modifier like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(Un)like</span>&nbsp;
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLikeArt.php?id1=<?=["numMemb"]; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier like article" title="Modifier like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(Un)like</span>&nbsp;
         <br /></td>
 
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteLikeArt.php?id1=<?=1; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer like article" title="Supprimer like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(S/Admin)</span>&nbsp;
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteLikeArt.php?id1=<?=["numMemb"]; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer like article" title="Supprimer like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(S/Admin)</span>&nbsp;
         <br /></td>
         </tr>
 <?php
-    // }   // End of foreach
+     }   // End of foreach
 ?>
     </tbody>
     </table>

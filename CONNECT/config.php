@@ -11,6 +11,9 @@ $serverBD = "mysql:dbname=$nomBD;host=$hostBD;charset=utf8";
 $userBD = 'root';         // Votre login
 // mot de passe de connexion à la BDD
 $passBD = '';         // Votre Pass
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> f124893bf79548aea5eb947ce3f2ae2276ad40d2

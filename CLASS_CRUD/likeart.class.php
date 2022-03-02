@@ -24,14 +24,14 @@ class LIKEART{
 		// prepare
 		$result = $db->query($query);
 		// execute
-		$allLikesArt = $result->fetchAll();
-		return($allLikesArt);
+		$allStatuts = $result->fetchAll();
+		return($allStatuts);
 	}
 
-	function get_AllLikesArtByNumArt(){
+	function get_AllLikesArtByNumArt($numArt){
 		global $db;
 
-		$query = 'SELECT * FROM MEMBRE ME INNER JOIN LIKEART LKA ON ME.numMemb = LKA.numMemb INNER JOIN ARTICLE ART ON LKA.numArt = ART.numArt GROUP BY ART.numArt;';
+		$query = 'SELECT * FROM LIKEART WHERE numArt = ?';
 		$result = $db->query($query);
 		$allLikesArtByNumArt = $result->fetchAll();
 		return($allLikesArtByNumArt);
@@ -100,7 +100,7 @@ class LIKEART{
 			$db->beginTransaction();
 
 			// update
-			$query = "UPDATE LIKEART SET likeArt = ? WHERE numMemb = ? AND numArt = ?";
+			$query = "UPDATE LIKEART SET likeA = ? WHERE numMemb = ? AND numArt = ?";
 			// prepare
 			$request = $db->prepare($query);
 			// execute
