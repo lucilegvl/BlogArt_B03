@@ -311,42 +311,67 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
         <!-- FK : Angle, Thématique + TJ Mots Clés -->
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
-        <!-- Listbox Angle -->
-        <br>
-            <div class="control-group">
-                <div class="controls">
-                <label class="control-label" for="LibTypAngl" title="Sélectionnez l'angle !">
-                    <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
-                </label>
+    <!-- Listbox angle -->
+    <br/><br/>
+      	  <label><b>&nbsp;&nbsp;&nbsp;Quel angle :&nbsp;&nbsp;</b></label>
+		  <div id='' style='display:inline'>
+      	    <select size="1" name="etudiant" title="Sélectionnez l'étudiant !" style="padding:2px; border:solid 1px black; color:steelblue; border-radius:5px;">
+			  <option value='-1'>- - - Aucun - - -</option>
+      	    </select>
+      	  </div>
+      	  <br /><br /><br />
+		</fieldset>
+		<br/><br/>
+		</form>
+  	<h3><a href="./twoListbox.php" title="Réinit du formulaire">Réinit du formulaire</a></h3>
+<!-- --------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------- -->
+  <!-- Script JS/AJAX -->
+  <script type='text/javascript'>
+		function getXhr() {
+      		var xhr = null;
+			if(window.XMLHttpRequest){ // Firefox & autres
+			   xhr = new XMLHttpRequest();
+			}else
+				if(window.ActiveXObject){ // IE / Edge
+				   try {
+						xhr = new ActiveXObject("Msxml2.XMLHTTP");
+				   }catch(e){
+						xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				   }
+				}else{
+				   alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest...");
+				   xhr = false;
+				}
+        	return xhr;
+		}	// End of function
 
-                <!-- Listbox Angle => 2ème temps -->
+		/**
+		* Méthode appelée sur le click du bouton/listbox
+		*/
+		function change() {
+			var xhr = getXhr();
+			// On définit quoi faire quand réponse reçue
+			xhr.onreadystatechange = function() {
+				// test si tout est reçu et si serveur est ok
+				if(xhr.readyState == 4 && xhr.status == 200){
+					di = document.getElementById('etudiant');
+					di.innerHTML = xhr.responseText;
+				}
+			}
 
-                    <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
-                    <option value="-1">- - - Choisissez un angle - - -</option>
+			// Traitement en POST
+			xhr.open("POST","./ajaxEtudiant.php",true);
+			// pour le post
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			// poster arguments : ici, numClas
+			numClas = document.getElementById('classe').options[document.getElementById('classe').selectedIndex].value;
 
-                <?php
-                    $listNumAngl = "";
-                    $listlibAngl = "";
-
-                    $result = $monAngle-> get_AllAnglesByLibAngl();
-                    if($result){
-                        foreach($result as $row) {
-                            $listNumAngl= $row["numAngl"];
-                            $listlibAngl = $row["libAngl"];
-                ?>
-                            <option value="<?= $listNumAngl; ?>">
-                                <?= $listlibAngl; ?>
-                            </option>
-                <?php
-                        } // End of foreach
-                    }   // if ($result)
-                ?>
-
-                </select>
-
-                </div>
-            </div>
-        <!-- FIN Listbox Angle -->
+			// Recup numClas à classe (PK) à passer en "m" à etudiant (FK)
+			xhr.send("numClas="+numClas);
+		}	// End of function
+  </script>
+<!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
         <!-- Listbox Thématique -->
