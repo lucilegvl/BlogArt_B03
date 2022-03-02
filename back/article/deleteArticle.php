@@ -158,7 +158,15 @@ include __DIR__ . '/initArticle.php';
             $numAngl = $req['numAngl'];
             $numThem = $req['numThem'];
             $id = $req['numArt']; 
-            $langue = $req['Langue'];
+        }
+        $request = $monAngle->get_1Angle($numAngl);
+        if ($request) {
+            $libAngl = $request['libAngl'];
+        }
+    
+        $request = $maThematique->get_1Thematique($numThem);
+        if ($request) {
+            $libThem = $request['libThem'];
         }
     }
 
@@ -267,12 +275,13 @@ include __DIR__ . '/initArticle.php';
                 </label>
 
                 <select name="Langue" id="Langue"  class="form-control form-control-create">
-                <?php
-                    $LangByAngle = $monAngle->get_1LangByAngle($numAngl);
-                ?>
-                <option value="<?= ($LangByAngle['numLang']); ?>"> <?= $LangByAngle['lib1Lang']; ?> </option>                
+                    <?php
+                        $LangByAngle = $monAngle->get_1LangByAngle($numAngl);
+                    ?>
 
-            </select>
+                    <option value="<?= ($LangByAngle['numLang']); ?>"> <?= $LangByAngle['lib1Lang']; ?> </option>                
+
+                 </select>
 
           </div>
         </div>
@@ -288,21 +297,21 @@ include __DIR__ . '/initArticle.php';
      <br>
         <div class="control-group">
             <div class="controls">
-            <label class="control-label" for="LibTypAngl" title="Sélectionnez l'angle !">
-                <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
-            </label>
+                <label class="control-label" for="LibTypAngl" >
+                    <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
+                </label>
+
 
             <!-- Listbox Angle => 2ème temps -->
 
-            <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
-                <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
+                 <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
+                    <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
 
+                            <option value="<?= $numAngl; ?>">
+                                <?php echo $libAngl; ?>
+                            </option>
 
-                        <option value="<?= $numAngl; ?>">
-                            <?php echo $libAngl; ?>
-                        </option>
-
-            </select>
+                 </select>
 
             </div>
         </div>
@@ -313,37 +322,23 @@ include __DIR__ . '/initArticle.php';
     <br>
         <div class="control-group">
             <div class="controls">
-            <label class="control-label" for="LibTypThem" title="Sélectionnez la thematique !">
-                <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
-            </label>
+                <label class="control-label" for="LibTypThem" >
+                    <b>Quelle thematique :&nbsp;&nbsp;&nbsp;</b>
+                </label>
 
             <!-- Listbox Thématique=> 2ème temps -->
 
             <input type="hidden" id="idTypThem" name="idTypThem" value="<?= $numThem; ?>" />
                 <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > 
-                <option value="-1">- - - Choisissez une thematique - - -</option>
-
-            <?php
-                $listNumThem = "";
-                $listlibThem = "";
-
-                $result = $maThematique->get_AllThematiquesByLibThem ();
-                if($result){
-                    foreach($result as $row) {
-                        $listNumThem= $row["numThem"];
-                        $listlibThem = $row["libThem"];
-            ?>
-                        <option value="<?= $listNumThem; ?>">
-                            <?= $listlibThem; ?>
+             
+                        <option value="<?= $NumThem; ?>">
+                            <?php echo $libThem; ?>
                         </option>
-            <?php
-                    } // End of foreach
-                }   // if ($result)
-            ?>
+           
+    
+                 </select>
 
-            </select>
-
-            </div>
+             </div>
         </div>
             
     <!-- FIN Listbox Thematique-->
@@ -372,12 +367,12 @@ include __DIR__ . '/initArticle.php';
         <div class="control-group">
             <div class="error">
 <?php
-            if ($erreur) {
-                echo ($errSaisies);
-            } else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
+                if ($erreur) {
+                    echo ($errSaisies);
+                } else {
+                    $errSaisies = "";
+                    echo ($errSaisies);
+                }
 ?>
             </div>
         </div>
@@ -386,7 +381,7 @@ include __DIR__ . '/initArticle.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 <br>
