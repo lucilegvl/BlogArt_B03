@@ -269,8 +269,8 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
 
 
     <!-- CONNEXION -->
-
-    <div class="connexion">
+<section class = "connexion-inscription">
+    <section class = "connexion">
         <h2>Connexion</h2>
 
         <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -304,13 +304,13 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
             </fieldset>
 
         </form>
-    </div>
+    </section>
 
 
 
     <!-- INSCRIPTION -->
 
-    <div class='incription'>
+    <section class='incription'>
         <h2>Inscription</h2>
 
         <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -412,7 +412,8 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
                 </div>
             </fieldset>
         </form>
-    </div>
+    </section>
+</section>
 
 <?php
 require_once __DIR__ . '/___footerFront.php';

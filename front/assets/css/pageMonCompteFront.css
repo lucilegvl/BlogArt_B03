@@ -53,6 +53,22 @@ header nav a:hover{
 }
 
 
+.connexion {
+    flex-shrink: 1;
+    width :46.5%;
+ }
+ 
+ .inscription {
+    display: block;
+ 
+    width: 46.5%;
+ }
+.connexion-inscription {
+    display: flex;
+   padding : 0% 6%;
+   justify-content: space-between;
+}
+
 /*El copié collé du menu deroulant*/
 
 /* .top-menu{
