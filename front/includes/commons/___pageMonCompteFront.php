@@ -43,10 +43,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Opérateur ternaire
     $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
-    if (isset($_POST["Submit"]) AND $Submit === "Initialiser") {
-        header("Location: ./createMembre.php");
+    //CONNEXION
+    if (isset($_POST["Submit"]) AND $Submit === "Se connecter") {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            echo ($_POST['pass']);
+        
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                //echo($_POST['pass'] . '<br>');
+                if (password_verify($_POST['pass'], $pass) === true) {
+                    echo ('<p>Bon mot de passe</p>');
+                    setcookie('user', $user, time() + 3600); // 1h
+                    setcookie('pass', $pass /* ICI ON STOCK LE HASH DU PASSWORD EVIDEMENT */, time() + 3600); // 1h
+                } else {
+                    echo ('<p>Mauvais mot de passe</p>');
+                }
+            }
+        
+            if (isset($_COOKIE['user'])) {
+                echo 'bonjour' . $_COOKIE['user'] . '<br>' ;
+            } else {
+                echo 'merci de vous connecter';
+            }
+        }
     }
 
+    //INSCRIPTION
     if (isset($_POST['prenomMemb']) AND !empty($_POST['prenomMemb'])
         AND isset($_POST['nomMemb']) AND !empty($_POST['nomMemb'])
         AND isset($_POST['pseudoMemb']) AND !empty($_POST['pseudoMemb'])
@@ -55,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         AND isset($_POST['eMail1Memb']) AND !empty($_POST['eMail1Memb'])
         AND isset($_POST['eMail2Memb']) AND !empty($_POST['eMail2Memb'])
         AND isset($_POST['accordMemb']) AND !empty($_POST['accordMemb'])
-        AND !empty($_POST['Submit']) AND $Submit === "Valider") {
+        AND !empty($_POST['Submit']) AND $Submit === "Créer un compte") {
 
         // Saisies valides
         $erreur = false;
@@ -73,7 +94,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $dtCreaMemb = date("Y-m-d-H-i-s");
         $valAccordMemb = ctrlSaisies($_POST['accordMemb']); // Form
         $accordMemb = ($valAccordMemb == "on") ? 1 : 0; // test avant insert
-        $idStat = ctrlSaisies($_POST['idStat']);
 
         // CTRL saisies
         // PSEUDO
@@ -161,7 +181,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $dtCreaMemb, $accordMemb, $idStat);
 
-            header("Location: ./membre.php");
+            //A remettre une fois que la page d'accueil est créée
+            //header("Location: ./accueil.php");
         }else{
             // Saisies invalides
             $erreur = true;
@@ -219,110 +240,142 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
     </script>
 </head>
 <body>
+    <?php
+    require_once __DIR__ . '/___headerFront.php';
+    ?>
     <h1>Mon compte</h1>
-    <h2>Inscription</h2>
 
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <div>
+        <h2>Connexion</h2>
 
-        <fieldset>
+        <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
-            <input type="hidden" id="id" name="id" value="<?= isset($_POST['id']) ? $_POST['id'] : '' ?>" />
+            <fieldset>
 
-            <div class="control-group">
-                <label class="control-label" for="prenomMemb"><b>Prénom<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="text" name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?php echo $prenomMemb; ?>" autocomplete="on" autofocus="autofocus" />
-            </div>
-
-            <br>
-            <div class="control-group">
-                <label class="control-label" for="nomMemb"><b>Nom<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="text" name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?php echo $nomMemb; ?>" autocomplete="on" />
-            </div>
-
-            <br>
-            <div class="control-group">
-                <label class="control-label" for="pseudoMemb"><b>Pseudonyme<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="text" name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?php echo $pseudoMemb; ?>" placeholder="6 car. minimum" autocomplete="on" />
-            </div>
-
-            <br>
-            <div class="control-group">
-                <label class="control-label" for="pass1Memb"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?php echo $pass1Memb; ?>" autocomplete="on" />
-                <br>
-                <input type="checkbox" onclick="myFunction('myInput1')">
-                &nbsp;&nbsp;
-                <label><i>Afficher Mot de passe</i></label>
-            </div>
-
-            <br>
-            <div class="control-group">
-                <label class="control-label" for="pass2Memb"><b>Confirmez la Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?php echo $pass2Memb; ?>" autocomplete="on" />
-                <br>
-                <input type="checkbox" onclick="myFunction('myInput2')">
-                &nbsp;&nbsp;
-                <label><i>Afficher Mot de passe</i></label>
-            </div>
-
-            <br>
-            <div class="control-group">
-                <label class="control-label" for="eMail1Memb"><b>eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="email" name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?php echo $eMail1Memb; ?>" autocomplete="on" />
-            </div>
-
-            <br>
-            <div class="control-group">
-                <label class="control-label" for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?php echo $eMail2Memb; ?>" autocomplete="on" />
-            </div>
-
-            <br>
-            <div class="control-group">
-                <label class="control-label" for="accordMemb"><b>J'accepte que mes données soient conservées :</b></label>
-                <div class="controls">
-                    <fieldset>
-                        <input type="radio" name="accordMemb"
-                        <?= ($accordMemb == "on") ? 'checked="checked"' : ''
-                        ?> value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="accordMemb"
-                        <?= ($accordMemb == "off") ? 'checked="checked"' : ''
-                        ?> value="off" checked="checked" />&nbsp;&nbsp;Non
-                    </fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="eMailMemb"><b>Email<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="email" name="eMailMemb" id="eMailMemb" size="80" maxlength="80" value="<?php echo $eMailMemb; ?>" autocomplete="on" />
                 </div>
-            </div>
-            <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
 
-            <!--    Captcha Blogart22    -->
-            <!-- Type de reCaptcha V2 Case à cocher : OK -->
-
-        <!-- -->
-            <div class="control-group">
-                <div class="error">
-        <?php
-                if ($erreur) {
-                    echo ($errSaisies);
-                }
-                else {
-                    $errSaisies = "";
-                    echo ($errSaisies);
-                }
-        ?>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <div class="controls">
-                    <br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="passMemb"><b>Mot de passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="password" name="passMemb" id="myInput1" size="80" maxlength="80" value="<?php echo $passMemb; ?>" autocomplete="on" />
                     <br>
+                    <input type="checkbox" onclick="myFunction('myInput1')">
+                    &nbsp;&nbsp;
+                    <label><i>Afficher le mot de passe</i></label>
                 </div>
-            </div>
-        </fieldset>
-    </form>
+        
+            </fieldset>
+
+        </form>
+    </div>
+
+    <div class='incription'>
+        <h2>Inscription</h2>
+
+        <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+
+            <fieldset>
+
+                <input type="hidden" id="id" name="id" value="<?= isset($_POST['id']) ? $_POST['id'] : '' ?>" />
+
+                <div class="control-group">
+                    <label class="control-label" for="prenomMemb"><b>Prénom<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="text" name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?php echo $prenomMemb; ?>" autocomplete="on" autofocus="autofocus" />
+                </div>
+
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="nomMemb"><b>Nom<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="text" name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?php echo $nomMemb; ?>" autocomplete="on" />
+                </div>
+
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="pseudoMemb"><b>Pseudo<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="text" name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?php echo $pseudoMemb; ?>" placeholder="6 car. minimum" autocomplete="on" />
+                </div>
+
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="pass1Memb"><b>Mot de passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?php echo $pass1Memb; ?>" autocomplete="on" />
+                    <br>
+                    <input type="checkbox" onclick="myFunction('myInput1')">
+                    &nbsp;&nbsp;
+                    <label><i>Afficher le mot de passe</i></label>
+                </div>
+
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="pass2Memb"><b>Confirmez le mot de passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?php echo $pass2Memb; ?>" autocomplete="on" />
+                    <br>
+                    <input type="checkbox" onclick="myFunction('myInput2')">
+                    &nbsp;&nbsp;
+                    <label><i>Afficher le mot de passe</i></label>
+                </div>
+
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="eMail1Memb"><b>Email<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="email" name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?php echo $eMail1Memb; ?>" autocomplete="on" />
+                </div>
+
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="eMail2Memb"><b>Confirmez l'email<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?php echo $eMail2Memb; ?>" autocomplete="on" />
+                </div>
+
+                <br>
+                <div class="control-group">
+                    <label class="control-label" for="accordMemb"><b>J'accepte que mes données soient conservées :</b></label>
+                    <div class="controls">
+                        <fieldset>
+                            <input type="radio" name="accordMemb"
+                            <?= ($accordMemb == "on") ? 'checked="checked"' : ''
+                            ?> value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="accordMemb"
+                            <?= ($accordMemb == "off") ? 'checked="checked"' : ''
+                            ?> value="off" checked="checked" />&nbsp;&nbsp;Non
+                        </fieldset>
+                    </div>
+                </div>
+                <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
+
+                <!--    Captcha Blogart22    -->
+                <!-- Type de reCaptcha V2 Case à cocher : OK -->
+
+            <!-- -->
+                <div class="control-group">
+                    <div class="error">
+            <?php
+                    if ($erreur) {
+                        echo ($errSaisies);
+                    }
+                    else {
+                        $errSaisies = "";
+                        echo ($errSaisies);
+                    }
+            ?>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" value="Créer un compte" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                        <br>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
 <?php
 require_once __DIR__ . '/___footerFront.php';
 ?>
