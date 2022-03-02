@@ -15,6 +15,9 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
+
+require_once ROOT . '/front/includes/commons/___headerFront.php';
+
 // Insertion classe Comment
 
 // Instanciation de la classe Comment
