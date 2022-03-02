@@ -106,7 +106,7 @@ include __DIR__ . '/initThematique.php';
 </head>
 <body>
     <h1>BLOGART22 Admin - CRUD Thematique</h1>
-    <h2>Suppression d'une Thematique</h2>
+    <h2>Suppression d'une thematique</h2>
 <?php
     // Supp : récup id à supprimer
     // id passé en GET
