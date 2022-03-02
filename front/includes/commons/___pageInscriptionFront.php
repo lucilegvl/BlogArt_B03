@@ -73,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $dtCreaMemb = date("Y-m-d-H-i-s");
         $valAccordMemb = ctrlSaisies($_POST['accordMemb']); // Form
         $accordMemb = ($valAccordMemb == "on") ? 1 : 0; // test avant insert
-        $idStat = ctrlSaisies($_POST['idStat']);
 
         // CTRL saisies
         // PSEUDO
@@ -219,6 +218,9 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
     </script>
 </head>
 <body>
+    <?php
+    require_once __DIR__ . '/___headerFront.php';
+    ?>
     <h1>Mon compte</h1>
     <h2>Inscription</h2>
 
@@ -241,39 +243,39 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
 
             <br>
             <div class="control-group">
-                <label class="control-label" for="pseudoMemb"><b>Pseudonyme<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <label class="control-label" for="pseudoMemb"><b>Pseudo<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="text" name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?php echo $pseudoMemb; ?>" placeholder="6 car. minimum" autocomplete="on" />
             </div>
 
             <br>
             <div class="control-group">
-                <label class="control-label" for="pass1Memb"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <label class="control-label" for="pass1Memb"><b>Mot de passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?php echo $pass1Memb; ?>" autocomplete="on" />
                 <br>
                 <input type="checkbox" onclick="myFunction('myInput1')">
                 &nbsp;&nbsp;
-                <label><i>Afficher Mot de passe</i></label>
+                <label><i>Afficher le mot de passe</i></label>
             </div>
 
             <br>
             <div class="control-group">
-                <label class="control-label" for="pass2Memb"><b>Confirmez la Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <label class="control-label" for="pass2Memb"><b>Confirmez le mot de passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?php echo $pass2Memb; ?>" autocomplete="on" />
                 <br>
                 <input type="checkbox" onclick="myFunction('myInput2')">
                 &nbsp;&nbsp;
-                <label><i>Afficher Mot de passe</i></label>
+                <label><i>Afficher le mot de passe</i></label>
             </div>
 
             <br>
             <div class="control-group">
-                <label class="control-label" for="eMail1Memb"><b>eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <label class="control-label" for="eMail1Memb"><b>Email<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="email" name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?php echo $eMail1Memb; ?>" autocomplete="on" />
             </div>
 
             <br>
             <div class="control-group">
-                <label class="control-label" for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <label class="control-label" for="eMail2Memb"><b>Confirmez l'email<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?php echo $eMail2Memb; ?>" autocomplete="on" />
             </div>
 
@@ -313,9 +315,7 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
 
             <div class="control-group">
                 <div class="controls">
-                    <br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <br>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                     <br>
