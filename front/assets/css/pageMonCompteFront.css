@@ -1,7 +1,7 @@
 *{
     margin:0;
     padding:0;
-    background-color:red; 
+    background-color:#0E1A24; 
 }
 
 
@@ -13,7 +13,7 @@
     display:flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #f1f2f2;
+    background-color: #0E1A24;
 }
 
 .logo{
@@ -28,7 +28,7 @@
 header nav a {
     font-family: 'Assistant', sans-serif;
     text-decoration: none;
-    color: #fff000;
+    color: #F1F2F2;
     text-transform: uppercase;
     font-size:23px;
     
@@ -51,12 +51,6 @@ header nav ul li{
 header nav a:hover{
     border-bottom: 2px solid;
 }
-
-h3{
- font-family: Assistant ;
-
-}
-
 
 
 /*El copié collé du menu deroulant*/
