@@ -8,7 +8,7 @@ class LIKEART{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM LIKEART WHERE numMemb = ?, numArt = ?';
+		$query = 'SELECT * FROM LIKEART WHERE numMemb = ? AND numArt = ?';
 		// prepare
 		$result = $db->prepare($query);
 		// execute
