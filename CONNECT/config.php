@@ -11,5 +11,8 @@ $serverBD = "mysql:dbname=$nomBD;host=$hostBD;charset=utf8";
 $userBD = 'root';         // Votre login
 // mot de passe de connexion à la BDD
 $passBD = 'root';         // Votre Pass
+<<<<<<< HEAD
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/BlogART_B03');
+=======
+>>>>>>> 7f51c1cb967e3f39909a638e315135b2ef907f57
