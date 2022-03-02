@@ -27,20 +27,47 @@ h1{
 h2{
 	font-family: 'Amarante', sans-serif;
 	font-size:36px;
-	color:#263d57;
-	background-color: #f1f2f2;
 	text-align:center;
+    
 }
+.lastArticles h2 {
+    color:#f1f2f2;
+    text-transform: uppercase;
+}
+
+.formulaire h2{
+	background-color: #f1f2f2; 
+    color:#263d57;
+}
+
 .top-page-index{
     /* background-image: url("/assets/images/topage.png"); */
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: calc(100vh - 75px);
+    min-height: calc(100vh - 92px);
     overflow-x: hidden;
     justify-self: center;
+
+
     /* @media screen and (max-width: 700px){
         min-height: 50px;
     } */
+}
+
+.presentation{
+    margin:82px;
+    margin-right:365px;
+    margin-left:365px;
+    text-align: center;
+}
+
+.construction{
+    /* min-height:100%; */
+    min-width: 100%;
+}
+
+.top-page-index h1{
+    margin-top:500px;
 }
 
 .menu-back ul li a{
