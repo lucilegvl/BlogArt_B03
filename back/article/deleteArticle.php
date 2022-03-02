@@ -66,27 +66,50 @@ $targetDir = TARGET;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
-    //Submit = "";
+
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
+
+
    if ((isset($_POST['Submit'])) AND ($_POST["Submit"] === "Annuler")) {
        header("Location: ./article.php");
    }
    // Mode création
 
    elseif (($_POST["Submit"] == "Valider")) {
+
    
        // Saisies valides
        $erreur = false;
        $numArt = ctrlSaisies($_POST['id']);
-       
+       $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($_POST["id"]);
+      
+       if ($nbArticle < 1) {
+        $monArticle->delete($_POST["id"]);
+        header("Location: ./article.php");
+    } else {
+        header("Location: article.php?errCIR=1");
+}
+}
+if (((isset($_POST["Submit"])) AND ($Submit === "Valider"))) {
+    $nbArticle = $monArticle->get_NbAllArticlesByNumThem($_POST["id"]);
+    //print_r($nbMembre);
+    //print_r($monMembre->get_AllMembersByStat($_POST["id"]));
+    if ($nbArticle < 1) {
+            $monArticle->delete($_POST["id"]);
+            header("Location: ./article.php");
+        } else {
+            header("Location: article.php?errCIR=1");
+    }
+}
     
-           $erreur=false;
-           $monArticle->delete($_POST['id']);
-           header("Location: ./article.php");
 
-   }
+ }
 
-}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+  // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 // Init variables form
 include __DIR__ . '/initArticle.php';
@@ -114,10 +137,10 @@ include __DIR__ . '/initArticle.php';
     // Supp : récup id à supprimer
     // id passé en GET
 
-    if (isset($_GET['id'])) {
+    if (isset($_GET['id']) and $_GET['id'] != '') {
 
-
-        $id=$_GET['id'];
+        $id= ctrlSaisies($_GET['id']);
+        
         $req = $monArticle->get_1Article($id);
         if ($req) {
             $numArt = $req['numArt'];
@@ -134,7 +157,8 @@ include __DIR__ . '/initArticle.php';
             $urlPhotArt = $req['urlPhotArt'];
             $numAngl = $req['numAngl'];
             $numThem = $req['numThem'];
-            $id = $req['numArt'];   
+            $id = $req['numArt']; 
+            $langue = $req['Langue'];
         }
     }
 
@@ -236,18 +260,22 @@ include __DIR__ . '/initArticle.php';
 <!-- --------------------------------------------------------------- -->
             <!-- Listbox Langue -->
             <br>
-                <label for="LibTypLang" title="Sélectionnez la langue !">
+        <div class="control-group">
+            <div class="controls">
+                <label class="control-label" for="LibTypLang">
                     <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
                 </label>
 
-                <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
-                    <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-
-                        <option value="<?=$idLang; ?>">
-                            <?= $lib1Lang; ?>
-                        </option>
+                <select name="Langue" id="Langue"  class="form-control form-control-create">
+                <?php
+                    $LangByAngle = $monAngle->get_1LangByAngle($numAngl);
+                ?>
+                <option value="<?= ($LangByAngle['numLang']); ?>"> <?= $LangByAngle['lib1Lang']; ?> </option>                
 
             </select>
+
+          </div>
+        </div>
             
     <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->
@@ -268,25 +296,11 @@ include __DIR__ . '/initArticle.php';
 
             <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
                 <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
-                <option value="-1">- - - Choisissez un angle - - -</option>
 
-            <?php
-                $listNumAngl = "";
-                $listlibAngl = "";
 
-                $result = $monAngle-> get_AllAnglesByLibAngl();
-                if($result){
-                    foreach($result as $row) {
-                        $listNumAngl= $row["numAngl"];
-                        $listlibAngl = $row["libAngl"];
-            ?>
-                        <option value="<?= $listNumAngl; ?>">
-                            <?= $listlibAngl; ?>
+                        <option value="<?= $numAngl; ?>">
+                            <?php echo $libAngl; ?>
                         </option>
-            <?php
-                    } // End of foreach
-                }   // if ($result)
-            ?>
 
             </select>
 
