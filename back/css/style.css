@@ -45,6 +45,11 @@ h2{
     } */
 }
 
+.construction{
+    /* min-height:100%; */
+    min-width: 100%;
+}
+
 .top-page-index h1{
     margin-top:500px;
 }
