@@ -21,6 +21,11 @@ require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 
+// Insertion classe Membre
+require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
+// Instanciation de la classe Membre
+$monUser = new USER();
+
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
 // Instanciation de la classe Statut
@@ -85,8 +90,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $msgErrPseudo = "&nbsp;&nbsp;- Votre pseudo doit être constitué de 6 à 70 caractères. <br>";
         }
 
-        $pseudoExist = $monMembre->get_ExistPseudo($pseudoMemb);
-        if($pseudoExist == 0){
+        $pseudoExistMemb = $monMembre->get_ExistPseudo($pseudoMemb);
+        $pseudoExistUser = $monUser->get_ExistPseudo($pseudoMemb);
+        if($pseudoExistMemb == 0 AND $pseudoExistUser == 0){
             $pseudoExistF1 = 1;
             $msgErrExistPseudo = "";
         }else{
@@ -124,8 +130,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         //MAIL EXISTANT
-        $eMailExist = $monMembre->get_AllMembresByEmail($eMail1Memb);
-        if ($eMailExist == 0){
+        $eMailExistMemb = $monMembre->get_AllMembresByEmail($eMail1Memb);
+        $eMailExistUser = $monUser->get_ExistEMail($eMail1Memb);
+        if ($eMailExistMemb == 0 AND $eMailExistUser == 0){
             $eMailExistF1 = 1;
             $msgErrExistMail = "";
         }else{
