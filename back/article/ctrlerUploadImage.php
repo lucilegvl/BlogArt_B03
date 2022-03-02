@@ -3,7 +3,14 @@
 //
 // Script : ctrlerUploadImage.php
 // Init constantes
-require_once __DIR__ . '/initConst.php';
+//require_once __DIR__ . '/initConst.php';
+
+// Dossier cible
+define('TARGET', "./uploads/");
+
+// Parametres max fichier image
+define('WIDTH_MAX', 80000);       // Largeur en pixels
+define('HEIGHT_MAX', 80000); 
 
 // Init variables
 require_once __DIR__ . '/initVar.php';

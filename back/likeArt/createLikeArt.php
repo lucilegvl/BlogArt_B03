@@ -31,8 +31,6 @@ $monMembre = new MEMBRE();
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 
 
-require_once ROOT . '/front/includes/commons/___headerFront.php';
-
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();
 
@@ -49,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
-    
             header("Location: ./LikeArt.php");
     }   
         
@@ -90,6 +87,11 @@ include __DIR__ . '/initLikeArt.php';
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
 </head>
+<section>
+    <?php
+    require_once ROOT . '/front/includes/commons/___headerFront.php';
+    ?>
+</section>
 <body>
     <h1>mon espace administrateur</h1>
     

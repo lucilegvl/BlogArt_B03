@@ -21,6 +21,11 @@ require_once __DIR__ . '/../../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 
+// Insertion classe Membre
+require_once __DIR__ . '/../../../CLASS_CRUD/user.class.php';
+// Instanciation de la classe Membre
+$monUser = new USER();
+
 // Insertion classe Statut
 require_once __DIR__ . '/../../../CLASS_CRUD/statut.class.php';
 // Instanciation de la classe Statut
@@ -30,9 +35,11 @@ $monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
 $erreur = false;
+$erreur2 = false;
 
 // init msg erreur
 $errSaisies='';
+$errSaisies2='';
 
 //Définition du fuseau horaire
 date_default_timezone_set('UTC');
@@ -47,27 +54,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['passMemb']) AND !empty($_POST['passMemb'])
     AND isset($_POST['eMailMemb']) AND !empty($_POST['eMailMemb'])
     AND isset($_POST["Submit"]) AND $Submit === "Se connecter") {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $passMemb = $_POST['passMemb'];
-            $eMailMemb = $_POST['eMailMemb'];
-        
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                //echo($_POST['pass'] . '<br>');
-                if (password_verify($_POST['pass'], $passMemb) === true) {
-                    echo ('<p>Bon mot de passe</p>');
-                    setcookie('eMailMemb', $eMailMemb, time() + 3600); // 1h
-                    setcookie('passMemb', $passMemb /* ICI ON STOCK LE HASH DU PASSWORD EVIDEMENT */, time() + 3600); // 1h
-                } else {
-                    echo ('<p>Mauvais mot de passe</p>');
-                }
-            }
-        
-            if (isset($_COOKIE['user'])) {
-                echo 'bonjour' . $_COOKIE['eMailMemb'] . '<br>' ;
-            } else {
-                echo 'merci de vous connecter';
-            }
+
+        $erreur2 = false;
+
+        $passMemb = $_POST['passMemb'];
+        $eMailMemb = $_POST['eMailMemb'];
+
+        $testEMail = $monMembre->get_1MembreByEmail($eMailMemb);
+
+
+        if ($passMemb == $testEMail['passMemb']){
+            $pseudoMemb = $testEMail['pseudoMemb'];
+
+            setcookie('user', $pseudoMemb, time() + 3600); // 1h
+            setcookie('eMail', $eMailMemb, time() + 3600); 
+            setcookie('pass', $passMembHash, time() + 3600);
+
+            header("Location: /../../index.php");
+
+        } else {
+            $erreur2 = true;
+            $errSaisies2 = "Email ou mot de passe invalide.";
         }
+
+    } else {
+        $erreur2 = true;
+        $errSaisies2 = "Erreur, champs vides ou incorrects.";
     }
 
     //INSCRIPTION
@@ -108,8 +120,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $msgErrPseudo = "&nbsp;&nbsp;- Votre pseudo doit être constitué de 6 à 70 caractères. <br>";
         }
 
-        $pseudoExist = $monMembre->get_ExistPseudo($pseudoMemb);
-        if($pseudoExist == 0){
+        $pseudoExistMemb = $monMembre->get_ExistPseudo($pseudoMemb);
+        $pseudoExistUser = $monUser->get_ExistPseudo($pseudoMemb);
+        if($pseudoExistMemb == 0 AND $pseudoExistUser == 0){
             $pseudoExistF1 = 1;
             $msgErrExistPseudo = "";
         }else{
@@ -134,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail2F1 = 0;    // FALSE
             $msgErrMail2 = "&nbsp;&nbsp;- Deuxième mail invalide<br>";
         }
-        // ----------------------------------------------------------------
+
         // MAIL IDENTIQUE
         if($mail1F1 == 1 AND $mail2F1 == 1){
             if($eMail1Memb == $eMail2Memb){
@@ -145,6 +158,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $msgErrMailIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mails différents. <br>";
             }
         }
+
+        //MAIL EXISTANT
+        $eMailExistMemb = $monMembre->get_AllMembresByEmail($eMail1Memb);
+        $eMailExistUser = $monUser->get_ExistEMail($eMail1Memb);
+        if ($eMailExistMemb == 0 AND $eMailExistUser == 0){
+            $eMailExistF1 = 1;
+            $msgErrExistMail = "";
+        }else{
+            $eMailExistF1 = 0;
+            $msgErrExistmail = "&nbsp;&nbsp;- Cet email est déjà utilisé<br>";
+        }
+
         // ----------------------------------------------------------------
         // PASS VALIDE
         if($pass1Memb == $pass2Memb){
@@ -159,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $passValidF1 = 1;
             $msgErrPassValid = "";
             // Cryptage du password
-            $pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
+            //$pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
         }else{
             $passValidF1 = 0;
             $msgErrPassValid = "&nbsp;&nbsp;- Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre, <br> 
@@ -185,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $dtCreaMemb, $accordMemb, $idStat);
 
             //A remettre une fois que la page d'accueil est créée
-            //header("Location: ./accueil.php");
+            header("Location: ./accueil.php");
         }else{
             // Saisies invalides
             $erreur = true;
@@ -210,7 +235,15 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
 <head>
     <meta charset="utf-8" />
     <title>Admin - CRUD Membre</title>
+    <!-- <link href="../assets/css/pageMonCompte.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../../assets/css/pageMonCompte.css"> -->
+    <link href="../../assets/css/pageMonCompteFront.css" rel="stylesheet" type="text/css" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Assistant:wght@300;600&display=swap" rel="stylesheet">
+    
+ 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;" />
     <!-- Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -218,9 +251,7 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
     <meta name="author" content="" />
 
     <!--  Le script reCaptcha : api.js  -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style type="text/css">
         .error {
             padding: 2px;
@@ -228,8 +259,8 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
             color: red;
             font-style: italic;
             border-radius: 5px;
-        }
-    </style>
+        } 
+    </style> -->
     <script>
         // Affichage pass
         function myFunction(myInputPass) {
@@ -246,9 +277,13 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
     <?php
     require_once __DIR__ . '/___headerFront.php';
     ?>
-    <h1>Mon compte</h1>
+    <h1 class = "Mon compte">Mon compte</h1>
 
-    <div>
+
+
+    <!-- CONNEXION -->
+<section class = "connexion-inscription">
+    <section class = "connexion">
         <h2>Connexion</h2>
 
         <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -269,13 +304,40 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
                     &nbsp;&nbsp;
                     <label><i>Afficher le mot de passe</i></label>
                 </div>
+
+                <div class="control-group">
+                    <div class="error">
+            <?php
+                    if ($erreur2) {
+                        echo ($errSaisies2);
+                    }
+                    else {
+                        $errSaisies2 = "";
+                        echo ($errSaisies2);
+                    }
+            ?>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" value="Se connecter" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                        <br>
+                    </div>
+                </div>
         
             </fieldset>
 
         </form>
-    </div>
+    </section>
 
-    <div class='incription'>
+
+
+    <!-- INSCRIPTION -->
+
+    <section class='incription'>
         <h2>Inscription</h2>
 
         <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -377,10 +439,14 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
                 </div>
             </fieldset>
         </form>
-    </div>
+    </section>
+</section>
 
 <?php
 require_once __DIR__ . '/___footerFront.php';
 ?>
+
 </body>
 </html>
+
+

@@ -4,21 +4,40 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class USER{
-	function get_1User($pseudoUser, $passUser){
+	function get_1UserByPseudo($pseudoUser, $passUser){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM USER WHERE pseudoUser = ?, passUser = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$pseudoUser, $passUser]);
 		return($result->fetch());
 	}
 
-/*	function get_AllUsers(){
+	function get_1UserByEMail($eMailUser, $passUser){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM USER WHERE eMailUser = ?, passUser = ?';
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$eMailUser, $passUser]);
+		return($result->fetch());
+	}
+
+	function get_AllUsers(){
+		global $db;
+
+		// select
+		$query = 'SELECT * FROM USER';
+		// prepare
+		$result = $db->query($query);
+		// execute
+		$allUsers = $result->fetchAll();
+
 		return($allUsers);
 	}
 
@@ -29,10 +48,21 @@ class USER{
 		$query = 'SELECT * FROM USER WHERE pseudoUser = ?;';
 		$result = $db->prepare($query);
 		$result->execute(array($pseudoUser));
+
 		return($result->rowCount());
 	}
 
-	function get_AllUsersByStat(){
+	function get_ExistEMail($eMailUser) {
+		global $db;
+
+		$query = 'SELECT * FROM USER WHERE eMailUser = ?;';
+		$result = $db->prepare($query);
+		$result->execute(array($eMailUser));
+		
+		return($result->rowCount());
+	}
+
+/*	function get_AllUsersByStat(){
 		global $db;
 
 		// select

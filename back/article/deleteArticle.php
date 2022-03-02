@@ -22,6 +22,8 @@ require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Article
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+
+
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();
 
@@ -129,8 +131,56 @@ include __DIR__ . '/initArticle.php';
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
+<section>
+    <?php
+    require_once ROOT . '/front/includes/commons/___headerFront.php';
+    ?>
+</section>
 <body>
-    <h1>BLOGART22 Admin - CRUD Article</h1>
+    <h1>mon espace administrateur</h1>
+
+    <div class=parentback>
+        <div class=menu-back>
+            <nav>
+                <ul class="menuback-liens">
+                    <li class="menu-back-gererArticles">
+                        <a href="../article/article.php" class=articles>Gérer mes articles</a>
+                    </li>
+                    <li class="menu-back-gererLangues">
+                        <a href="../langue/langue.php" class=langues>Gérer mes langues</a>
+                    </li>
+                    <li class="menu-back-angles">
+                        <a href="../angle/angle.php" class=angles>Gérer mes angles</a>
+                    </li>
+                    <li class="menu-back-membres">
+                        <a href="../membre/membre.php" class=membres>Gérer mes membres</a>
+                    </li>
+                    <li class="menu-back-utilisateurs">
+                        <a href="../user/user.php" class=users>Gérer mes users</a>
+                    </li>
+                    <li class="menu-back-com">
+                        <a href="../comment/comment.php" class=comment>Gérer mes commentaires</a>
+                    </li>
+                    <li class="menu-back-likeart">
+                        <a href="../likeArt/likeArt.php" class=likeart>Gérer mes like</a>
+                    </li>
+                    <li class="menu-back-likecom">
+                        <a href="../likeCom/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
+                    </li>
+                    <li class="menu-back-statut">
+                        <a href="../statut/statut.php" class=stat>Gérer mes statuts</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../motCle/MotsCle.php" class=Mc>Gérer mes mots clés</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../thematique/thematique.php" class=them>Gérer mes thématiques</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class=formulaire>
+ 
     <h2>Suppression d'un article</h2>
 
 <?php
@@ -274,7 +324,7 @@ include __DIR__ . '/initArticle.php';
                     <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
                 </label>
 
-                <select name="Langue" id="Langue"  class="form-control form-control-create">
+                <select name="Langue" id="Langue"  class="form-control form-control-create" disabled>
                     <?php
                         $LangByAngle = $monAngle->get_1LangByAngle($numAngl);
                     ?>
@@ -305,7 +355,7 @@ include __DIR__ . '/initArticle.php';
             <!-- Listbox Angle => 2ème temps -->
 
                  <input type="hidden" id="idTypAngl" name="idTypAngl" value="<?= $numAngl; ?>" />
-                    <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
+                    <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !"disabled > 
 
                             <option value="<?= $numAngl; ?>">
                                 <?php echo $libAngl; ?>
@@ -329,7 +379,7 @@ include __DIR__ . '/initArticle.php';
             <!-- Listbox Thématique=> 2ème temps -->
 
             <input type="hidden" id="idTypThem" name="idTypThem" value="<?= $numThem; ?>" />
-                <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !" > 
+                <select size="1" name="TypThem" id="TypThem"  class="form-control form-control-create" title="Sélectionnez la thematique !"disabled > 
              
                         <option value="<?= $NumThem; ?>">
                             <?php echo $libThem; ?>
@@ -381,18 +431,19 @@ include __DIR__ . '/initArticle.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="Submit" value="Annuler" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="Submit" value="Valider" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                 <br>
             </div>
         </div>
       </fieldset>
     </form>
+    </div>
+    </div>
 <?php
-require_once __DIR__ . '/footerArticle.php';
+require_once ROOT . '/front/includes/commons/___footerFront.php';
 
-require_once __DIR__ . '/footer.php';
 ?>
 </body>
 </html>
