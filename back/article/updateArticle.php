@@ -102,10 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numAngl = ctrlSaisies($_POST['numAngl']);
         $numThem = ctrlSaisies($_POST['numThem']);
     
-
 if (isset($_FILES['monfichier']['tmp_name']) AND !empty($_FILES['monfichier']['tmp_name'])) {
     $target_file = $targetDir . $urlPhotArt;
-    // $delFile = $targetDir . $urlPhotArt; voir si ça fonctionne
     // Del old image sur serveur
     if(file_exists($delFile)){
         // delete
@@ -113,15 +111,14 @@ if (isset($_FILES['monfichier']['tmp_name']) AND !empty($_FILES['monfichier']['t
         move_uploaded_file($_FILES['monfichier']['tmp_name'], $target_file);
     }
     // Traitnemnt : upload image => Chnager image
-    require_once __DIR__ . '/ctrlerUploadImage.php';
+    require_once ROOT . 'back/article/ctrlerUploadImage.php';
 
     // Nom image à la volée
-    $urlPhotArt = $nomImage;
+    $urlPhotArt = $_FILES['monfichier']['name'] ; 
 } else {
     $urlPhotArt = -1;
 }
-$monArticle->update($numArt, $_POST['libTitrArt'], $_POST['libChapoArt'], $_POST['libAccrochArt'], $_POST['parag1Art'], $_POST['libSsTitr1Art'], $_POST['parag2Art'], $_POST['libSsTitr2Art'], $_POST['parag3Art'], $_POST['libConclArt'], $urlPhotArt, $_POST['numAngl'], $_POST['numThem']);
-       // $monArticle->update($numNextArt, $dtCreArt, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
+    $monArticle->update($numNextArt, $dtCreArt, $libTitrArt,$libChapoArt, $libAccrochArt,  $parag1Art, $libSsTitr1Art, $parag2Art,$libSsTitr2Art,$parag3Art,$libConclArt,$urlPhotArt,$numAngl,$numThem);
 
         header("Location: ./article.php");
 
@@ -147,8 +144,7 @@ $monArticle->update($numArt, $_POST['libTitrArt'], $_POST['libChapoArt'], $_POST
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initArticle.php';
-// En dur
-$urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -170,9 +166,8 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
     <h2>Modification d'un article</h2>
 <?php
     // Modif : récup id à modifier
+
     // id passé en GET
-
-
     if (isset($_GET['id'])) {
         //ajouter ctrl saisies ici
 
@@ -216,7 +211,7 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
         <div class="control-group">
             <div class="controls">
             <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="dtCreArt" id="dtCreArt" value="<?php echo $dtCreArt; ?>" tabindex="20" placeholder="" disabled />
+            <input type="text" name="dtCreArt" id="dtCreArt" value="<?php echo $dtCreArt  ?> "tabindex="20" placeholder="" disabled/>
             </div>
         </div>
 
@@ -297,6 +292,10 @@ $urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
                   echo "<i>" . $msgImagesOK . "</i>";
 ?>
                 </p>
+<?php
+                var_dump($targetDir);
+                exit;
+?>
                 <p><b><i>Image actuelle :&nbsp;&nbsp;<img src="<?php $targetDir . htmlspecialchars($urlPhotArt); ?>" height="183" width="275" /></i></b></p>
 
             </div>

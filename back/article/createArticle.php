@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (
       /*  isset($_POST['dtCretArt']) and !empty($_POST['dtCretArt'])
     and*/
+
     isset($_POST['libTitrArt']) and !empty($_POST['libTitrArt'])
     and isset($_POST['libChapoArt']) and !empty($_POST['libChapoArt'])
     and isset($_POST['libAccrochArt']) and !empty($_POST['libAccrochArt'])
@@ -88,9 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numAngl = ctrlSaisies($_POST['TypAngl']);
         $numThem = ctrlSaisies($_POST['TypThem']);
-require_once ROOT . '/back/article/ctrlerUploadImage.php';
 
-$urlPhotArt = $monImage ; 
+require_once ROOT . '/back/article/ctrlerUploadImage.php';
+$urlPhotArt = $nomImage ; 
 
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
@@ -183,12 +184,21 @@ include __DIR__ . '/initArticle.php';
                     <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<?php if(isset($_GET['id'])){echo $_POST['libTitrArt'];} ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
                 </div>
             </div>
+<<<<<<< HEAD
+        </div>
+        <br>
+        <div class="control-group">
+            <div class="controls">
+            <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<?php if(isset($_GET['id'])) echo $dtCreArt; ?>" tabindex="20" placeholder="" />
+=======
             <br>
             <div class="control-group">
                 <div class="controls">
                 <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                     <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<?php if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
                 </div>
+>>>>>>> 1e5dac2eb99c9d55b19b5f55b2237b6903286a65
             </div>
             <br>
             <div class="control-group">

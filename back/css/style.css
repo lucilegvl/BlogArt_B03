@@ -141,7 +141,7 @@ input {
  background-color:#f1f2f2;
  border-radius: 5px;
 
- }
+}
 
 input[type=radio] {
  margin-right:50px;
@@ -160,7 +160,9 @@ input[type=submit] {
 } 
 
 select, option {
- background-color:#A6BEDE;
+ background-color:#f1f2f2;
+ border-radius: 5px;
+
  }
 
 textarea {

@@ -9,7 +9,7 @@
 $extension  = "";
 $infosfile = "";
 $name = "";
-$file = $nomImage = "";
+$file = $momImage = "";
 
 // init état trait image
 // Code erreur Upload Image
