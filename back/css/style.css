@@ -31,6 +31,17 @@ h2{
 	background-color: #f1f2f2;
 	text-align:center;
 }
+.top-page-index{
+    /* background-image: url("/assets/images/topage.png"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: calc(100vh - 75px);
+    overflow-x: hidden;
+    justify-self: center;
+    /* @media screen and (max-width: 700px){
+        min-height: 50px;
+    } */
+}
 
 .menu-back ul li a{
 	font-family: 'Assistant', sans-serif;
