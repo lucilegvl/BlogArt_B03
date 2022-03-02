@@ -14,19 +14,19 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Likeart
-require_once __DIR__ . '/../../CLASS_CRUD/likeArt.class.php';
+require_once __DIR__ . '/../../class_crud/likeArt.class.php';
 
 // Instanciation de la classe Likeart
 $monLikeArt = new LIKEART();
 
 // Insertion classe Membre
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+require_once __DIR__ . '/../../class_crud/membre.class.php';
 
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 
 // Insertion classe Article
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+require_once __DIR__ . '/../../class_crud/article.class.php';
 
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();

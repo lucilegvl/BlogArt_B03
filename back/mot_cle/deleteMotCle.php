@@ -14,19 +14,19 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe MotCle
-require_once __DIR__ . '/../../CLASS_CRUD/motCle.class.php';
+require_once __DIR__ . '/../../class_crud/motcle.class.php';
 
 // Instanciation de la classe MotCle
 $monMotCle = new MOTCLE();
 
 // Insertion classe Langue
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+require_once __DIR__ . '/../../class_crud/langue.class.php';
 
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
 
 // Insertion classe MotCleArticle
-require_once __DIR__ . '/../../CLASS_CRUD/motclearticle.class.php';
+require_once __DIR__ . '/../../class_crud/motclearticle.class.php';
 
 // Instanciation de la classe MotCleArticle
 $monMotCleArticle = new MOTCLEARTICLE();
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $Submit = "";
     }
     if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
-        header("Location: ./MotCle.php");
+        header("Location: ./motCle.php");
     }   
 
     elseif (($_POST["Submit"] == "Valider")) {{

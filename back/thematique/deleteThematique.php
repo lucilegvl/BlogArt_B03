@@ -14,13 +14,13 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Thematique
-require_once __DIR__ . '/../../CLASS_CRUD/Thematique.class.php';
+require_once __DIR__ . '/../../class_crud/thematique.class.php';
 
 // Instanciation de la classe Thematique
 $maThematique = new THEMATIQUE ();
 
 // Insertion classe Langue
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+require_once __DIR__ . '/../../class_crud/langue.class.php';
 
 // Instanciation de la classe langue
 $maLangue = new LANGUE();
@@ -30,7 +30,7 @@ $errCIR = 0;
 $errDel=0;
 
 // Insertion classe Article
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+require_once __DIR__ . '/../../class_crud/article.class.php';
 
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();

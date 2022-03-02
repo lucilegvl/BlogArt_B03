@@ -17,11 +17,11 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe MotCle
-require_once __DIR__ . '/../../CLASS_CRUD/MotCle.class.php';
+require_once __DIR__ . '/../../class_crud/motcle.class.php';
 // Instanciation de la classe MotCle
 $monMotCle = new MOTCLE();
 
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+require_once __DIR__ . '/../../class_crud/langue.class.php';
 
 require_once ROOT . '/front/includes/commons/___headerFront.php';
 
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // creation effective de la MotCle
             $monMotCle->create($libMotCle, $_POST["TypLang"]); 
 
-            header("Location: ./MotCle.php");
+            header("Location: ./motCle.php");
 
         } else {
             $erreur = true;
@@ -122,16 +122,16 @@ include __DIR__ . '/initMotCle.php';
                         <a href="../comment/comment.php" class=comment>Gérer mes commentaires</a>
                     </li>
                     <li class="menu-back-likeart">
-                        <a href="../likeArt/likeArt.php" class=likeart>Gérer mes like</a>
+                        <a href="../like_art/likeArt.php" class=likeart>Gérer mes like</a>
                     </li>
                     <li class="menu-back-likecom">
-                        <a href="../likeCom/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
+                        <a href="../like_com/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
                     </li>
                     <li class="menu-back-statut">
                         <a href="../statut/statut.php" class=stat>Gérer mes statuts</a>
                     </li>
                     <li class="menu-back-MotsCles">
-                        <a href="../motCle/MotsCle.php" class=Mc>Gérer mes mots clés</a>
+                        <a href="../mot_cle/MotsCle.php" class=Mc>Gérer mes mots clés</a>
                     </li>
                     <li class="menu-back-MotsCles">
                         <a href="../thematique/thematique.php" class=them>Gérer mes thématiques</a>

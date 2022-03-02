@@ -16,17 +16,17 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Membre
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+require_once __DIR__ . '/../../class_crud/membre.class.php';
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 
 // Insertion classe Statut
-require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+require_once __DIR__ . '/../../class_crud/statut.class.php';
 // Instanciation de la classe Statut
 $monStatut = new STATUT();
 
 // Insertion classe Comment
-require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php';
+require_once __DIR__ . '/../../class_crud/comment.class.php';
 // Instanciation de la classe Statut
 $monCommentaire = new COMMENT();
 
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
     if (isset($_POST["Submit"]) AND $Submit === "Annuler") {
-        header("Location: ./Membre.php");
+        header("Location: ./membre.php");
     }
 
     if ($_POST['Submit'] == 'Valider'){

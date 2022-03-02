@@ -13,7 +13,7 @@ require_once __DIR__ . '/util/utilErrOn.php';
 
 
 // Insertion classe Langue 
-require_once ROOT . '/CLASS_CRUD/article.class.php';
+require_once ROOT . '/class_crud/article.class.php';
 // Instanciation de la classe angle
 $monArticle = new ARTICLE();
 ?>

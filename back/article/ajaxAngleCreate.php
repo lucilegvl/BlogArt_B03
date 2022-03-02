@@ -1,15 +1,12 @@
 <?php
-/*
-*   Script : ajaxEtudiant.php
-*   Example : 2 listbox dynamiques liées via AJAX
-*/
+
 // Mode DEV
 require_once __DIR__ . '/../../util/utilErrOn.php';
-
+ 
 // connexion
-require_once __DIR__ . '/../../CONNECT/database.php';
+require_once __DIR__ . '/../../connect/database.php';
 
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+require_once __DIR__ . '/../../class_crud/angle.class.php';
 
 ?>
 <select name='TypAngl' style='padding:2px; border:solid 1px black; color:steelblue; border-radius:5px;' >
@@ -17,7 +14,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 $TypLang = $_REQUEST["numLang"];
 
 if (isset($TypLang)) {
-	$query = "SELECT numAngl, libAngl FROM ANGLE WHERE numLang = ?" ; 
+	$query = "SELECT numAngl, libAngl FROM ANGLE WHERE numLang = ?;" ; 
 	$result = $db->prepare($query);
 	$result->execute([$TypLang]);
 	$allAnglesByLang = $result->fetchAll();
@@ -38,6 +35,6 @@ if (isset($TypLang)) {
 			<option value='-1'>- - - Choisissez un angle - - -</option>
 <?php
 	}	// else
-}	// End of if (isset($classe))
+}	// End of if (isset($TypLang))
 ?>
 </select>

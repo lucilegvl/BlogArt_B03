@@ -14,7 +14,7 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
-require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+require_once __DIR__ . '/../../class_crud/statut.class.php';
 
 require_once ROOT . '/front/includes/commons/___headerFront.php';
 
@@ -113,16 +113,16 @@ include __DIR__ . '/initStatut.php';
                         <a href="../comment/comment.php" class=comment>Gérer mes commentaires</a>
                     </li>
                     <li class="menu-back-likeart">
-                        <a href="../likeArt/likeArt.php" class=likeart>Gérer mes like</a>
+                        <a href="../like_art/likeArt.php" class=likeart>Gérer mes like</a>
                     </li>
                     <li class="menu-back-likecom">
-                        <a href="../likeCom/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
+                        <a href="../like_com/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
                     </li>
                     <li class="menu-back-statut">
                         <a href="../statut/statut.php" class=stat>Gérer mes statuts</a>
                     </li>
                     <li class="menu-back-MotsCles">
-                        <a href="../motCle/MotsCle.php" class=Mc>Gérer mes mots clés</a>
+                        <a href="../mot_cle/MotsCle.php" class=Mc>Gérer mes mots clés</a>
                     </li>
                     <li class="menu-back-MotsCles">
                         <a href="../thematique/thematique.php" class=them>Gérer mes thématiques</a>
