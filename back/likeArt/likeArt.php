@@ -84,8 +84,8 @@ $monArticle = new ARTICLE();
     <tbody>
 <?php
     // Appel des méthodes : Get tous les users en BDD
-    $allStatuts = $monLikeArt->get_AllLikesArt();
-    foreach($allStatuts as $row) {
+    $allLikesArt = $monLikeArt->get_AllLikesArt();
+    foreach($allLikesArt as $row) {
     // Boucle pour afficher
 
     //
@@ -95,9 +95,8 @@ $monArticle = new ARTICLE();
 
         <td>&nbsp; <?= $row["numArt"]; ?> &nbsp;</td>
 
-        <td>&nbsp;<span class="OK">&nbsp; <?= "ici (un)like"; ?> &nbsp;</span></td>
+        <td>&nbsp;<span class="OK">&nbsp; <?= ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</span></td>
 
-        <td>&nbsp; <?= ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</td>
 
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLikeArt.php?id1=<?=["numMemb"]; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier like article" title="Modifier like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(Un)like</span>&nbsp;
         <br /></td>

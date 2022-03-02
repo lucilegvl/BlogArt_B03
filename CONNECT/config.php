@@ -15,6 +15,6 @@ $passBD = 'root';         // Votre Pass
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/BlogART_B03');
 
-$passBD = '';         // Votre Pass
+
 
 
