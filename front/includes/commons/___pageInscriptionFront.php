@@ -8,26 +8,25 @@
 ////////////////////////////////////////////////////////////
 
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-require_once __DIR__ . '/../../util/regex.php';
+require_once __DIR__ . '/../../../util/utilErrOn.php';
+require_once __DIR__ . '/../../../util/regex.php';
 
 // controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../../util/ctrlSaisies.php';
 // Del accents sur string
-require_once __DIR__ . '/../../util/delAccents.php';
+require_once __DIR__ . '/../../../util/delAccents.php';
 
 // Insertion classe Membre
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+require_once __DIR__ . '/../../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 
 // Insertion classe Statut
-require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+require_once __DIR__ . '/../../../CLASS_CRUD/statut.class.php';
 // Instanciation de la classe Statut
 $monStatut = new STATUT();
 
 // Constantes reCaptcha
-
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -56,11 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         AND isset($_POST['eMail1Memb']) AND !empty($_POST['eMail1Memb'])
         AND isset($_POST['eMail2Memb']) AND !empty($_POST['eMail2Memb'])
         AND isset($_POST['accordMemb']) AND !empty($_POST['accordMemb'])
-        AND isset($_POST['idStat']) AND !empty($_POST['idStat']) AND $_POST['idStat'] != -1
         AND !empty($_POST['Submit']) AND $Submit === "Valider") {
 
         // Saisies valides
         $erreur = false;
+
+        $idStat=3;
 
         $prenomMemb = ctrlSaisies($_POST['prenomMemb']);
         $nomMemb = ctrlSaisies($_POST['nomMemb']);
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail2F1 = 0;    // FALSE
             $msgErrMail2 = "&nbsp;&nbsp;- Deuxième mail invalide<br>";
         }
-
+        // ----------------------------------------------------------------
         // MAIL IDENTIQUE
         if($mail1F1 == 1 AND $mail2F1 == 1){
             if($eMail1Memb == $eMail2Memb){
@@ -122,17 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $msgErrMailIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mails différents. <br>";
             }
         }
-
-        //MAIL EXISTANT
-        $eMailExist = $monMembre->get_AllMembresByEmail($eMail1Memb);
-        if ($eMailExist == 0){
-            $eMailExistF1 = 1;
-            $msgErrExistMail = "";
-        }else{
-            $eMailExistF1 = 0;
-            $msgErrExistmail = "&nbsp;&nbsp;- Cet email est déjà utilisé<br>";
-        }
-
         // ----------------------------------------------------------------
         // PASS VALIDE
         if($pass1Memb == $pass2Memb){
@@ -147,8 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $passValidF1 = 1;
             $msgErrPassValid = "";
             // Cryptage du password
-            // cost : meilleur coût algo cryptage (10: defaut)
-            // $pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
+            $pass1Memb = password_hash($pass1Memb, PASSWORD_DEFAULT, ['cost' => 15]);
         }else{
             $passValidF1 = 0;
             $msgErrPassValid = "&nbsp;&nbsp;- Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre, <br> 
@@ -168,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // ----------------------------------------------------------------
         // Ctrl cohérence de tous les différents éléments saisis avant insert
         if($prenomMemb != "" AND $nomMemb != "" 
-            AND $mailIdentiqF1 == 1 AND $eMailExistF1 = 1 AND $passIdentiqF1 == 1 AND $passValidF1 == 1
+            AND $mailIdentiqF1 == 1 AND $passIdentiqF1 == 1 AND $passValidF1 == 1
             AND $pseudoF1 == 1 AND $pseudoExistF1 == 1 AND $RGPDOk == 1){
 
             $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $dtCreaMemb, $accordMemb, $idStat);
@@ -179,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $erreur = true;
             $errSaisies = "Création impossible, incohérence des données saisies :<br>" . 
             $msgErrExistPseudo . $msgErrPseudo . $msgErrMail1 . $msgErrMail2 . 
-            $msgErrMailIdentiq . $msgErrExistMail . $msgErrPassIdentiq . $msgErrPassValid . $msgErrRGPDOk;
+            $msgErrMailIdentiq . $msgErrPassIdentiq . $msgErrPassValid . $msgErrRGPDOk;
         }
     }   // Fin if ((isset($_POST['prenomMemb'])) ...
     else{
@@ -190,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 // Init variables form
-include __DIR__ . '/initMembre.php';
+include __DIR__ . '/../../../back/membre/initMembre.php';
 ?>
 
 <!DOCTYPE html>
@@ -231,13 +219,12 @@ include __DIR__ . '/initMembre.php';
     </script>
 </head>
 <body>
-    <h1>BLOGART22 Admin - CRUD Membre</h1>
-    <h2>Ajout d'un membre : Inscription</h2>
+    <h1>Mon compte</h1>
+    <h2>Inscription</h2>
 
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
         <fieldset>
-            <legend class="legend1">Formulaire Membre...</legend>
 
             <input type="hidden" id="id" name="id" value="<?= isset($_POST['id']) ? $_POST['id'] : '' ?>" />
 
@@ -306,44 +293,6 @@ include __DIR__ . '/initMembre.php';
             </div>
             <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
 
-        <!-- --------------------------------------------------------------- -->
-        <!-- --------------------------------------------------------------- -->
-        <!-- FK : Statut -->
-        <!-- --------------------------------------------------------------- -->
-        <!-- Listbox statut -->
-            <br><br>
-            <div class="control-group">
-                <label class="control-label" for="LibTypStat"><b>Statut :&nbsp;&nbsp;&nbsp;</b></label>   
-
-                <select size="1" name="idStat" id="idStat"  class="form-control form-control-create" title="Sélectionnez un statut." >
-                    <option value="-1">- - - Choisissez un statut - - -</option>
-
-                    <?php
-                        $listidStat = "";
-                        $listlibStat = "";
-
-                        $result = $monStatut->get_AllStatuts();
-                        if($result){
-                            foreach($result as $row) {
-                                $listidStat= $row["idStat"];
-                                $listlibStat = $row["libStat"];
-                    ?>
-                                <option value="<?= $listidStat; ?>">
-                                    <?= $listlibStat; ?>
-                                </option>
-                    <?php
-                            } // End of foreach
-                        }   // if ($result)
-                    ?>
-                </select>
-            </div>
-            <br>
-        <!-- FIN Listbox statut -->
-        <!-- --------------------------------------------------------------- -->
-        <!-- FK : Statut -->
-        <!-- --------------------------------------------------------------- -->
-        <!-- --------------------------------------------------------------- -->
-        <!-- -->
             <!--    Captcha Blogart22    -->
             <!-- Type de reCaptcha V2 Case à cocher : OK -->
 
@@ -375,9 +324,7 @@ include __DIR__ . '/initMembre.php';
         </fieldset>
     </form>
 <?php
-require_once __DIR__ . '/footerMembre.php';
-
-require_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/___footerFront.php';
 ?>
 </body>
 </html>
