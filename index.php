@@ -30,8 +30,8 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     <meta name="author" content="" />
 </head>
 
-<section class="top-page-index">
-    <div class="top-page-index_content">
+<section class="top-page-index" style="background-image: url('<?php echo(ROOTFRONT . '/front/assets/images/topage.png');?>')">
+    <div class="top-page-index_content" >
         <h1>Paranormal à Bordeaux</h1>
     </div>
 </section>
