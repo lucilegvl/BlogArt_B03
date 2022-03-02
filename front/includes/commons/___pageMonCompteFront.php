@@ -235,7 +235,15 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
 <head>
     <meta charset="utf-8" />
     <title>Admin - CRUD Membre</title>
+    <!-- <link href="../assets/css/pageMonCompte.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../../assets/css/pageMonCompte.css"> -->
+    <link href="../../assets/css/pageMonCompteFront.css" rel="stylesheet" type="text/css" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Assistant:wght@300;600&display=swap" rel="stylesheet">
+    
+ 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;" />
     <!-- Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -243,9 +251,7 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
     <meta name="author" content="" />
 
     <!--  Le script reCaptcha : api.js  -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style type="text/css">
         .error {
             padding: 2px;
@@ -253,8 +259,8 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
             color: red;
             font-style: italic;
             border-radius: 5px;
-        }
-    </style>
+        } 
+    </style> -->
     <script>
         // Affichage pass
         function myFunction(myInputPass) {
@@ -271,13 +277,13 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
     <?php
     require_once __DIR__ . '/___headerFront.php';
     ?>
-    <h1>Mon compte</h1>
+    <h1 class = "Mon compte">Mon compte</h1>
 
 
 
     <!-- CONNEXION -->
-
-    <div class="connexion">
+<section class = "connexion-inscription">
+    <section class = "connexion">
         <h2>Connexion</h2>
 
         <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -325,13 +331,13 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
             </fieldset>
 
         </form>
-    </div>
+    </section>
 
 
 
     <!-- INSCRIPTION -->
 
-    <div class='incription'>
+    <section class='incription'>
         <h2>Inscription</h2>
 
         <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -433,10 +439,14 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
                 </div>
             </fieldset>
         </form>
-    </div>
+    </section>
+</section>
 
 <?php
 require_once __DIR__ . '/___footerFront.php';
 ?>
+
 </body>
 </html>
+
+

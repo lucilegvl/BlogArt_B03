@@ -1,8 +1,10 @@
 *{
     margin:0;
     padding:0;
-    /* background-color:#263d57; */
+    background-color:#0E1A24; 
 }
+
+
 
 /* HEADER */
 .menu-desktop{
@@ -11,7 +13,7 @@
     display:flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #f1f2f2;
+    background-color: #0E1A24;
 }
 
 .logo{
@@ -26,9 +28,10 @@
 header nav a {
     font-family: 'Assistant', sans-serif;
     text-decoration: none;
-    color: #263d57;
+    color: #F1F2F2;
     text-transform: uppercase;
     font-size:23px;
+    
     
 }
  
@@ -48,7 +51,23 @@ header nav ul li{
 header nav a:hover{
     border-bottom: 2px solid;
 }
+
+
+.connexion {
+    flex-shrink: 1;
+    width :46.5%;
+ }
  
+ .inscription {
+    display: block;
+ 
+    width: 46.5%;
+ }
+.connexion-inscription {
+    display: flex;
+   padding : 0% 6%;
+   justify-content: space-between;
+}
 
 /*El copié collé du menu deroulant*/
 
