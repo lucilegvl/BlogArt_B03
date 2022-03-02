@@ -25,11 +25,34 @@ h1{
 h2{
 	font-family: 'Amarante', sans-serif;
 	font-size:36px;
+}
+
+.menu-back ul li a{
+	font-family: 'Assistant', sans-serif;
+	font-size:18px;
+	text-transform:uppercase;
+	text-decoration:none;
+	color:#0e1a24;
+	/* padding:30px; */
+}
+
+.menu-back {
+	background-color:#f1f2f2;
+	text-align: center;
+	/* margin-right:60px;
+	margin-left:60px; */
+}
+
+.parentback{
+	display:flex;
+	justify-content: space-between;
+	margin-right: 90px;
+	margin-left:90px;
 
 }
 
 fieldset {
-	background-color: red;	/* color: oldlace */
+	background-color: black;	/* color: oldlace */
 	max-width: 600px;			/* largeur maximale cadre */
 	padding: 16px;				/* marge interne / sépare le contenu de la bordure	*/
 	/* Coins arrondis et couleur du cadre */
