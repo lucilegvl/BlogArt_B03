@@ -53,6 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     AND isset($_POST['eMailMemb']) AND !empty($_POST['eMailMemb'])
     AND isset($_POST["Submit"]) AND $Submit === "Se connecter") {
 
+        $erreur2 = false;
+
         $passMemb = $_POST['passMemb'];
         $eMailMemb = $_POST['eMailMemb'];
 
@@ -60,13 +62,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         if ($passMemb == $testEMail['passMemb']){
-            echo 1;
+            $pseudoMemb = $testEMail['pseudoMemb'];
+
+            setcookie('user', $pseudoMemb, time() + 3600); // 1h
+            setcookie('eMail', $eMailMemb, time() + 3600); 
+            setcookie('pass', $passMembHash, time() + 3600);
+
+            header("Location: /../../index.php");
+
         } else {
-            echo "raté!";
+            $erreur2 = true;
+            $errSaisies2 = "Email ou mot de passe invalide.";
         }
+
     } else {
-        $erreur = true;
-        $errSaisies = "Erreur, champs vides ou incorrects.";
+        $erreur2 = true;
+        $errSaisies2 = "Erreur, champs vides ou incorrects.";
     }
 
     //INSCRIPTION
@@ -156,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $eMailExistF1 = 0;
             $msgErrExistmail = "&nbsp;&nbsp;- Cet email est déjà utilisé<br>";
         }
-        
+
         // ----------------------------------------------------------------
         // PASS VALIDE
         if($pass1Memb == $pass2Memb){
@@ -197,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $dtCreaMemb, $accordMemb, $idStat);
 
             //A remettre une fois que la page d'accueil est créée
-            //header("Location: ./accueil.php");
+            header("Location: ./accueil.php");
         }else{
             // Saisies invalides
             $erreur = true;
@@ -290,6 +301,20 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
                     <input type="checkbox" onclick="myFunction('myInput1')">
                     &nbsp;&nbsp;
                     <label><i>Afficher le mot de passe</i></label>
+                </div>
+
+                <div class="control-group">
+                    <div class="error">
+            <?php
+                    if ($erreur2) {
+                        echo ($errSaisies2);
+                    }
+                    else {
+                        $errSaisies2 = "";
+                        echo ($errSaisies2);
+                    }
+            ?>
+                    </div>
                 </div>
 
                 <div class="control-group">
