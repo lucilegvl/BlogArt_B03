@@ -44,23 +44,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
     //CONNEXION
-    if (isset($_POST["Submit"]) AND $Submit === "Se connecter") {
+    if (isset($_POST['passMemb']) AND !empty($_POST['passMemb'])
+    AND isset($_POST['eMailMemb']) AND !empty($_POST['eMailMemb'])
+    AND isset($_POST["Submit"]) AND $Submit === "Se connecter") {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            echo ($_POST['pass']);
+            $passMemb = $_POST['passMemb'];
+            $eMailMemb = $_POST['eMailMemb'];
         
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //echo($_POST['pass'] . '<br>');
-                if (password_verify($_POST['pass'], $pass) === true) {
+                if (password_verify($_POST['pass'], $passMemb) === true) {
                     echo ('<p>Bon mot de passe</p>');
-                    setcookie('user', $user, time() + 3600); // 1h
-                    setcookie('pass', $pass /* ICI ON STOCK LE HASH DU PASSWORD EVIDEMENT */, time() + 3600); // 1h
+                    setcookie('eMailMemb', $eMailMemb, time() + 3600); // 1h
+                    setcookie('passMemb', $passMemb /* ICI ON STOCK LE HASH DU PASSWORD EVIDEMENT */, time() + 3600); // 1h
                 } else {
                     echo ('<p>Mauvais mot de passe</p>');
                 }
             }
         
             if (isset($_COOKIE['user'])) {
-                echo 'bonjour' . $_COOKIE['user'] . '<br>' ;
+                echo 'bonjour' . $_COOKIE['eMailMemb'] . '<br>' ;
             } else {
                 echo 'merci de vous connecter';
             }

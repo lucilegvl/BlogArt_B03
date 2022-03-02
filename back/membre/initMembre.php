@@ -7,8 +7,10 @@
 $prenomMemb = "";
 $nomMemb = "";
 $pseudoMemb = "";
+$passMemb = "";
 $pass1Memb = "";
 $pass2Memb = "";
+$eMailMemb = "";
 $eMail1Memb = "";
 $eMail2Memb = "";
 $dtCreaMemb = "";
