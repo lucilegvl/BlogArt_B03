@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         AND isset($_POST['eMail1Memb']) AND !empty($_POST['eMail1Memb'])
         AND isset($_POST['eMail2Memb']) AND !empty($_POST['eMail2Memb'])
         AND isset($_POST['accordMemb']) AND !empty($_POST['accordMemb'])
-        AND isset($_POST['idStat']) AND !empty($_POST['idStat'])
+        AND isset($_POST['idStat']) AND !empty($_POST['idStat']) AND $_POST['idStat'] != -1
         AND !empty($_POST['Submit']) AND $Submit === "Valider") {
 
         // Saisies valides

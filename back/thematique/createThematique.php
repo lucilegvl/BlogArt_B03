@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // controle des saisies du formulaire
     if (isset($_POST['libThem']) AND !empty($_POST['libThem'])
-    AND isset($_POST['TypLang']) AND !empty($_POST['TypLang'])
+    AND isset($_POST['TypLang']) AND !empty($_POST['TypLang']) AND $_POST['TypLang'] != -1
     AND !empty($_POST['Submit']) AND $Submit === "Valider") { // Saisies valides
 
         $erreur = false;

@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     
     if (isset($_POST['libMotCle']) AND !empty($_POST['libMotCle'])
-    AND isset($_POST['TypLang']) AND !empty($_POST['TypLang'])
+    AND isset($_POST['TypLang']) AND !empty($_POST['TypLang']) AND $_POST['TypLang'] != -1
     AND !empty($_POST['Submit']) AND $Submit === "Valider") {
         $erreur = false;
 
