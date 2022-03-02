@@ -268,42 +268,42 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
     <!-- Listbox Langue -->
-    <br>
-            <div class="control-group">
-                <div class="controls">
-                <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
-                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
-                </label>
-
-                <!-- Listbox langue => 2ème temps -->
-
-                    <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-                    <option value="-1">- - - Choisissez une langue - - -</option>
-
-                <?php
-                    $listNumLang = "";
-                    $listlib1Lang = "";
-
-                    $result = $maLangue->get_AllLanguesOrderByLib1Lang();
-                    if($result){
-                        foreach($result as $row) {
-                            $listNumLang= $row["numLang"];
-                            $listlib1Lang = $row["lib1Lang"];
-                ?>
-                            <option value="<?= $listNumLang; ?>">
-                                <?= $listlib1Lang; ?>
-                            </option>
-                <?php
-                        } // End of foreach
-                    }   // if ($result)
-                ?>
-
-                </select>
-
-                </div>
-            </div>
-                
-        <!-- FIN Listbox langue-->
+   <br>
+           <div class="control-group">
+               <div class="controls">
+               <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
+                   <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+               </label>
+ 
+               <!-- Listbox langue => 2ème temps -->
+ 
+                   <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" onchange='change()' >
+                   <option value="-1">- - - Choisissez une langue - - -</option>
+ 
+               <?php
+                   $listNumLang = "";
+                   $listlib1Lang = "";
+ 
+                   $result = $maLangue->get_AllLanguesOrderByLib1Lang();
+                   if($result){
+                       foreach($result as $row) {
+                           $listNumLang= $row["numLang"];
+                           $listlib1Lang = $row["lib1Lang"];
+               ?>
+                           <option value="<?php $listNumLang; ?>">
+                               <?php echo $listlib1Lang; ?>
+                           </option>
+               <?php
+                       } // End of foreach
+                   }   // if ($result)
+               ?>
+ 
+               </select>
+ 
+               </div>
+           </div>
+              
+       <!-- FIN Listbox langue-->
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
 
@@ -314,16 +314,15 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     <!-- Listbox angle -->
     <br/><br/>
       	  <label><b>&nbsp;&nbsp;&nbsp;Quel angle :&nbsp;&nbsp;</b></label>
-		  <div id='' style='display:inline'>
-      	    <select size="1" name="etudiant" title="Sélectionnez l'étudiant !" style="padding:2px; border:solid 1px black; color:steelblue; border-radius:5px;">
-			  <option value='-1'>- - - Aucun - - -</option>
+		  <div id='TypAngl' style='display:inline'>
+      	    <select size="1" name="TypAngl" title="Sélectionnez l'angle !" style="padding:2px; border:solid 1px black; color:steelblue; border-radius:5px;">
+			  <option value='-1'>- - - Choissisez l'angle - - -</option>
       	    </select>
       	  </div>
       	  <br /><br /><br />
 		</fieldset>
 		<br/><br/>
 		</form>
-  	<h3><a href="./twoListbox.php" title="Réinit du formulaire">Réinit du formulaire</a></h3>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
   <!-- Script JS/AJAX -->
@@ -355,20 +354,20 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
 			xhr.onreadystatechange = function() {
 				// test si tout est reçu et si serveur est ok
 				if(xhr.readyState == 4 && xhr.status == 200){
-					di = document.getElementById('etudiant');
+					di = document.getElementById('TypAngl');
 					di.innerHTML = xhr.responseText;
 				}
 			}
 
 			// Traitement en POST
-			xhr.open("POST","./ajaxEtudiant.php",true);
+			xhr.open("POST","./ajaxAngleCreate.php",true);
 			// pour le post
 			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 			// poster arguments : ici, numClas
-			numClas = document.getElementById('classe').options[document.getElementById('classe').selectedIndex].value;
+			numLang = document.getElementById('TypLang').options[document.getElementById('TypLang').selectedIndex].value;
 
 			// Recup numClas à classe (PK) à passer en "m" à etudiant (FK)
-			xhr.send("numClas="+numClas);
+			xhr.send("numLang="+numLang);
 		}	// End of function
   </script>
 <!-- --------------------------------------------------------------- -->
