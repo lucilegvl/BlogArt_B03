@@ -163,9 +163,9 @@ include __DIR__ . '/initStatut.php';
                     <div class="controls">
                         <br><br>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:#263d57" name="Submit" />
+                        <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="submit" value="Valider" style="cursor:pointer; border-color: #263d57; padding:5px 20px; background-color:#263d57" name="Submit" />
+                        <input type="submit" value="Valider" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                         <br>
                     </div>
                 </div>
