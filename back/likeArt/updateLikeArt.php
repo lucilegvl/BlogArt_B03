@@ -53,30 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             $errSaisies =  "Erreur lors de l'update!";
         }
 
-            $numMemb = intval(ctrlSaisies($_GET['id1']));
-            $numArt = intval(ctrlSaisies($_GET['id2']));
-
-            $likeA = $monLikeArt->get_1LikeArt($numMemb, $numArt)['likeA'];
-
-            if($likeA == 1){
-                $likeA = 0;
-            }
-            else{
-                $likeA = 1;
-            }
-
-            $monLikeArt->update($numMemb, $numArt, $likeA);
-            header("Location: ./likeArt.php");
-        }
-        else{
-            $erreur = true;
-            $errSaisies =  "Erreur lors de l'udpate !";
-        }
-
-
-
-
-
 
 
 
