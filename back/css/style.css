@@ -28,7 +28,7 @@ h2{
 }
 
 fieldset {
-	background-color: white;	/* color: oldlace */
+	background-color: red;	/* color: oldlace */
 	max-width: 600px;			/* largeur maximale cadre */
 	padding: 16px;				/* marge interne / sépare le contenu de la bordure	*/
 	/* Coins arrondis et couleur du cadre */
@@ -85,12 +85,12 @@ label, button {
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
-    background-color: white;
+    background-color: red;
     width: 90%
 }
 
 span {
-	background-color: white;
+	background-color: purple;
 }
 
 input {
@@ -140,7 +140,7 @@ textarea {
  *de couleur blanche */
 @media screen and (min-width: 1280px){
     body{
-        background-color: white;
+        background-color: #263d57;
     }
 }
 
