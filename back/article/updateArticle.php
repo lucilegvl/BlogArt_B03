@@ -281,23 +281,8 @@ include __DIR__ . '/initArticle.php';
 
         <br>
         <div class="control-group">
-            <label class="control-label" for="urlPhotArt"><b>Importez l'illustration :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
-                <input type="hidden" name="MAX_FILE_SIZE" id="MAX_FILE_SIZE" value="<?php MAX_SIZE; ?>" />
-                <input type="file" name="monfichier" id="monfichier" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" value="<?php echo "$urlPhotArt"; ?>" tabindex="110" placeholder="Sur 70 car." title="Recherchez l'image à uploader !" />
-                <p>
-<?php              // Gestion extension images acceptées
-                  $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
-                    "(lageur, hauteur, taille max : 80000px, 80000px, 200 000 Go)";
-                  echo "<i>" . $msgImagesOK . "</i>";
-?>
-                </p>
-<?php
-                var_dump($targetDir);
-                exit;
-?>
-                <p><b><i>Image actuelle :&nbsp;&nbsp;<img src="<?php $targetDir . htmlspecialchars($urlPhotArt); ?>" height="183" width="275" /></i></b></p>
-
+                <p><b><i>Image associée :&nbsp;&nbsp;<img src="<?= $targetDir . htmlspecialchars($urlPhotArt); ?>" height="183" width="275" /></i></b></p>
             </div>
         </div>
         <br>
