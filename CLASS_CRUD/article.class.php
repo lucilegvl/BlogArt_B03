@@ -93,6 +93,16 @@ class ARTICLE{
 		return($allArticlesByMotsCles);
 	}
 
+	function get_4DerniersArticles(){
+		global $db;
+
+		// Recherche plusieurs mots clés (CONCAT)
+		$textQuery = 'SELECT * FROM ARTICLE ORDER BY dtCreArt DESC LIMIT 4';
+		$result = $db->query($textQuery);
+		$allArticlesByDates = $result->fetchAll();
+		return($allArticlesByDates);
+	}
+
 	// Barre de recherche JOIN : mots clés par MOTCLE (TJ) dans ARTICLE
 	function get_MotsClesByArticles($listMotcles){
 		global $db;
