@@ -35,9 +35,11 @@ $monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
 $erreur = false;
+$erreur2 = false;
 
 // init msg erreur
 $errSaisies='';
+$errSaisies2='';
 
 //Définition du fuseau horaire
 date_default_timezone_set('UTC');
