@@ -85,10 +85,7 @@ include __DIR__ . '/initStatut.php';
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amarante&family=Assistant:wght@300;600&display=swap" rel="stylesheet">
-</head>
+    </head>
 <body>
     <h1> Mon espace administrateur</h1>
     
@@ -141,7 +138,7 @@ include __DIR__ . '/initStatut.php';
             <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
             <fieldset>
-                <legend class="legend1">Formulaire Statut...</legend>
+                <legend class="legend1">Formulaire création d'un statut </legend>
 
                 <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
@@ -167,9 +164,9 @@ include __DIR__ . '/initStatut.php';
                     <div class="controls">
                         <br><br>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                        <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:#263d57" name="Submit" />
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                        <input type="submit" value="Valider" style="cursor:pointer; border-color: #263d57; padding:5px 20px; background-color:#263d57" name="Submit" />
                         <br>
                     </div>
                 </div>
