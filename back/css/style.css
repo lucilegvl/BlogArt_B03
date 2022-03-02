@@ -8,14 +8,27 @@ body {
 	/* Essai :
 	background-color: grey; ou transparent; ou mintcream; ou floralwhite; ou ghostwhite;
 	ou snow; ou whitesmoke; ou silver; ou aliceblue; ou gainsboro; ou lightgrey; ou oldlace; */
-	background-color: lightgrey;
-	color: steelblue;
+	background-color: #263d57;
+	color: #f1f2f2;
 	padding-top: 60px;
 	padding-bottom: 40px;
 }
 
+h1{
+	font-family: 'Amarante', sans-serif;
+	font-size:48px;
+	display:inline;
+	align-items: center;
+}
+
+h2{
+	font-family: 'Amarante', sans-serif;
+	font-size:36px;
+
+}
+
 fieldset {
-	background-color: #FDF5E6;	/* color: oldlace */
+	background-color: white;	/* color: oldlace */
 	max-width: 600px;			/* largeur maximale cadre */
 	padding: 16px;				/* marge interne / sépare le contenu de la bordure	*/
 	/* Coins arrondis et couleur du cadre */

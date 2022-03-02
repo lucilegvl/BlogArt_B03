@@ -74,9 +74,12 @@ include __DIR__ . '/initStatut.php';
     <meta name="author" content="" />
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amarante&family=Assistant:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>BLOGART22 Admin - CRUD Statut</h1>
+    <h1>Admin - CRUD Statut</h1>
     <h2>Ajout d'un statut</h2>
 
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
