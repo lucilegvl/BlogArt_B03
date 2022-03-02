@@ -66,26 +66,31 @@ $targetDir = TARGET;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
+    //Submit = "";
+   if ((isset($_POST['Submit'])) AND ($_POST["Submit"] === "Annuler")) {
+       header("Location: ./article.php");
+   }
+   // Mode création
 
+   elseif (($_POST["Submit"] == "Valider")) {
+   
+       // Saisies valides
+       $erreur = false;
+       $numArt = ctrlSaisies($_POST['id']);
+       
+    
+           $erreur=false;
+           $monArticle->delete($_POST['id']);
+           header("Location: ./article.php");
 
-    // controle CIR 
-
-    // delete effective du article
-
-
-
-
-
-
-
-
-
+   }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
+
 // Init variables form
 include __DIR__ . '/initArticle.php';
-// En dur
-$urlPhotArt = "../uploads/?";
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -97,7 +102,7 @@ $urlPhotArt = "../uploads/?";
     <meta name="author" content="" />
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
-
+    
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
@@ -114,7 +119,6 @@ $urlPhotArt = "../uploads/?";
 
         $id=$_GET['id'];
         $req = $monArticle->get_1Article($id);
-        echo "coucou";
         if ($req) {
             $numArt = $req['numArt'];
             $dtCreArt = $req['dtCreArt'];
@@ -230,41 +234,20 @@ $urlPhotArt = "../uploads/?";
         <br>
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
-   <!-- Listbox Langue -->
- <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
-                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
-            </label>
+            <!-- Listbox Langue -->
+            <br>
+                <label for="LibTypLang" title="Sélectionnez la langue !">
+                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+                </label>
 
-            <!-- Listbox langue => 2ème temps -->
+                <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+                    <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
 
-            <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
-                <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-
-            <?php
-                $listNumLang = "";
-                $listlib1Lang = "";
-
-                $result = $maLangue->get_AllLanguesOrderByLib1Lang();
-                if($result){
-                    foreach($result as $row) {
-                        $listNumLang= $row["numLang"];
-                        $listlib1Lang = $row["lib1Lang"];
-            ?>
-                        <option value="<?= $listNumLang; ?>">
-                            <?= $listlib1Lang; ?>
+                        <option value="<?=$idLang; ?>">
+                            <?= $lib1Lang; ?>
                         </option>
-            <?php
-                    } // End of foreach
-                }   // if ($result)
-            ?>
 
             </select>
-
-            </div>
-        </div>
             
     <!-- FIN Listbox langue-->
 <!-- --------------------------------------------------------------- -->

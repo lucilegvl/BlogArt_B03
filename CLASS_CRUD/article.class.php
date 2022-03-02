@@ -66,6 +66,7 @@ class ARTICLE{
 		$count = $allNbArticlesBynumAngl->rowCount();
 		return($count);
 	}
+	
 
 	function get_NbAllArticlesByNumThem($numThem){
 		global $db;
