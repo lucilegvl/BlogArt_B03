@@ -87,7 +87,7 @@ $errDel = 0;
     
     foreach($allMemb as $row) {
 
-            // date dtCreaMemb => FR
+        // date dtCreaMemb => FR
         $dtCreaMemb=$row['dtCreaMemb'];
         $dtCreaMemb = dateChangeFormat($dtCreaMemb, $from, $to);
 ?>
