@@ -268,42 +268,42 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
     <!-- Listbox Langue -->
-    <br>
-            <div class="control-group">
-                <div class="controls">
-                <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
-                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
-                </label>
-
-                <!-- Listbox langue => 2ème temps -->
-
-                    <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
-                    <option value="-1">- - - Choisissez une langue - - -</option>
-
-                <?php
-                    $listNumLang = "";
-                    $listlib1Lang = "";
-
-                    $result = $maLangue->get_AllLanguesOrderByLib1Lang();
-                    if($result){
-                        foreach($result as $row) {
-                            $listNumLang= $row["numLang"];
-                            $listlib1Lang = $row["lib1Lang"];
-                ?>
-                            <option value="<?= $listNumLang; ?>">
-                                <?= $listlib1Lang; ?>
-                            </option>
-                <?php
-                        } // End of foreach
-                    }   // if ($result)
-                ?>
-
-                </select>
-
-                </div>
-            </div>
-                
-        <!-- FIN Listbox langue-->
+   <br>
+           <div class="control-group">
+               <div class="controls">
+               <label class="control-label" for="LibTypLang" title="Sélectionnez la langue !">
+                   <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+               </label>
+ 
+               <!-- Listbox langue => 2ème temps -->
+ 
+                   <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" onchange='change()' >
+                   <option value="-1">- - - Choisissez une langue - - -</option>
+ 
+               <?php
+                   $listNumLang = "";
+                   $listlib1Lang = "";
+ 
+                   $result = $maLangue->get_AllLanguesOrderByLib1Lang();
+                   if($result){
+                       foreach($result as $row) {
+                           $listNumLang= $row["numLang"];
+                           $listlib1Lang = $row["lib1Lang"];
+               ?>
+                           <option value="<?php $listNumLang; ?>">
+                               <?php echo $listlib1Lang; ?>
+                           </option>
+               <?php
+                       } // End of foreach
+                   }   // if ($result)
+               ?>
+ 
+               </select>
+ 
+               </div>
+           </div>
+              
+       <!-- FIN Listbox langue-->
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
 
@@ -311,42 +311,66 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
         <!-- FK : Angle, Thématique + TJ Mots Clés -->
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
-        <!-- Listbox Angle -->
-        <br>
-            <div class="control-group">
-                <div class="controls">
-                <label class="control-label" for="LibTypAngl" title="Sélectionnez l'angle !">
-                    <b>Quel angle :&nbsp;&nbsp;&nbsp;</b>
-                </label>
+    <!-- Listbox angle -->
+    <br/><br/>
+      	  <label><b>&nbsp;&nbsp;&nbsp;Quel angle :&nbsp;&nbsp;</b></label>
+		  <div id='TypAngl' style='display:inline'>
+      	    <select size="1" name="TypAngl" title="Sélectionnez l'angle !" style="padding:2px; border:solid 1px black; color:steelblue; border-radius:5px;">
+			  <option value='-1'>- - - Choissisez l'angle - - -</option>
+      	    </select>
+      	  </div>
+      	  <br /><br /><br />
+		</fieldset>
+		<br/><br/>
+		</form>
+<!-- --------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------- -->
+  <!-- Script JS/AJAX -->
+  <script type='text/javascript'>
+		function getXhr() {
+      		var xhr = null;
+			if(window.XMLHttpRequest){ // Firefox & autres
+			   xhr = new XMLHttpRequest();
+			}else
+				if(window.ActiveXObject){ // IE / Edge
+				   try {
+						xhr = new ActiveXObject("Msxml2.XMLHTTP");
+				   }catch(e){
+						xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				   }
+				}else{
+				   alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest...");
+				   xhr = false;
+				}
+        	return xhr;
+		}	// End of function
 
-                <!-- Listbox Angle => 2ème temps -->
+		/**
+		* Méthode appelée sur le click du bouton/listbox
+		*/
+		function change() {
+			var xhr = getXhr();
+			// On définit quoi faire quand réponse reçue
+			xhr.onreadystatechange = function() {
+				// test si tout est reçu et si serveur est ok
+				if(xhr.readyState == 4 && xhr.status == 200){
+					di = document.getElementById('TypAngl');
+					di.innerHTML = xhr.responseText;
+				}
+			}
 
-                    <select size="1" name="TypAngl" id="TypAngl"  class="form-control form-control-create" title="Sélectionnez l'angle !" > 
-                    <option value="-1">- - - Choisissez un angle - - -</option>
+			// Traitement en POST
+			xhr.open("POST","./ajaxAngleCreate.php",true);
+			// pour le post
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			// poster arguments : ici, numClas
+			numLang = document.getElementById('TypLang').options[document.getElementById('TypLang').selectedIndex].value;
 
-                <?php
-                    $listNumAngl = "";
-                    $listlibAngl = "";
-
-                    $result = $monAngle-> get_AllAnglesByLibAngl();
-                    if($result){
-                        foreach($result as $row) {
-                            $listNumAngl= $row["numAngl"];
-                            $listlibAngl = $row["libAngl"];
-                ?>
-                            <option value="<?= $listNumAngl; ?>">
-                                <?= $listlibAngl; ?>
-                            </option>
-                <?php
-                        } // End of foreach
-                    }   // if ($result)
-                ?>
-
-                </select>
-
-                </div>
-            </div>
-        <!-- FIN Listbox Angle -->
+			// Recup numClas à classe (PK) à passer en "m" à etudiant (FK)
+			xhr.send("numLang="+numLang);
+		}	// End of function
+  </script>
+<!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
     <!-- --------------------------------------------------------------- -->
         <!-- Listbox Thématique -->
