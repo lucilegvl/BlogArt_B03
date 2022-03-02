@@ -16,7 +16,7 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
 
-require_once ROOT . '/front/includes/commons/___headerFront.html';
+require_once ROOT . '/front/includes/commons/___headerFront.php';
 
 
 // Instanciation de la classe Statut
