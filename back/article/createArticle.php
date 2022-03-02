@@ -19,7 +19,7 @@ require_once __DIR__ . '/initConst.php';
 // Init variables
 require_once __DIR__ . '/initVar.php';
 
-// controle des saisies du formulaire
+// controle des saisies du formulaireg
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Article
@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (
       /*  isset($_POST['dtCretArt']) and !empty($_POST['dtCretArt'])
     and*/
+
     isset($_POST['libTitrArt']) and !empty($_POST['libTitrArt'])
     and isset($_POST['libChapoArt']) and !empty($_POST['libChapoArt'])
     and isset($_POST['libAccrochArt']) and !empty($_POST['libAccrochArt'])
@@ -88,9 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numAngl = ctrlSaisies($_POST['TypAngl']);
         $numThem = ctrlSaisies($_POST['TypThem']);
-require_once ROOT . '/back/article/ctrlerUploadImage.php';
 
-$urlPhotArt = $monImage ; 
+require_once ROOT . '/back/article/ctrlerUploadImage.php';
+$urlPhotArt = $nomImage ; 
 
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
@@ -189,6 +190,7 @@ include __DIR__ . '/initArticle.php';
                 <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                     <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<?php if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
                 </div>
+
             </div>
             <br>
             <div class="control-group">

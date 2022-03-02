@@ -132,7 +132,6 @@ include __DIR__ . '/initLangue.php';
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
 <!-- Listbox Pays -->
-  
             <label for="LibTypPays" title="Sélectionnez le pays !">
                 <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
             </label>
