@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../assets/css/footer.css">
+<link rel="stylesheet" href="<?php echo(ROOTFRONT . '/back/css/style.css');?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Assistant:wght@300;600&display=swap" rel="stylesheet">

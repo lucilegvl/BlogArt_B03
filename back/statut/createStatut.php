@@ -15,6 +15,10 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+
+require_once ROOT . '/front/includes/commons/___headerFront.php';
+
+
 // Instanciation de la classe Statut
 $monStatut = new STATUT();
 
@@ -80,13 +84,45 @@ include __DIR__ . '/initStatut.php';
     <meta name="author" content="" />
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Assistant:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Admin - CRUD Statut</h1>
-    <h2>Ajout d'un statut</h2>
+    <h1> Mon espace administrateur</h1>
+    <h2>Créer un statut</h2>
+    <!-- <h2>Ajout d'un statut</h2> -->
+
+    <div class=menu-back>
+        <nav>
+            <ul class="menuback-liens">
+                <li class="menu-back-gererArticles">
+                    <a href="article.php" class=articles>Gérer mes articles</a>
+                </li>
+                <li class="menu-back-gererLangues">
+                    <a href="langue.php" class=langues>Gérer mes langues</a>
+                </li>
+                <li class="menu-back-angles">
+                    <a href="angles.php" class=angles>Gérer mes angles</a>
+                </li>
+                <li class="menu-back-membres">
+                    <a href="membres.php" class=membres>Gérer mes membres</a>
+                </li>
+                <li class="menu-back-utilisateurs">
+                    <a href="users.php" class=users>Gérer mes users</a>
+                </li>
+                <li class="menu-back-com">
+                    <a href="comment.php" class=comment>Gérer mes commentaires</a>
+                </li>
+
+                <!-- <li>
+                    <a href="construction.html">Nous soutenir</a>
+                </li> -->
+            </ul>
+        </nav>
+    </div>
+
 
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
@@ -126,9 +162,13 @@ include __DIR__ . '/initStatut.php';
       </fieldset>
     </form>
 <?php
-require_once __DIR__ . '/footerStatut.php';
 
-require_once __DIR__ . '/footer.php';
+/*require_once __DIR__ . '/footerStatut.php';
+
+require_once __DIR__ . '/footer.php';*/
+
+require_once ROOT . '/front/includes/commons/___footerFront.php';
+
 ?>
 </body>
 </html>
