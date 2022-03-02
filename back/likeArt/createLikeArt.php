@@ -16,11 +16,10 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/delAccents.php';
 
 // Insertion classe Likeart
+require_once __DIR__ . '/../../CLASS_CRUD/likeart.class.php';
 
 // Instanciation de la classe Likeart
-
-
-
+$monLikeart = new LIKEART();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -28,10 +27,18 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    } 
+    
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+        $sameId=$_POST['id'];
+        header("Location: ./createLikeArt.php");
+    }
 
-
-
-    // controle des saisies du formulaire
+  // controle des saisies du formulaire
 
     // création effective du likeart
 

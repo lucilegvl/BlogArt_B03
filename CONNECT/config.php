@@ -12,5 +12,5 @@ $userBD = 'root';         // Votre login
 // mot de passe de connexion à la BDD
 $passBD = '';         // Votre Pass
 
-define ('ROOT' , $_SERVER['DOCUMENT_ROOT' . '/BLOGART22'])
-include ROOT . '/img/monimage.png';
+
+

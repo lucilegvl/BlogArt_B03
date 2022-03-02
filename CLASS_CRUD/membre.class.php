@@ -178,15 +178,19 @@ class MEMBRE{
 	}
 
 	// Ctrl FK sur COMMENT avec del
-	/*function delete($numMemb){
+	function delete($numMemb){
 		global $db;
 		
 		try {
 			$db->beginTransaction();
 
 			// delete
+			$query="DELETE FROM MEMBRE WHERE numMemb = ?";
 			// prepare
+			$request=$db->prepare($query);
 			// execute
+			$request->execute([$numMemb]);
+			
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();
@@ -197,5 +201,5 @@ class MEMBRE{
 			$request->closeCursor();
 			die('Erreur delete MEMBRE : ' . $e->getMessage());
 		}
-	} */
+	} 
 }	// End of class
