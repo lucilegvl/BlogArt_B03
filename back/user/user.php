@@ -17,11 +17,12 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe User
-
+require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
 // Instanciation de la classe User
-
+$monUser = NEW USER;
 
 ?>
+
 <!DOCTYPE html>
 <html lang="fr-FR">
 <head>
@@ -40,9 +41,8 @@ require_once __DIR__ . '/../../util/dateChangeFormat.php';
             border-radius: 5px;
         }
         .superAdmin {
-            text-decoration: none;  /* del sourligné */
-            color: #797979;     /* Acier */
-/*            color: #919191;      Etain */
+            text-decoration: none;
+            color: #797979;
         }
     </style>
 </head>

@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail2F1 = 0;    // FALSE
             $msgErrMail2 = "&nbsp;&nbsp;- Deuxième mail invalide<br>";
         }
-        // ----------------------------------------------------------------
+
         // MAIL IDENTIQUE
         if($mail1F1 == 1 AND $mail2F1 == 1){
             if($eMail1Memb == $eMail2Memb){
@@ -122,6 +122,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $msgErrMailIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mails différents. <br>";
             }
         }
+
+        //MAIL EXISTANT
+        $eMailExist = $monMembre->get_AllMembresByEmail($eMail1Memb);
+        if ($eMailExist == 0){
+            $eMailExistF1 = 1;
+            $msgErrExistMail = "";
+        }else{
+            $eMailExistF1 = 0;
+            $msgErrExistmail = "&nbsp;&nbsp;- Cet email est déjà utilisé<br>";
+        }
+
         // ----------------------------------------------------------------
         // PASS VALIDE
         if($pass1Memb == $pass2Memb){
@@ -157,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // ----------------------------------------------------------------
         // Ctrl cohérence de tous les différents éléments saisis avant insert
         if($prenomMemb != "" AND $nomMemb != "" 
-            AND $mailIdentiqF1 == 1 AND $passIdentiqF1 == 1 AND $passValidF1 == 1
+            AND $mailIdentiqF1 == 1 AND $eMailExistF1 = 1 AND $passIdentiqF1 == 1 AND $passValidF1 == 1
             AND $pseudoF1 == 1 AND $pseudoExistF1 == 1 AND $RGPDOk == 1){
 
             $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $dtCreaMemb, $accordMemb, $idStat);
@@ -168,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $erreur = true;
             $errSaisies = "Création impossible, incohérence des données saisies :<br>" . 
             $msgErrExistPseudo . $msgErrPseudo . $msgErrMail1 . $msgErrMail2 . 
-            $msgErrMailIdentiq . $msgErrPassIdentiq . $msgErrPassValid . $msgErrRGPDOk;
+            $msgErrMailIdentiq . $msgErrExistMail . $msgErrPassIdentiq . $msgErrPassValid . $msgErrRGPDOk;
         }
     }   // Fin if ((isset($_POST['prenomMemb'])) ...
     else{
