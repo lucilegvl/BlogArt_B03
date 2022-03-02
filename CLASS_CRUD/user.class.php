@@ -4,7 +4,7 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class USER{
-/*	function get_1User($pseudoUser, $passUser){
+	function get_1User($pseudoUser, $passUser){
 		global $db;
 
 		// select
@@ -13,7 +13,7 @@ class USER{
 		return($result->fetch());
 	}
 
-	function get_AllUsers(){
+/*	function get_AllUsers(){
 		global $db;
 
 		// select

@@ -85,14 +85,19 @@ class MEMBRE{
 		return($count);
 	}
 
-/*	function get_AllMembresByEmail($eMailMemb){
+	function get_AllMembresByEmail($eMailMemb){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MEMBRE WHERE eMailMemb = ?';
 		// prepare
+		$allNbMembersByEMail = $db->prepare($query);
 		// execute
-		return($result->fetchAll());
-	}*/
+		$allNbMembersByEMail->execute([$eMailMemb]);
+		$count = $allNbMembersByEMail->rowCount(); 
+
+		return($count);
+	}
 
 	// Inscription membre
 	function create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat){

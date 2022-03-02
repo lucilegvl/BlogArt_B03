@@ -23,6 +23,9 @@ $monMembre = new MEMBRE();
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+
+require_once ROOT . '/front/includes/commons/___headerFront.php';
+
 // Instanciation de la classe Statut
 $monStatut = new STATUT();
 
@@ -56,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         AND isset($_POST['eMail1Memb']) AND !empty($_POST['eMail1Memb'])
         AND isset($_POST['eMail2Memb']) AND !empty($_POST['eMail2Memb'])
         AND isset($_POST['accordMemb']) AND !empty($_POST['accordMemb'])
-        AND isset($_POST['idStat']) AND !empty($_POST['idStat'])
+        AND isset($_POST['idStat']) AND !empty($_POST['idStat']) AND $_POST['idStat'] != -1
         AND !empty($_POST['Submit']) AND $Submit === "Valider") {
 
         // Saisies valides
@@ -111,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail2F1 = 0;    // FALSE
             $msgErrMail2 = "&nbsp;&nbsp;- Deuxième mail invalide<br>";
         }
-        // ----------------------------------------------------------------
+
         // MAIL IDENTIQUE
         if($mail1F1 == 1 AND $mail2F1 == 1){
             if($eMail1Memb == $eMail2Memb){
@@ -122,6 +125,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $msgErrMailIdentiq = "&nbsp;&nbsp;- Vous avez rentré deux mails différents. <br>";
             }
         }
+
+        //MAIL EXISTANT
+        $eMailExist = $monMembre->get_AllMembresByEmail($eMail1Memb);
+        if ($eMailExist == 0){
+            $eMailExistF1 = 1;
+            $msgErrExistMail = "";
+        }else{
+            $eMailExistF1 = 0;
+            $msgErrExistmail = "&nbsp;&nbsp;- Cet email est déjà utilisé<br>";
+        }
+
         // ----------------------------------------------------------------
         // PASS VALIDE
         if($pass1Memb == $pass2Memb){
@@ -157,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // ----------------------------------------------------------------
         // Ctrl cohérence de tous les différents éléments saisis avant insert
         if($prenomMemb != "" AND $nomMemb != "" 
-            AND $mailIdentiqF1 == 1 AND $passIdentiqF1 == 1 AND $passValidF1 == 1
+            AND $mailIdentiqF1 == 1 AND $eMailExistF1 = 1 AND $passIdentiqF1 == 1 AND $passValidF1 == 1
             AND $pseudoF1 == 1 AND $pseudoExistF1 == 1 AND $RGPDOk == 1){
 
             $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $pass1Memb, $eMail1Memb, $dtCreaMemb, $accordMemb, $idStat);
@@ -168,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $erreur = true;
             $errSaisies = "Création impossible, incohérence des données saisies :<br>" . 
             $msgErrExistPseudo . $msgErrPseudo . $msgErrMail1 . $msgErrMail2 . 
-            $msgErrMailIdentiq . $msgErrPassIdentiq . $msgErrPassValid . $msgErrRGPDOk;
+            $msgErrMailIdentiq . $msgErrExistMail . $msgErrPassIdentiq . $msgErrPassValid . $msgErrRGPDOk;
         }
     }   // Fin if ((isset($_POST['prenomMemb'])) ...
     else{
@@ -220,9 +234,51 @@ include __DIR__ . '/initMembre.php';
     </script>
 </head>
 <body>
-    <h1>BLOGART22 Admin - CRUD Membre</h1>
+    <h1>mon espace administrateur</h1>
+    
+    <div class=parentback>
+        <div class=menu-back>
+            <nav>
+                <ul class="menuback-liens">
+                    <li class="menu-back-gererArticles">
+                        <a href="../article/article.php" class=articles>Gérer mes articles</a>
+                    </li>
+                    <li class="menu-back-gererLangues">
+                        <a href="../langue/langue.php" class=langues>Gérer mes langues</a>
+                    </li>
+                    <li class="menu-back-angles">
+                        <a href="../angle/angle.php" class=angles>Gérer mes angles</a>
+                    </li>
+                    <li class="menu-back-membres">
+                        <a href="../membre/membre.php" class=membres>Gérer mes membres</a>
+                    </li>
+                    <li class="menu-back-utilisateurs">
+                        <a href="../user/user.php" class=users>Gérer mes users</a>
+                    </li>
+                    <li class="menu-back-com">
+                        <a href="../comment/comment.php" class=comment>Gérer mes commentaires</a>
+                    </li>
+                    <li class="menu-back-likeart">
+                        <a href="../likeArt/likeArt.php" class=likeart>Gérer mes like</a>
+                    </li>
+                    <li class="menu-back-likecom">
+                        <a href="../likeCom/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
+                    </li>
+                    <li class="menu-back-statut">
+                        <a href="../statut/statut.php" class=stat>Gérer mes statuts</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../motCle/MotsCle.php" class=Mc>Gérer mes mots clés</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../thematique/thematique.php" class=them>Gérer mes thématiques</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    
+    <div class=formulaire>
     <h2>Ajout d'un membre : Inscription</h2>
-
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
         <fieldset>
@@ -355,18 +411,19 @@ include __DIR__ . '/initMembre.php';
                 <div class="controls">
                     <br><br>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <input type="submit" value="Valider" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                     <br>
                 </div>
             </div>
         </fieldset>
     </form>
+    </div>
+    </div>
 <?php
-require_once __DIR__ . '/footerMembre.php';
+require_once ROOT . '/front/includes/commons/___footerFront.php';
 
-require_once __DIR__ . '/footer.php';
 ?>
 </body>
 </html>

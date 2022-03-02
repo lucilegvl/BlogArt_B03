@@ -18,20 +18,20 @@ class LIKEART{
 
 	function get_AllLikesArt(){
 		global $db;
-
+	
 		// select
-		$query = 'SELECT * FROM LIKEART';
+		$query = "SELECT * FROM LIKEART LKA , ARTICLE ART , MEMBRE ME WHERE LKA.numMemb = ME.numMemb AND LKA.numArt = ART.numArt";
 		// prepare
-		$result = $db->query($query);
+		$result=$db->query($query);
 		// execute
-		$allStatuts = $result->fetchAll();
-		return($allStatuts);
+		$allLikesArt = $result->fetchAll();
+		return($allLikesArt);
 	}
 
-	function get_AllLikesArtByNumArt($numArt){
+	function get_AllLikesArtByNumArt(){
 		global $db;
 
-		$query = 'SELECT * FROM LIKEART WHERE numArt = ?';
+		$query = 'SELECT * FROM LIKEART LKA INNER JOIN ARTICLE ART ON LKA.numArt = ART.numArt';
 		$result = $db->query($query);
 		$allLikesArtByNumArt = $result->fetchAll();
 		return($allLikesArtByNumArt);
@@ -40,7 +40,7 @@ class LIKEART{
 	function get_AllLikesArtByNumMemb(){
 		global $db;
 
-		$query = 'SELECT * FROM MEMBRE ME INNER JOIN LIKEART LKA ON ME.numMemb = LKA.numMemb INNER JOIN ARTICLE ART ON LKA.numArt = ART.numArt GROUP BY ME.numMemb;';
+		$query = 'SELECT * FROM LIKEART LKA INNER JOIN MEMBRE ME ON ME.numMemb = LKA.numMemb';
 		$result = $db->query($query);
 		$allLikesArtByNumMemb = $result->fetchAll();
 		return($allLikesArtByNumMemb);
