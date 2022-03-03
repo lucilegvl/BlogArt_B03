@@ -5,11 +5,8 @@
  */
 
 body {
-	/* Essai :
-	background-color: grey; ou transparent; ou mintcream; ou floralwhite; ou ghostwhite;
-	ou snow; ou whitesmoke; ou silver; ou aliceblue; ou gainsboro; ou lightgrey; ou oldlace; */
 	background-color: #0e1a24;
-	color: black;
+	color: red;
 	/* padding-top: 60px;
 	padding-bottom: 40px; */
 }
