@@ -300,7 +300,7 @@ include __DIR__ . '/initArticle.php';
                 <?php
                     $LangByAngle = $monAngle->get_1LangByAngle($numAngl);
                 ?>
-                   <option value="-1"> <?php<xc  ($LangByAngle ['numLang']);?> <?php echo $LangByAngle['lib1Lang']; ?></option>
+                   <option value="-1"> <?php  ($LangByAngle ['numLang']);?> <?php echo $LangByAngle['lib1Lang']; ?></option>
  
  
                </select>
