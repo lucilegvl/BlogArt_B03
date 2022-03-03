@@ -4,21 +4,40 @@
 require_once __DIR__ . '../../CONNECT/database.php';
 
 class COMMENT{
-/*	function get_1Comment($numSeqCom, $numArt){
+	function get_1Comment($numSeqCom, $numArt){
 		global $db;
 
 		// select
+		$query = "SELECT * FROM COMMENT WHERE numSeqCom = ? AND numArt = ?";
 		// prepare
+		$result = $db->prepare($query);
 		// execute
+		$result->execute([$numSeqCom, $numArt]);
 		return($result->fetch());
 	}
 
-	function get_AllCommentByArticle($numArt){
+	function get_AllComments() {
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM COMMENT';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allComments = $result->fetchAll();
+		return($allComments);
+	}
+
+
+	function get_AllCommentByArticle(){
+		global $db;
+
+		// select
+		$query = 'SELECT * FROM COMMENT CO INNER JOIN ARTICLE ART ON CO.numArt = ART.numArt';
+		// prepare
+		$result = $db->query($query);
+		// execute
+		$AllCommentByArticle = $result->fetchAll();
 		return($result->fetchAll());
 	}
 
@@ -26,38 +45,44 @@ class COMMENT{
 		global $db;
 
 		// select
+		$query = "SELECT * FROM COMMENT WHERE numArt = ?";
 		// prepare
+		$result = $db->prepare($query);
 		// execute
-		return($allCommentsByArt);
+		$result->execute([$numArt]);
+
+        $allCommentsBynumArt = $result->rowCount();
+
+		return($allCommentsBynumArt);
 	}
 
-	function get_1CommentsByNumSeqComNumArt($numSeqCom, $numArt){
-		global $db;
+//	function get_1CommentsByNumSeqComNumArt($numSeqCom, $numArt){
+//		global $db;
 
 		// select
 		// prepare
 		// execute
-		return($result->fetch());
-	}
+//		return($result->fetch());
+//	}
 
-	function get_AllCommentsByNumSeqComNumArt($numSeqCom, $numArt){
-		global $db;
-
-		// select
-		// prepare
-		// execute
-		return($allCommentsByNumSeqComNumArt);
-	}
-
-	function get_AllCommentsByArticleByMemb(){
-		global $db;
+//	function get_AllCommentsByNumSeqComNumArt($numSeqCom, $numArt){
+//		global $db;
 
 		// select
 		// prepare
 		// execute
-		return($allCommentsByArticleByMemb);
-	}
-*/
+//		return($allCommentsByNumSeqComNumArt);
+//	}
+
+//	function get_AllCommentsByArticleByMemb(){
+//		global $db;
+
+		// select
+		// prepare
+		// execute
+//		return($allCommentsByArticleByMemb);
+//	}
+
 	function get_NbAllCommentsBynumMemb($numMemb){
 		global $db;
 
@@ -73,7 +98,7 @@ class COMMENT{
 		return($count);
 	}
 
-/*
+
 	// Fonction : recupérer next numéro séquence de article recherché (PK COMMENT)
 	// Commentaire suivant sur un article
 	// => Pour table COMMENT & table COMMENTPLUS
@@ -117,8 +142,11 @@ class COMMENT{
 			$db->beginTransaction();
 
 			// insert
+			$query = 'INSERT INTO COMMENT (numSeqCom, numArt, dtCreCom, libCom, numMemb) VALUES (?, ?, ?, ?, ?);';
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$numSeqCom, $numArt, $dtCreCom, $libCom, $numMemb]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -131,62 +159,62 @@ class COMMENT{
 
 	// Moderation : TRUE si comment affiché, FALSE sinon
 	// et remarques possibles admin si non affiché
-	function update($numSeqCom, $numArt, $attModOK, $dtModCom, $notifComKOAff, $delLogiq){
-		global $db;
+//	function update($numSeqCom, $numArt, $attModOK, $dtModCom, $notifComKOAff, $delLogiq){
+//		global $db;
 
-		try {
-			$db->beginTransaction();
+//		try {
+//			$db->beginTransaction();
 
 			// update
 			// prepare
 			// execute
-			$db->commit();
-			$request->closeCursor();
-		}
-		catch (PDOException $e) {
-			$db->rollBack();
-			$request->closeCursor();
-			die('Erreur update COMMENT : ' . $e->getMessage());
-		}
-	}
+//			$db->commit();
+//			$request->closeCursor();
+		//}
+//		catch (PDOException $e) {
+//			$db->rollBack();
+//			$request->closeCursor();
+//			die('Erreur update COMMENT : ' . $e->getMessage());
+//		}
+//	}
 
 	// Create et Update en même temps => Del logique du Comment
-	function createOrUpdate($numSeqCom, $numArt){
-		global $db;
+//	function createOrUpdate($numSeqCom, $numArt){
+//		global $db;
 
-		try {
-			$db->beginTransaction();
+//		try {
+//			$db->beginTransaction();
 
 			// insert / update
 			// prepare
 			// execute
-			$db->commit();
-			$request->closeCursor();
-		}
-		catch (PDOException $e) {
-			$db->rollBack();
-			$request->closeCursor();
-			die('Erreur insert Or Update COMMENT : ' . $e->getMessage());
-		}
-	}
+//			$db->commit();
+//			$request->closeCursor();
+//		}
+//		catch (PDOException $e) {
+//			$db->rollBack();
+//			$request->closeCursor();
+//			die('Erreur insert Or Update COMMENT : ' . $e->getMessage());
+//		}
+//	}
 
 	// A priori : del comment impossible (sauf si choix admin après modération) => Cf. createOrUpdate() ci-dessus
-	function delete($numSeqCom, $numArt){	// OU à utiliser pour del logique : del => update
-		global $db;
+//	function delete($numSeqCom, $numArt){	// OU à utiliser pour del logique : del => update
+//		global $db;
 
-		try {
-			$db->beginTransaction();
+//		try {
+//			$db->beginTransaction();
 
 			// delete
 			// prepare
 			// execute
-			$db->commit();
-			$request->closeCursor();
-		}
-		catch (PDOException $e) {
-			$db->rollBack();
-			$request->closeCursor();
-			die('Erreur delete COMMENT : ' . $e->getMessage());
-		}
-	} */
+//			$db->commit();
+//			$request->closeCursor();
+//		}
+//		catch (PDOException $e) {
+//			$db->rollBack();
+//			$request->closeCursor();
+//			die('Erreur delete COMMENT : ' . $e->getMessage());
+//		}
+//	} 
 }	// End of class
