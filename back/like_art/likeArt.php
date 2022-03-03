@@ -109,7 +109,7 @@ $monArticle = new ARTICLE();
 
     <p>&nbsp;</p>
 <?php
-require_once __DIR__ . '/footer.php';
+require_once ROOT . '/footer.php';
 ?>
 </body>
 </html>
