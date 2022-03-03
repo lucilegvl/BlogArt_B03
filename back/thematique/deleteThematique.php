@@ -104,82 +104,132 @@ include __DIR__ . '/initThematique.php';
         }
     </style>
 </head>
+
+<section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
-    <h1>BLOGART22 Admin - CRUD Thematique</h1>
-    <h2>Suppression d'une thematique</h2>
-<?php
-    // Supp : récup id à supprimer
-    // id passé en GET
-
-    if (isset($_GET['id']) AND $_GET['id']) { //toujours update delete
-
-        $id = ctrlSaisies($_GET['id']);
-        $reqThem = $maThematique->get_1Thematique($id);
-        if ($reqThem) {
-            $libThem = $reqThem['libThem'];
-            $idLang = $reqThem['numLang'];
-        }
-
-        $request = $maLangue->get_1Langue($idLang);
-        if ($request) {
-            $lib1Lang = $request['lib1Lang'];
-        }
-    }
-
-?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
-
-      <fieldset>
-        <legend class="legend1">Formulaire Thematique...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="libThem"><b>Libellé :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libThem" id="libThem" size="80" maxlength="80" value="<?= $libThem; ?>" disabled="disabled" />
+    <h1>mon espace administrateur</h1>
+    <div class=parentback>
+        <div class=menu-back>
+            <nav>
+                <ul class="menuback-liens">
+                    <li class="menu-back-gererArticles">
+                        <a href="../article/article.php" class=articles>Gérer mes articles</a>
+                    </li>
+                    <li class="menu-back-gererLangues">
+                        <a href="../langue/langue.php" class=langues>Gérer mes langues</a>
+                    </li>
+                    <li class="menu-back-angles">
+                        <a href="../angle/angle.php" class=angles>Gérer mes angles</a>
+                    </li>
+                    <li class="menu-back-membres">
+                        <a href="../membre/membre.php" class=membres>Gérer mes membres</a>
+                    </li>
+                    <li class="menu-back-utilisateurs">
+                        <a href="../user/user.php" class=users>Gérer mes users</a>
+                    </li>
+                    <li class="menu-back-com">
+                        <a href="../comment/comment.php" class=comment>Gérer mes commentaires</a>
+                    </li>
+                    <li class="menu-back-likeart">
+                        <a href="../like_art/likeArt.php" class=likeart>Gérer mes like</a>
+                    </li>
+                    <li class="menu-back-likecom">
+                        <a href="../like_com/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
+                    </li>
+                    <li class="menu-back-statut">
+                        <a href="../statut/statut.php" class=stat>Gérer mes statuts</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../mot_cle/motCle.php" class=Mc>Gérer mes mots clés</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../thematique/thematique.php" class=them>Gérer mes thématiques</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
+        
+    <div class=formulaire>  
+    
+        <h2>Suppression d'une thematique</h2>
+    <?php
+        // Supp : récup id à supprimer
+        // id passé en GET
 
-        <br>
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Langue -->
-<!-- --------------------------------------------------------------- -->
+        if (isset($_GET['id']) AND $_GET['id']) { //toujours update delete
 
-                  </div>
-           <!-- Listbox Langue -->
-           <br>
-                <label for="LibTypLang" title="Sélectionnez la langue !">
-                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
-                </label>
+            $id = ctrlSaisies($_GET['id']);
+            $reqThem = $maThematique->get_1Thematique($id);
+            if ($reqThem) {
+                $libThem = $reqThem['libThem'];
+                $idLang = $reqThem['numLang'];
+            }
 
-                <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
-                    <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
+            $request = $maLangue->get_1Langue($idLang);
+            if ($request) {
+                $lib1Lang = $request['lib1Lang'];
+            }
+        }
 
-                        <option value="<?=$idLang; ?>">
-                            <?= $lib1Lang; ?>
-                        </option>
+    ?>
+        <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
-            </select>
-            
-    <!-- FIN Listbox langue-->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Langue -->
-<!-- --------------------------------------------------------------- -->
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
+        <fieldset>
+            <legend class="legend1">Formulaire supression d'une thématique </legend>
+
+            <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+
+            <div class="control-group">
+                <label class="control-label" for="libThem"><b>Libellé :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                <input type="text" name="libThem" id="libThem" size="80" maxlength="80" value="<?= $libThem; ?>" disabled="disabled" />
             </div>
-        </div>
-      </fieldset>
-    </form>
-<?php
-require_once __DIR__ . '/footerThematique.php';
 
-require_once __DIR__ . '/footer.php';
+            <br>
+    <!-- --------------------------------------------------------------- -->
+        <!-- FK : Langue -->
+    <!-- --------------------------------------------------------------- -->
+
+            
+            <!-- Listbox Langue -->
+            <br>
+                    <label for="LibTypLang" title="Sélectionnez la langue !">
+                        <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+                    </label>
+
+                    <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
+                        <select size="1" name="TypLang" id="TypLang"  class="form-control form-control-create" title="Sélectionnez la langue !" > 
+
+                            <option value="<?=$idLang; ?>">
+                                <?= $lib1Lang; ?>
+                            </option>
+
+                </select>
+                
+        <!-- FIN Listbox langue-->
+    <!-- --------------------------------------------------------------- -->
+        <!-- FK : Langue -->
+    <!-- --------------------------------------------------------------- -->
+            <div class="control-group">
+                <div class="controls">
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:#0e1a27" name="Submit" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="Valider" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
+                    <br>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    </div>
+</div>
+
+<?php
+require_once ROOT . '/front/includes/commons/___footerFront.php';
+
 ?>
 </body>
 </html>
