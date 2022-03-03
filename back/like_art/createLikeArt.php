@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
             $monLikeArt->create($numMemb, $numArt, $likeA);
     
-            header("Location: ./likeArt.php");
+            //header("Location: ./likeArt.php");
         }   
         else {
             // Saisies invalides
@@ -143,11 +143,6 @@ include __DIR__ . '/initLikeArt.php';
       <fieldset>
         <legend class="legend1">Formulaire Like Article...</legend>
 
-        <input type="hidden" id="id1" name="id1" value="<?= isset($_GET['id1']) ? $_GET['id1'] : '' ?>" />
-        <input type="hidden" id="id2" name="id2" value="<?= isset($_GET['id2']) ? $_GET['id2'] : '' ?>" />
-
-        <br>
-
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Membre -->
@@ -158,8 +153,6 @@ include __DIR__ . '/initLikeArt.php';
                 <b>Quel membre :&nbsp;&nbsp;&nbsp;</b>
             </label>
             <input type="hidden" id="idTypMemb" name="idTypMemb" value="<?= $numMemb; ?>" />
-
-            
 
             <!-- Listbox membre => 2ème temps -->
             <select name="Membre" id="Article"  class="form-control form-control-create">
