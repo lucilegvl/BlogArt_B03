@@ -106,15 +106,11 @@ class ARTICLE{
 	function get_LastArticlebyDate(){
 		global $db;
 
-		$requete = "SELECT MAX(dtCreArt) AS dtCreArt FROM article;";
-		$result = $db->query($requete);
-
-		if ($result) {
-			$tuple = $result->fetch();
-			$lastNumArt = $tuple["numArt"];
-
-		}   // End of if ($result)
-		return $lastNumArt;
+		// Recherche plusieurs mots clés (CONCAT)
+		$textQuery = 'SELECT * FROM article ORDER BY dtCreArt DESC LIMIT 1';
+		$result = $db->query($textQuery);
+		$lastArticlesByDates = $result->fetchAll();
+		return($lastArticlesByDates);
 	} // End of function
 
 	// Barre de recherche JOIN : mots clés par MOTCLE (TJ) dans ARTICLE

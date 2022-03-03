@@ -53,21 +53,39 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     <h2>Les derniers articles</h2>
     <?php
         $allArticles=$monArticle->get_4DerniersArticles();
+        $dernierArticle=$monArticle->get_LastArticlebyDate();
         $i=1;
     ?>
-    
-    <?php foreach($allArticles as $row) {
-        if ($i == 1){
-            $image = $row['urlPhotArt']; ?>
-            <img src='uploads/<?php echo $image ?>'>
+
+    <a href="/front/includes/commons/article_front.php">
+    <?php foreach($dernierArticle as $row) {?>
+        <img src='uploads/<?php echo $row['urlPhotArt'] ?>'>
+        <h3> <?php echo $row["libTitrArt"] ?> </h3>
+        <p> <?php echo $row["dtCreArt"] ?> </p>
+        <p> <?php echo $row["libChapoArt"] ?> </p>
         <?php } ?>
-       
-       <?php $titre= $row['libTitrArt'];
+    </a>
+    
+    <?php foreach($allArticles as $ligne) {
+        if ($i == 1){
+            $image = $ligne['urlPhotArt']; ?> 
+        <?php } else { ?>
+            <div>
+            <?php
+            $image=$row['urlPhotArt']; 
+            $titre= $row['libTitrArt'];
             $date=$row['dtCreArt'];
             $chapeau=$row['libChapoArt'];
-            echo $titre . "<br>" . $date . "<br>" . $chapeau . "<br>"; ?>
-    
-    <?php } ?>
-    
+            echo $titre . "<br>" . $date . "<br>";
+            ?>
+            <img src='uploads/<?php echo $image ?>'>
+            <?php
+            echo $chapeau . "<br>";
+            ?>
+            </div>
+            <?php } 
+        $i = $i+1;
+    } 
+    ?>
 
 </section>
