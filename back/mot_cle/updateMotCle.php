@@ -190,7 +190,7 @@ include __DIR__ . '/initMotCle.php';
                 }   // if ($result)
 ?>
             </select>
-        </div>
+        
     <!-- FIN Listbox langue -->
 <!-- --------------------------------------------------------------- -->
     <!-- FK : Langue -->
