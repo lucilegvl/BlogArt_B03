@@ -87,21 +87,19 @@ $monArticle = new ARTICLE();
     $allLikesArt = $monLikeArt->get_AllLikesArt();
     foreach($allLikesArt as $row) {
     // Boucle pour afficher
-
-    //
 ?>
         <tr>
-        <td><h4>&nbsp; <?= $row["pseudoMemb"]; ?> &nbsp;</h4></td>
+        <td><h4>&nbsp; <?php echo $row["pseudoMemb"]; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= $row["libTitrArt"]; ?> &nbsp;</td>
+        <td>&nbsp; <?php echo $row["libTitrArt"]; ?> &nbsp;</td>
 
-        <td>&nbsp;<span class="OK">&nbsp; <?= ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</span></td>
+        <td>&nbsp;<span class="OK">&nbsp; <?php echo ($row["likeA"] == 1) ? "Oui" : "Non" ?> &nbsp;</span></td>
 
 
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLikeArt.php?id1=<?=["numMemb"]; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier like article" title="Modifier like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(Un)like</span>&nbsp;
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLikeArt.php?id1=<?php echo ["numMemb"]; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier like article" title="Modifier like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(Un)like</span>&nbsp;
         <br /></td>
 
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteLikeArt.php?id1=<?=["numMemb"]; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer like article" title="Supprimer like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(S/Admin)</span>&nbsp;
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteLikeArt.php?id1=<?php echo ["numMemb"]; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer like article" title="Supprimer like article" /></i></a><br>&nbsp;&nbsp;<span class="error">(S/Admin)</span>&nbsp;
         <br /></td>
         </tr>
 <?php
