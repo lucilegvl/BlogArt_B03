@@ -1,7 +1,7 @@
 <?php
 // CRUD COMMENTPLUS
 // ETUD
-require_once __DIR__ . '../../connect/database.php';
+require_once __DIR__ . '../../CONNECT/database.php';
 
 class COMMENTPLUS{
 	function get_AllCommentPlusByArticle($numArt){

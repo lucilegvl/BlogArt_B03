@@ -364,8 +364,8 @@ include __DIR__ . '/initMembre.php';
                                 $listidStat= $row["idStat"];
                                 $listlibStat = $row["libStat"];
                     ?>
-                                <option value="<?= $listidStat; ?>"  <?php ((isset($idStat) && $idStat == $listidStat) ? " selected='selected'" : null); ?>>
-                                    <?php echo $listlibStat; ?>
+                                <option value="<?= $listidStat; ?>"  <?= ((isset($idStat) && $idStat == $listidStat) ? " selected='selected'" : null); ?>>
+                                    <?= $listlibStat; ?>
                                 </option>
                     <?php
                             } // End of foreach

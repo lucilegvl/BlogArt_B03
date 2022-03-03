@@ -1,7 +1,7 @@
 <?php
 // CRUD ARTICLE
 // ETUD
-require_once __DIR__ . '/../connect/database.php';
+require_once __DIR__ . '/../CONNECT/database.php';
 
 class ARTICLE{
 	function get_1Article($numArt){
@@ -87,7 +87,7 @@ class ARTICLE{
 		global $db;
 
 		// Recherche plusieurs mots clés (CONCAT)
-		$textQuery = 'SELECT * FROM article ar INNER JOIN thematique th ON AR.numThem = TH.numThem WHERE CONCAT(libTitrArt, libChapoArt, libAccrochArt, parag1Art, libSsTitr1Art, parag2Art, libSsTitr2Art, parag3Art, libConclArt, libThem) LIKE "%'.$motcle.'%" ORDER BY numArt DESC';
+		$textQuery = 'SELECT * FROM ARTICLE AR INNER JOIN THEMATIQUE TH ON AR.numThem = TH.numThem WHERE CONCAT(libTitrArt, libChapoArt, libAccrochArt, parag1Art, libSsTitr1Art, parag2Art, libSsTitr2Art, parag3Art, libConclArt, libThem) LIKE "%'.$motcle.'%" ORDER BY numArt DESC';
 		$result = $db->query($textQuery);
 		$allArticlesByMotsCles = $result->fetchAll();
 		return($allArticlesByMotsCles);
@@ -97,7 +97,7 @@ class ARTICLE{
 		global $db;
 
 		// Recherche plusieurs mots clés (CONCAT)
-		$textQuery = 'SELECT * FROM article ORDER BY dtCreArt DESC LIMIT 4';
+		$textQuery = 'SELECT * FROM ARTICLE ORDER BY dtCreArt DESC LIMIT 4';
 		$result = $db->query($textQuery);
 		$allArticlesByDates = $result->fetchAll();
 		return($allArticlesByDates);

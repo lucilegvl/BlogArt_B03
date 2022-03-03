@@ -1,7 +1,7 @@
 <?php
 // CRUD LIKEART
 // ETUD
-require_once __DIR__ . '../../connect/database.php';
+require_once __DIR__ . '../../CONNECT/database.php';
 
 class LIKEART{
 	function get_1LikeArt($numMemb, $numArt){

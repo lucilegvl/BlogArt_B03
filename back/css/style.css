@@ -25,10 +25,7 @@ h1 .crud{
     color:#f1f2f2;
 }
 
-.testouille{
-    display: flex;
-    color:blue;
-}
+
 
 h2{
 	font-family: 'Amarante', sans-serif;
@@ -86,8 +83,6 @@ h2{
 
 .menu-back ul li {
 	padding-top:30px;
-    text-decoration:none;
-
 }
 
 .menu-back {

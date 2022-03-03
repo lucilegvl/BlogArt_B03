@@ -7,9 +7,9 @@
 //
 ////////////////////////////////////////////////////////////
 
-
-require_once './connect/config.php';
-require_once './util/utilErrOn.php';
+// Mode DEV
+require_once __DIR__ . '/connect/config.php';
+require_once __DIR__ . '/util/utilErrOn.php';
 
 
 // Insertion classe Langue 
@@ -23,6 +23,7 @@ $monArticle = new ARTICLE();
 <?php
 require_once ROOT . '/front/includes/commons/___headerFront.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -89,3 +90,11 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     ?>
 
 </section>
+
+
+
+<?php
+require_once ROOT . '/front/includes/commons/___footerFront.php';
+?>
+
+</html>

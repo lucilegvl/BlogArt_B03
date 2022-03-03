@@ -6,7 +6,7 @@
 // Mode DEV
 require_once __DIR__ . '/util/utilErrOn.php';
 // connexion
-require_once __DIR__ . '/connect/database.php';
+require_once __DIR__ . '/CONNECT/database.php';
 ?>
 <select name='etudiant' style='padding:2px; border:solid 1px black; color:steelblue; border-radius:5px;' >
 <?php
