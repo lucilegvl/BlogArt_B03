@@ -20,7 +20,7 @@ class THEMATIQUE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM THEMATIQUE WHERE numThem = ?';
+		$query = 'SELECT * FROM THEMATIQUE THE INNER JOIN LANGUE LA ON THE.numLang = LA.numLang WHERE numThem = ?;';
 		// prepare
 		$result = $db->prepare($query);
 		// execute
