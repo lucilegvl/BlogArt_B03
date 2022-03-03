@@ -40,21 +40,15 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
+    $Submit = isset($_POST['Submit']) ? $_POST['Submit'] : '';
 
-    if ((isset($_POST["Submit"])) AND ($Submit === "Annuler")) {
-        header("Location: ./deleteStatut.php");
+    if ((isset($_POST['Submit'])) AND ($_POST["Submit"] === "Annuler")) {
+        header("Location: ./statut.php");
     }   
 
-    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
-    AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    elseif (($_POST["Submit"] == "Valider")) {{
 
         $erreur = false;
-        $libStat = ctrlSaisies(($_POST['libStat']));
         $idStat = ctrlSaisies(($_POST['id']));
         
         $nbMembre = $monMembre->get_NbAllMembersByidStat($_POST['id']);
@@ -68,12 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $monStatut->delete($idStat);
             header("Location: ./statut.php");
         }
-    }      // Fin if ((isset($_POST['libStat'])) ...
-    else { // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
+          // Fin if ((isset($_POST['libStat'])) ...
+
     }  
 
+    }
     // A faire dans un 2ème temps
     // Ctrl CIR : inexistence FK => del possible
 
