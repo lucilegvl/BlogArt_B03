@@ -25,7 +25,7 @@ if (isset($TypLang)) {
 <?php
 			foreach($allAnglesByLang as $row){
 ?>
-				<option value="<?php $row['numAngl']; ?>">
+				<option value="<?php echo $row['numAngl']; ?>">
 					<?php echo $row['libAngl'] ?>
 				</option>
 <?php

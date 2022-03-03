@@ -292,7 +292,7 @@ include __DIR__ . '/../../../back/membre/initMembre.php';
 
                 <div class="control-group">
                     <label class="control-label" for="eMailMemb"><b>Email<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                    <input type="email" name="eMailMemb" id="eMailMemb" size="80" maxlength="80" value="<?php echo $eMailMemb; ?>" autocomplete="on" />
+                    <input class = "input" type="email" name="eMailMemb" id="eMailMemb" size="80" maxlength="80" value="<?php echo $eMailMemb; ?>" autocomplete="on" />
                 </div>
 
                 <br>
