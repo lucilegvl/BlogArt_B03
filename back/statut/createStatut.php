@@ -92,7 +92,7 @@ include __DIR__ . '/initStatut.php';
 </section>
 
 <body>
-    <h1> mon espace administrateur</h1>
+    <h1 class= crud > mon espace administrateur</h1>
     
 
     <div class=parentback>
