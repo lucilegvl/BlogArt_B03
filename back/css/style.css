@@ -5,11 +5,8 @@
  */
 
 body {
-	/* Essai :
-	background-color: grey; ou transparent; ou mintcream; ou floralwhite; ou ghostwhite;
-	ou snow; ou whitesmoke; ou silver; ou aliceblue; ou gainsboro; ou lightgrey; ou oldlace; */
 	background-color: #0e1a24;
-	color: #f1f2f2;
+	color: red;
 	/* padding-top: 60px;
 	padding-bottom: 40px; */
 }
@@ -23,6 +20,12 @@ h1{
 	padding-top:50px;
 	padding-bottom: 50px;
 }
+
+h1 .crud{
+    color:#f1f2f2;
+}
+
+
 
 h2{
 	font-family: 'Amarante', sans-serif;
@@ -135,6 +138,13 @@ fieldset .controle-group .control-label b{
 	/* border-top: 2px dashed; */
 }
 
+h4{
+    color:red;
+}
+thead{
+    color:red;
+}
+
 .span1 {
 	color: #CC9900;			/* color: yellow; */
 }
@@ -219,7 +229,7 @@ textarea {
  *de fond de notre élément body (donc de notre page) sera orange */
 @media screen and (max-width: 680px){
     body{
-        background-color: orange;
+        background-color: #0e1a24;
     }
 }
 
@@ -227,7 +237,7 @@ textarea {
  *fond de notre page sera bleue */
 @media screen and (min-width: 681px) and (max-width: 1279px){
     body{
-        background-color: blue;
+        background-color: #0e1a24;
     }
 }
 

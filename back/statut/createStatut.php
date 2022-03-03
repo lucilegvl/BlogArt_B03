@@ -16,7 +16,6 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 // Insertion classe Statut
 require_once __DIR__ . '/../../class_crud/statut.class.php';
 
-require_once ROOT . '/front/includes/commons/___headerFront.php';
 
 
 // Instanciation de la classe Statut
@@ -86,8 +85,14 @@ include __DIR__ . '/initStatut.php';
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
 
     </head>
+
+    <!-- section pour ajouter le header sans qu'il gene avec le location-->
+<section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
-    <h1> mon espace administrateur</h1>
+    <h1 class= crud > mon espace administrateur</h1>
     
 
     <div class=parentback>
@@ -122,7 +127,7 @@ include __DIR__ . '/initStatut.php';
                         <a href="../statut/statut.php" class=stat>Gérer mes statuts</a>
                     </li>
                     <li class="menu-back-MotsCles">
-                        <a href="../mot_cle/MotsCle.php" class=Mc>Gérer mes mots clés</a>
+                        <a href="../mot_cle/motCle.php" class=Mc>Gérer mes mots clés</a>
                     </li>
                     <li class="menu-back-MotsCles">
                         <a href="../thematique/thematique.php" class=them>Gérer mes thématiques</a>

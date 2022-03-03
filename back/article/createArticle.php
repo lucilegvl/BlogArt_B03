@@ -128,11 +128,14 @@ include __DIR__ . '/initArticle.php';
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 </head>
+
+ <!-- section pour ajouter le header sans qu'il gene avec le location-->
+ <section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
 
-<?php
-require_once ROOT . '/front/includes/commons/___headerFront.php';
-?>
 
     <h1>mon espace administrateur</h1>
 
@@ -177,7 +180,7 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
             </nav>
         </div>
 
-        <div class =formaulaire>
+        <div class =formulaire>
         <h2>Ajout d'un article</h2>
         <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8" id="chgLang">
 
@@ -397,9 +400,9 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
                 <div class="controls">
                     <br><br>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <input type="submit" value="Valider" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                     <br>
                 </div>
             </div>

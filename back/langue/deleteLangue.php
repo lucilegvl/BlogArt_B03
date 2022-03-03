@@ -96,8 +96,55 @@ include __DIR__ . '/initLangue.php';
         }
     </style>
 </head>
+
+ <!-- section pour ajouter le header sans qu'il gene avec le location-->
+ <section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
-    <h1>BLOGART22 Admin - CRUD Langue</h1>
+    <h1>mon espace administrateur</h1>
+    <div class=parentback>
+        <div class=menu-back>
+            <nav>
+                <ul class="menuback-liens">
+                    <li class="menu-back-gererArticles">
+                        <a href="../article/article.php" class=articles>Gérer mes articles</a>
+                    </li>
+                    <li class="menu-back-gererLangues">
+                        <a href="../langue/langue.php" class=langues>Gérer mes langues</a>
+                    </li>
+                    <li class="menu-back-angles">
+                        <a href="../angle/angle.php" class=angles>Gérer mes angles</a>
+                    </li>
+                    <li class="menu-back-membres">
+                        <a href="../membre/membre.php" class=membres>Gérer mes membres</a>
+                    </li>
+                    <li class="menu-back-utilisateurs">
+                        <a href="../user/user.php" class=users>Gérer mes users</a>
+                    </li>
+                    <li class="menu-back-com">
+                        <a href="../comment/comment.php" class=comment>Gérer mes commentaires</a>
+                    </li>
+                    <li class="menu-back-likeart">
+                        <a href="../like_art/likeArt.php" class=likeart>Gérer mes like</a>
+                    </li>
+                    <li class="menu-back-likecom">
+                        <a href="../like_com/likeCom.php" class=likecom>Gérer mes like sur commentaires</a>
+                    </li>
+                    <li class="menu-back-statut">
+                        <a href="../statut/statut.php" class=stat>Gérer mes statuts</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../mot_cle/motCle.php" class=Mc>Gérer mes mots clés</a>
+                    </li>
+                    <li class="menu-back-MotsCles">
+                        <a href="../thematique/thematique.php" class=them>Gérer mes thématiques</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    <div class=formulaire>    
     <h2>Suppression d'une langue</h2>
 <?php
     if (isset($_GET['id'])) {
@@ -163,14 +210,16 @@ include __DIR__ . '/initLangue.php';
                 <div class="controls">
                     <br><br>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                    <input type="submit" value="Valider" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                     <br>
                 </div>
             </div>
         </fieldset>
     </form>
+    </div>
+    </div>
 </body>
 </html>
       <div class="control-group">
@@ -178,12 +227,10 @@ include __DIR__ . '/initLangue.php';
     </form>
 
     <br>
-    <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
 
 <?php
-require_once __DIR__ . '/footerLangue.php';
+require_once ROOT . '/front/includes/commons/___footerFront.php';
 
-require_once __DIR__ . '/footer.php';
 ?>
 </body>
 </html>
