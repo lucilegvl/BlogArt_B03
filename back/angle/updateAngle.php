@@ -18,7 +18,6 @@ require_once __DIR__ . '/../../class_crud/angle.class.php';
 // Insertion classe Langue 
 require_once __DIR__ . '/../../class_crud/langue.class.php';
 
-require_once ROOT . '/front/includes/commons/___headerFront.php';
 
 // Instanciation de la classe angle
 $monAngle = new ANGLE();
@@ -87,6 +86,12 @@ include __DIR__ . '/initAngle.php';
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
 </head>
+
+ <!-- section pour ajouter le header sans qu'il gene avec le location-->
+ <section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
     <h1>mon espace administrateur</h1>
     <div class=parentback>
@@ -229,9 +234,8 @@ include __DIR__ . '/initAngle.php';
     </div>
     </div>
 <?php
-require_once __DIR__ . '/footerAngle.php';
+require_once ROOT . '/front/includes/commons/___footerFront.php';
 
-require_once __DIR__ . '/footer.php';
 ?>
 </body>
 </html>

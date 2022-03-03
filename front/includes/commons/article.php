@@ -35,19 +35,19 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     <meta name="author" content="" />
 </head>
 
-<section class="top-page-index" style="background-image: url('<?php echo(ROOTFRONT . '/front/assets/images/topage.png');?>')">
+<!-- <section class="top-page-index" style="background-image: url('<?php echo(ROOTFRONT . '/front/assets/images/topage.png');?>')">
     <div class="top-page-index_content" >
         <h1>Paranormal à Bordeaux</h1>
     </div>
-</section>
+</section> -->
 
-<section class="presentation">
+<!-- <section class="presentation">
     <p>
         Postremo ad id indignitatis est ventum, ut cum peregrini ob formidatam haut ita dudum alimentorum 
         inopiam pellerentur ab urbe praecipites, sectatoribus disciplinarum liberalium inpendio paucis sine 
         respiratione ulla extrusis, tenerentur minimarum adseclae veri, quique id simularun
     </p>
-</section>
+</section> -->
 
 <section class="lastArticles">
     <h2>Les derniers articles</h2>

@@ -29,7 +29,6 @@ $monUser = new USER();
 // Insertion classe Statut
 require_once __DIR__ . '/../../class_crud/statut.class.php';
 
-require_once ROOT . '/front/includes/commons/___headerFront.php';
 
 // Instanciation de la classe Statut
 $monStatut = new STATUT();
@@ -240,6 +239,12 @@ include __DIR__ . '/initMembre.php';
         }
     </script>
 </head>
+
+<!-- section pour ajouter le header sans qu'il gene avec le location-->
+<section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
     <h1>mon espace administrateur</h1>
     

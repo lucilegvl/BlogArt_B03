@@ -1,7 +1,7 @@
 <?php
 // CRUD USER
 // ETUD
-require_once __DIR__ . '../../CONNECT/database.php';
+require_once __DIR__ . '../../connect/database.php';
 
 class USER{
 	function get_1UserByPseudo($pseudoUser, $passUser){

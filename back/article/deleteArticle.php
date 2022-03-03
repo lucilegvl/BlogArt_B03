@@ -131,11 +131,13 @@ include __DIR__ . '/initArticle.php';
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
+
 <section>
     <?php
     require_once ROOT . '/front/includes/commons/___headerFront.php';
     ?>
 </section>
+
 <body>
     <h1>mon espace administrateur</h1>
 
@@ -179,6 +181,7 @@ include __DIR__ . '/initArticle.php';
                 </ul>
             </nav>
         </div>
+        
         <div class=formulaire>
  
     <h2>Suppression d'un article</h2>

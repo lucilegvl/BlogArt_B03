@@ -18,8 +18,6 @@ require_once __DIR__ . '/../../class_crud/angle.class.php';
 // Insertion classe Langue 
 require_once __DIR__ . '/../../class_crud/langue.class.php';
 
-require_once ROOT . '/front/includes/commons/___headerFront.php';
-
 
 // Instanciation de la classe angle
 $monAngle = new ANGLE();
@@ -85,8 +83,14 @@ include __DIR__ . '/initAngle.php';
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
 </head>
+
+ <!-- section pour ajouter le header sans qu'il gene avec le location-->
+ <section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
-<h1> Mon espace administrateur</h1>
+<h1> mon espace administrateur</h1>
 
 <div class=parentback>
         <div class=menu-back>
@@ -201,9 +205,9 @@ include __DIR__ . '/initAngle.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:#263d57" name="Submit" />
+                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; border-color: #263d57; padding:5px 20px; background-color:#263d57" name="Submit" />
+                <input type="submit" value="Valider" style="cursor:pointer; border-color: #0e1a27; padding:5px 20px; background-color:#0e1a27" name="Submit" />
                 <br>
             </div>
         </div>

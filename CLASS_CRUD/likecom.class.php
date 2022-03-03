@@ -1,7 +1,7 @@
 <?php
 // CRUD LIKECOM
 // ETUD
-require_once __DIR__ . '../../CONNECT/database.php';
+require_once __DIR__ . '../../connect/database.php';
 
 class LIKECOM{
 	function get_1LikeCom($numMemb, $numSeqCom, $numArt){

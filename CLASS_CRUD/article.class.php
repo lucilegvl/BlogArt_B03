@@ -1,7 +1,7 @@
 <?php
 // CRUD ARTICLE
 // ETUD
-require_once __DIR__ . '/../CONNECT/database.php';
+require_once __DIR__ . '/../connect/database.php';
 
 class ARTICLE{
 	function get_1Article($numArt){
@@ -97,7 +97,7 @@ class ARTICLE{
 		global $db;
 
 		// Recherche plusieurs mots clés (CONCAT)
-		$textQuery = 'SELECT * FROM ARTICLE ORDER BY dtCreArt DESC LIMIT 4';
+		$textQuery = 'SELECT * FROM article ORDER BY dtCreArt DESC LIMIT 4';
 		$result = $db->query($textQuery);
 		$allArticlesByDates = $result->fetchAll();
 		return($allArticlesByDates);
