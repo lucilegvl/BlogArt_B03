@@ -227,7 +227,6 @@ include __DIR__ . '/initLangue.php';
     </form>
 
     <br>
-    <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
 
 <?php
 require_once ROOT . '/front/includes/commons/___footerFront.php';

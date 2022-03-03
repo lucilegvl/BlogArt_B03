@@ -242,7 +242,6 @@ include __DIR__ . '/initMembre.php';
     </div>
     </div>
     <br>
-    <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
 <?php
 require_once ROOT . '/front/includes/commons/___footerFront.php';
 
