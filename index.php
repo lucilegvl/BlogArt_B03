@@ -59,38 +59,11 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
         if ($i == 1){
             $image=$row['urlPhotArt']; ?>
             <img src='uploads/<?php$image?>'>
-            
-            <?php
-            $titre= $row['libTitrArt'];
-            $date=$row['dtCreArt'];
-            $chapeau=$row['libChapoArt'];
-            echo $titre . "<br>" . $date . "<br>" . $chapeau . "<br>";
+        <?php
         } 
-        ?>
-        <div class=testouille>
-        <?php
-        
         else {
-            ?>
-                <div>
-                    <?php
-                    $image=$row['urlPhotArt']; 
-                    $titre= $row['libTitrArt'];
-                    $date=$row['dtCreArt'];
-                    $chapeau=$row['libChapoArt'];
-                    echo $titre . "<br>" . $date . "<br>";
-                    ?>
-                    <img src='uploads/<?php$image?>'>
-                    <?php
-                    echo $chapeau . "<br>";
-                    ?>
-                </div>
-            </div>
-            <?php
+            echo "pas content :(";
         }
-        ?>
-        </div>
-        <?php
         $i = $i+1;
     }
         ?>
