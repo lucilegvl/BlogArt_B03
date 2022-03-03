@@ -45,13 +45,20 @@ $errCIR = 0;
         }
     </style>
 </head>
+
+  <!-- section pour ajouter le header sans qu'il gene avec le location-->
+  <section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
+
 <body>
-	<h1>BLOGART22 Admin - CRUD Statut</h1>
+	<h1>mon espace administrateur</h1>
 
 	<hr />
 	<h2>Nouveau statut :&nbsp;<a href="./createStatut.php"><i>Créer un statut</i></a></h2>
 	<hr />
-	<h2>Tous les statuts</h2>
+	<h2>Gérer les statuts</h2>
 
 	<table border="3" bgcolor="aliceblue">
     <thead>
@@ -108,7 +115,7 @@ $errCIR = 0;
 ?>
     <p>&nbsp;</p>
 <?php
-require_once __DIR__ . '/footer.php';
+require_once ROOT . '/front/includes/commons/___footerFront.php';
 ?>
 </body>
 </html>
