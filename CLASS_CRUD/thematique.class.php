@@ -1,7 +1,7 @@
 <?php
 // CRUD THEMATIQUE
 // ETUD
-require_once __DIR__ . '../../CONNECT/database.php';
+require_once __DIR__ . '../../connect/database.php';
 
 class THEMATIQUE{
 	function get_1Thematique($numThem){
