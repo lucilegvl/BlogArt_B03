@@ -57,7 +57,6 @@ require_once __DIR__ . '/../../class_crud/motcle.class.php';
 $monMotCle = new MOTCLE();
 
 
-
 // Gestion des erreurs de saisie
 $erreur = false;
 // dossier images
@@ -90,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
        $nbArticle = $monArticle->get_NbAllArticlesByNumAngl($_POST["id"]);
       
        if ($nbArticle < 1) {
-        $monArticle->delete($_POST["id"]);
+        $monArticle->delete($_POST["id"], $FILES);
         header("Location: ./article.php");
     } else {
         header("Location: article.php?errCIR=1");
@@ -105,10 +104,20 @@ if (((isset($_POST["Submit"])) AND ($Submit === "Valider"))) {
             header("Location: ./article.php");
         } else {
             header("Location: article.php?errCIR=1");
-    }
+        }
 }
     
-
+if (isset($_FILES['monfichier']['tmp_name']) AND !empty($_FILES['monfichier']['tmp_name'])) {
+    $target_file = $targetDir . $urlPhotArt;
+    // Del old image sur serveur
+    if(file_exists($delFile)){
+        // delete
+        unlink("./uploads/" . $urlPhotArt['urlPhotArt']);
+        move_uploaded_file($_FILES['monfichier']['tmp_name'], $target_file);
+    }
+}
+    // Traitnemnt : upload image => Chnager image
+    require_once ROOT . 'back/article/ctrlerUploadImage.php';
  }
 
   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
