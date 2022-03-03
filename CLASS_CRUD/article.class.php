@@ -87,7 +87,7 @@ class ARTICLE{
 		global $db;
 
 		// Recherche plusieurs mots clés (CONCAT)
-		$textQuery = 'SELECT * FROM ARTICLE AR INNER JOIN THEMATIQUE TH ON AR.numThem = TH.numThem WHERE CONCAT(libTitrArt, libChapoArt, libAccrochArt, parag1Art, libSsTitr1Art, parag2Art, libSsTitr2Art, parag3Art, libConclArt, libThem) LIKE "%'.$motcle.'%" ORDER BY numArt DESC';
+		$textQuery = 'SELECT * FROM article ar INNER JOIN thematique th ON AR.numThem = TH.numThem WHERE CONCAT(libTitrArt, libChapoArt, libAccrochArt, parag1Art, libSsTitr1Art, parag2Art, libSsTitr2Art, parag3Art, libConclArt, libThem) LIKE "%'.$motcle.'%" ORDER BY numArt DESC';
 		$result = $db->query($textQuery);
 		$allArticlesByMotsCles = $result->fetchAll();
 		return($allArticlesByMotsCles);
@@ -102,6 +102,20 @@ class ARTICLE{
 		$allArticlesByDates = $result->fetchAll();
 		return($allArticlesByDates);
 	}
+
+	function get_LastArticlebyDate(){
+		global $db;
+
+		$requete = "SELECT MAX(dtCreArt) AS dtCreArt FROM article;";
+		$result = $db->query($requete);
+
+		if ($result) {
+			$tuple = $result->fetch();
+			$lastNumArt = $tuple["numArt"];
+
+		}   // End of if ($result)
+		return $lastNumArt;
+	} // End of function
 
 	// Barre de recherche JOIN : mots clés par MOTCLE (TJ) dans ARTICLE
 	function get_MotsClesByArticles($listMotcles){

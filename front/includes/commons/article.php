@@ -49,8 +49,8 @@ require_once ROOT . '/front/includes/commons/___headerFront.php';
     </p>
 </section> -->
 
-<section class="lastArticles">
-    <h2>Les derniers articles</h2>
+<section class="je sais pas encore">
+    <!-- <h2>Les derniers articles</h2> -->
     <?php
         $allArticles=$monArticle->get_4DerniersArticles();
         $i=1;
