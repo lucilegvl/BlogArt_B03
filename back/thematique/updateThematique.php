@@ -91,6 +91,11 @@ include __DIR__ . '/initThematique.php';
 
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
 </head>
+
+<section> 
+<?php require_once ROOT . '/front/includes/commons/___headerFront.php'; ?>
+</section>
+
 <body>
     <h1>BLOGART22 Admin - CRUD Thematique</h1>
     <h2>Modification d'une Thematique</h2>
