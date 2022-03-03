@@ -17,9 +17,19 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Comment
-
+require_once __DIR__ . '/../../class_crud/comment.class.php';
 // Instanciation de la classe Comment
+$monComment = new COMMENT();
 
+// Insertion classe Article
+require_once __DIR__ . '/../../class_crud/article.class.php';
+// Instanciation de la classe Article
+$monArticle = new ARTICLE();
+
+// Insertion classe Article
+require_once __DIR__ . '/../../class_crud/membre.class.php';
+// Instanciation de la classe Article
+$monMembre = new MEMBRE();
 
 ?>
 <!DOCTYPE html>
@@ -84,9 +94,9 @@ require_once __DIR__ . '/../../util/dateChangeFormat.php';
     $to = 'd/m/Y H:i:s';
 
     // Appel méthode : Get tous les comments en BDD
-
+$allComments = $monComment->get_AllComments();
     // Boucle pour afficher
-    //foreach($all as $row) {
+    foreach($allComments as $row) {
 
         // date dtCreCom => FR
         // $dtCreCom = dateChangeFormat($dtCreCom, $from, $to);
@@ -95,17 +105,17 @@ require_once __DIR__ . '/../../util/dateChangeFormat.php';
         // $dtModCom = dateChangeFormat($dtModCom, $from, $to);
 ?>
         <tr>
-        <td><h4>&nbsp; <?= "ici numArt"; ?> &nbsp;</h4></td>
+        <td><h4>&nbsp; <?= $row['numArt']; ?> &nbsp;</h4></td>
 
-        <td><h4>&nbsp; <?= "ici numSeqCom"; ?> &nbsp;</h4></td>
+        <td><h4>&nbsp; <?= $row['numSeqCom']; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici pseudoMemb"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['numMemb']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici dtCreCom"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['dtCreCom']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici libCom"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['libCom']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici dtModCom"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['dtModCom']; ?> &nbsp;</td>
 
 
         <td>&nbsp;<span class="OK">&nbsp; <?= "ici attModOK"; ?> &nbsp;</span></td>
@@ -126,7 +136,7 @@ require_once __DIR__ . '/../../util/dateChangeFormat.php';
         <br /></td>
         </tr>
 <?php
-    // } // End of foreach
+     } // End of foreach
 ?>
     </tbody>
     </table>

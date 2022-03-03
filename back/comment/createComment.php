@@ -15,13 +15,20 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
-
-require_once ROOT . '/front/includes/commons/___headerFront.php';
-
 // Insertion classe Comment
-
+require_once __DIR__ . '/../../class_crud/comment.class.php';
 // Instanciation de la classe Comment
+$monComment = new COMMENT();
 
+// Insertion classe Article
+require_once __DIR__ . '/../../class_crud/article.class.php';
+// Instanciation de la classe Article
+$monArticle = new ARTICLE();
+
+// Insertion classe Article
+require_once __DIR__ . '/../../class_crud/membre.class.php';
+// Instanciation de la classe Article
+$monMembre = new MEMBRE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -29,13 +36,45 @@ $erreur = false;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // controle des saisies du formulaire
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    } 
+    
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+
+        $sameId=$_POST['id'];
+        header("Location: ./createComment.php");
+    }
 
 
-    // insertion classe comment
+ // controle des saisies du formulaire
+    // Saisies valides
+    if (((isset($_POST['Membre'])) AND (!empty($_POST['Membre']))
+    AND (isset($_POST['Article'])) AND (!empty($_POST['Article']))
+    AND (isset($_POST['dtCrecom'])) AND (!empty($_POST['dtCrecom']))
+    AND (isset($_POST['libCom'])) AND (!empty($_POST['libCom']))
+    AND (!empty($_POST['Submit'])) AND ($Submit === "Valider"))) {
 
+        $erreur = false;
+
+        $numMemb = ctrlSaisies(($_POST['Membre']));
+        $numArt = ctrlSaisies(($_POST['Article']));
+        $numSeqCom = $monCommentaire->getNextNumCom($numArt);
+        $libCom = ctrlSaisies(($_POST['libCom']));
+
+        $monComment->create($numSeqCom, $numArt, $dtCreCom, $libCom, $numMemb);
+        header("Location: ./comment.php");
+    } else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, Veuillez remplir tous les champs de saisie !";
+    }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
+
 include __DIR__ . '/initComment.php';
 // Var init
 
@@ -54,6 +93,11 @@ include __DIR__ . '/initComment.php';
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
 
 </head>
+<section>
+    <?php
+require_once ROOT . '/front/includes/commons/___headerFront.php';
+?>
+</section>
 <body>
     <h1>BLOGART22 Admin - CRUD Commentaire</h1>
     <h2>Ajout d'un commentaire</h2>
@@ -61,7 +105,7 @@ include __DIR__ . '/initComment.php';
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
       <fieldset>
-        <legend class="legend1">Commentez un commentaire...</legend>
+        <legend class="legend1">Ajout d'un commentaire...</legend>
 
         <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
 
@@ -76,26 +120,59 @@ include __DIR__ . '/initComment.php';
             <label class="control-label" for="LibTypAngl">
                 <b>Quel membre :&nbsp;&nbsp;&nbsp;</b>
             </label>
-            <input type="text" name="idMemb" id="idMemb" size="5" maxlength="5" value="<?= ""; ?>" autocomplete="on" />
+            <input type="hidden" id="idTypMemb" name="idTypMemb" value="<?= $numMemb; ?>" />
 
             <!-- Listbox membre => 2ème temps -->
-
+            <select name="Membre" id="Article"  class="form-control form-control-create">
+                <option value="-1">- - - Selectionner un membre - - -</option>
+                <?php
+                $allMembres = $monMembre->get_AllMembres();
+                
+                if($allMembres){
+                for ($i=0; $i < count($allMembres); $i++){
+                    $value = $allMembres[$i]['numMemb'];
+                ?>
+                
+                <option value="<?php echo($value); ?>"> <?= $value ." - " . $allMembres[$i]['pseudoMemb']; ?> </option>
+                
+                <?php
+                    } // End of foreach
+                }   // if ($result)
+                ?>
+            </select>
             </div>
         </div>
     <!-- FIN Listbox Membre -->
 <!-- --------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------- -->
     <!-- Listbox Article -->
-        <br>
+    <br>
         <div class="control-group">
             <div class="controls">
-            <label class="control-label" for="LibTypThem">
+            <label class="control-label" for="LibTypArt">
                 <b>Quel article :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
             </label>
-            <input type="text" name="idArt" id="idArt" size="5" maxlength="5" value="<?= ""; ?>" autocomplete="on" />
+            <input type="hidden" id="idTypArt" name="idTypArt" value="<?= $numArt; ?>" />
 
-            <!-- Listbox Article => 2ème temps -->
 
+     <!-- Listbox article => 2ème temps -->
+            <select name="Article" id="Article"  class="form-control form-control-create">
+                <option value="-1">- - - Selectionner un article - - -</option>
+                <?php
+                $allArticles = $monArticle->get_AllArticles();
+                
+                if($allArticles){
+                for ($i=0; $i < count($allArticles); $i++){
+                    $value = $allArticles[$i]['numArt'];
+                ?>
+                
+                <option value="<?php echo($value); ?>"> <?= $value ." - " . $allArticles[$i]['libTitrArt']; ?> </option>
+                
+                <?php
+                    } 
+                }   
+                ?>
+            </select>
             </div>
         </div>
     <!-- FIN Listbox Article -->
